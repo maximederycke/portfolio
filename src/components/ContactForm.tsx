@@ -35,6 +35,14 @@ const initial: FormData = {
 
 // ─── Entry point ─────────────────────────────────────────────────────────────
 
+const validModes: CollabMode[] = ['agile', 'forfait', 'unknown']
+
+function getInitialMode(): CollabMode | '' {
+  if (typeof window === 'undefined') return ''
+  const m = new URLSearchParams(window.location.search).get('mode')
+  return validModes.includes(m as CollabMode) ? (m as CollabMode) : ''
+}
+
 export default function ContactForm() {
   return (
     <Scoped>
@@ -47,7 +55,9 @@ export default function ContactForm() {
 
 function FormInner() {
   const stepper = useStepper()
-  const [data, setData] = useState<FormData>(initial)
+  const [initialMode] = useState<CollabMode | ''>(getInitialMode)
+  const [data, setData] = useState<FormData>({ ...initial, mode: initialMode })
+
   const [hp, setHp] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -191,7 +201,7 @@ const modes = [
   {
     value: 'agile' as const,
     label: 'Agile',
-    desc: 'Collaboration itérative sur la durée. TJM, sprints de 2 semaines, ajustements réguliers. Idéal si le périmètre évolue.',
+    desc: 'Collaboration itérative sur la durée. TJM fixe, sprints de 2 semaines, périmètre ajustable à chaque cycle.',
   },
   {
     value: 'forfait' as const,
@@ -206,6 +216,7 @@ const modes = [
 ]
 
 function ModeStep({ value, onChange }: { value: string; onChange: (v: CollabMode) => void }) {
+    console.log(value)
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Mode de collaboration</h2>
