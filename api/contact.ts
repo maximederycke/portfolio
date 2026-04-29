@@ -1,4 +1,4 @@
-import { CORS, FnEvent, FnResponse, reply } from './lib/http.ts'
+import { FnEvent, FnResponse, reply } from './lib/http.ts'
 import { bullet, h2, notionPost, para } from './lib/notion.ts'
 import { checkRate } from './lib/rate-limit.ts'
 
@@ -25,45 +25,46 @@ const BUDGET: Record<string, string> = {
 // ─── Handler ──────────────────────────────────────────────────────────────────
 
 export const handle = async (event: FnEvent): Promise<FnResponse> => {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS }
-  if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' })
+  const origin = event.headers['origin'] ?? event.headers['Origin'] ?? ''
+  if (event.httpMethod === 'OPTIONS') return reply(204, undefined, origin)
+  if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' }, origin)
 
   let body: Record<string, string>
   try {
     body = JSON.parse(event.body)
   } catch {
-    return reply(400, { error: 'Invalid JSON' })
+    return reply(400, { error: 'Invalid JSON' }, origin)
   }
 
   // Honeypot
-  if (body._hp) return { statusCode: 400, headers: CORS }
+  if (body._hp) return reply(400, undefined, origin)
 
   // Rate limit
   const ip = event.headers['x-forwarded-for']?.split(',')[0].trim() ?? ''
-  if (!checkRate(ip)) return reply(429, { error: 'Trop de demandes. Réessayez dans une heure.' })
+  if (!checkRate(ip)) return reply(429, { error: 'Trop de demandes. Réessayez dans une heure.' }, origin)
 
   const { type, mode, budget, description, nom, email, entreprise } = body
 
   if (!nom?.trim() || !email?.trim() || !type) {
-    return reply(400, { error: 'Champs requis manquants.' })
+    return reply(400, { error: 'Champs requis manquants.' }, origin)
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    return reply(400, { error: 'Email invalide.' })
+    return reply(400, { error: 'Email invalide.' }, origin)
   }
   if (!Object.keys(TYPE).includes(type)) {
-    return reply(400, { error: 'Type de projet invalide.' })
+    return reply(400, { error: 'Type de projet invalide.' }, origin)
   }
   if (mode && !Object.keys(MODE).includes(mode)) {
-    return reply(400, { error: 'Mode de collaboration invalide.' })
+    return reply(400, { error: 'Mode de collaboration invalide.' }, origin)
   }
   if (budget && !Object.keys(BUDGET).includes(budget)) {
-    return reply(400, { error: 'Budget invalide.' })
+    return reply(400, { error: 'Budget invalide.' }, origin)
   }
   if (nom.trim().length > 100 || email.trim().length > 200) {
-    return reply(400, { error: 'Champs trop longs.' })
+    return reply(400, { error: 'Champs trop longs.' }, origin)
   }
   if (description && description.length > 2000) {
-    return reply(400, { error: 'Description trop longue.' })
+    return reply(400, { error: 'Description trop longue.' }, origin)
   }
 
   try {
@@ -83,10 +84,10 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
       children: buildRecueil({ nom, email, entreprise, type, mode, budget, description }),
     })
 
-    return reply(200, { ok: true })
+    return reply(200, { ok: true }, origin)
   } catch (err) {
     console.error('Notion error:', err)
-    return reply(500, { error: 'Erreur serveur.' })
+    return reply(500, { error: 'Erreur serveur.' }, origin)
   }
 }
 
