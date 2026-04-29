@@ -1,0 +1,46 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - src/**
+      - public/**
+      - astro.config.*
+      - package.json
+      - pnpm-lock.yaml
+      - .github/workflows/deploy-frontend.yml
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Build
+        run: pnpm install --frozen-lockfile && pnpm run build
+        env:
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+
+      - name: Install rclone
+        run: curl https://rclone.org/install.sh | sudo bash
+
+      - name: Deploy to Scaleway Object Storage
+        env:
+          RCLONE_CONFIG_SCW_TYPE: s3
+          RCLONE_CONFIG_SCW_PROVIDER: Scaleway
+          RCLONE_CONFIG_SCW_ACCESS_KEY_ID: ${{ secrets.SCW_ACCESS_KEY }}
+          RCLONE_CONFIG_SCW_SECRET_ACCESS_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          RCLONE_CONFIG_SCW_REGION: fr-par
+          RCLONE_CONFIG_SCW_ENDPOINT: s3.fr-par.scw.cloud
+          RCLONE_CONFIG_SCW_ACL: public-read
+        run: rclone sync dist/ scw:maximederycke-portfolio --progress

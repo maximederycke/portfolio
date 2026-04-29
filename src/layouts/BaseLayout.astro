@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css'
+import LinkedIn from '../components/icons/LinkedIn.astro'
+import Malt from '../components/icons/Malt.astro'
+import GitHub from '../components/icons/GitHub.astro'
 
 interface Props {
   title: string
@@ -120,11 +123,21 @@ const currentPath = Astro.url.pathname
     </main>
 
     <footer class="border-t border-zinc-100 py-8">
-      <div class="max-w-3xl mx-auto px-6 flex items-center justify-between text-sm text-zinc-400">
-        <span>© {new Date().getFullYear()} Maxime Derycke</span>
-        <a href="https://github.com/maximederycke" class="hover:text-zinc-600 transition-colors">
-          GitHub
-        </a>
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+        <p class="text-xs font-mono text-zinc-400">
+          © {new Date().getFullYear()} Maxime Derycke
+        </p>
+        <div class="flex items-center gap-5">
+          <a href="https://www.linkedin.com/in/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+            <LinkedIn size={18} />
+          </a>
+          <a href="https://www.malt.fr/profile/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="Malt" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+            <Malt size={18} />
+          </a>
+          <a href="https://github.com/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+            <GitHub size={18} />
+          </a>
+        </div>
       </div>
     </footer>
 

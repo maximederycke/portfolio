@@ -216,7 +216,6 @@ const modes = [
 ]
 
 function ModeStep({ value, onChange }: { value: string; onChange: (v: CollabMode) => void }) {
-    console.log(value)
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Mode de collaboration</h2>
