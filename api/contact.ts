@@ -1,67 +1,6 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-interface FnEvent {
-  httpMethod: string
-  headers: Record<string, string>
-  body: string
-}
-
-interface FnResponse {
-  statusCode: number
-  headers?: Record<string, string>
-  body?: string
-}
-
-// ─── Notion ───────────────────────────────────────────────────────────────────
-
-const NOTION_API = 'https://api.notion.com/v1'
-const NOTION_VERSION = '2022-06-28'
-
-async function notionPost(path: string, payload: unknown): Promise<{ id: string }> {
-  const res = await fetch(`${NOTION_API}${path}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
-      'Content-Type': 'application/json',
-      'Notion-Version': NOTION_VERSION,
-    },
-    body: JSON.stringify(payload),
-  })
-  if (!res.ok) {
-    const err = await res.text()
-    throw new Error(`Notion ${res.status}: ${err}`)
-  }
-  return res.json() as Promise<{ id: string }>
-}
-
-// ─── CORS ─────────────────────────────────────────────────────────────────────
-
-const CORS: Record<string, string> = {
-  'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN ?? 'https://maximederycke.dev',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type': 'application/json',
-}
-
-const reply = (statusCode: number, body?: object): FnResponse => ({
-  statusCode,
-  headers: CORS,
-  ...(body && { body: JSON.stringify(body) }),
-})
-
-// ─── Rate limiting ────────────────────────────────────────────────────────────
-
-const rateMap = new Map<string, number[]>()
-const RATE_LIMIT = 3
-const RATE_WINDOW = 60 * 60 * 1000
-
-function checkRate(ip: string): boolean {
-  const now = Date.now()
-  const hits = (rateMap.get(ip) ?? []).filter(t => now - t < RATE_WINDOW)
-  if (hits.length >= RATE_LIMIT) return false
-  rateMap.set(ip, [...hits, now])
-  return true
-}
+import { CORS, FnEvent, FnResponse, reply } from './lib/http.ts'
+import { bullet, h2, notionPost, para } from './lib/notion.ts'
+import { checkRate } from './lib/rate-limit.ts'
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
 
@@ -108,6 +47,24 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
   if (!nom?.trim() || !email?.trim() || !type) {
     return reply(400, { error: 'Champs requis manquants.' })
   }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    return reply(400, { error: 'Email invalide.' })
+  }
+  if (!Object.keys(TYPE).includes(type)) {
+    return reply(400, { error: 'Type de projet invalide.' })
+  }
+  if (mode && !Object.keys(MODE).includes(mode)) {
+    return reply(400, { error: 'Mode de collaboration invalide.' })
+  }
+  if (budget && !Object.keys(BUDGET).includes(budget)) {
+    return reply(400, { error: 'Budget invalide.' })
+  }
+  if (nom.trim().length > 100 || email.trim().length > 200) {
+    return reply(400, { error: 'Champs trop longs.' })
+  }
+  if (description && description.length > 2000) {
+    return reply(400, { error: 'Description trop longue.' })
+  }
 
   try {
     const clientPage = await notionPost('/pages', {
@@ -133,7 +90,7 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
   }
 }
 
-// ─── Fiche client ─────────────────────────────────────────────────────────────
+// ─── Builders ─────────────────────────────────────────────────────────────────
 
 function buildFicheClient(d: { nom: string; email: string; entreprise: string }) {
   return [
@@ -142,8 +99,6 @@ function buildFicheClient(d: { nom: string; email: string; entreprise: string })
     ...(d.entreprise?.trim() ? [bullet(`Entreprise : ${d.entreprise}`)] : []),
   ]
 }
-
-// ─── Recueil de besoins ───────────────────────────────────────────────────────
 
 function buildRecueil(d: {
   nom: string; email: string; entreprise: string
@@ -166,11 +121,3 @@ function buildRecueil(d: {
     para(''),
   ]
 }
-
-// ─── Block helpers ────────────────────────────────────────────────────────────
-
-const rt = (content: string) => [{ type: 'text' as const, text: { content } }]
-
-const h2 = (c: string) => ({ type: 'heading_2' as const, heading_2: { rich_text: rt(c) } })
-const bullet = (c: string) => ({ type: 'bulleted_list_item' as const, bulleted_list_item: { rich_text: rt(c) } })
-const para = (c: string) => ({ type: 'paragraph' as const, paragraph: { rich_text: rt(c) } })
