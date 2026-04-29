@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const stack = [
+  'TypeScript', 'React', 'React Native', 'Node.js', 'Bun', 'Deno',
+  'Next.js', 'NestJS', 'Hono', 'PostgreSQL', 'Docker', 'AWS',
+]
+---
+
+<BaseLayout
+  title="À propos — Maxime Derycke"
+  description="Développeur fullstack JS/TS freelance, spécialisé dans les applications métier sur mesure pour les PME."
+>
+  <section class="max-w-3xl mx-auto px-6 py-16 space-y-14">
+
+    <div>
+      <h1 class="text-3xl font-semibold text-zinc-900 mb-4">À propos</h1>
+      <div class="space-y-4 text-zinc-500 leading-relaxed">
+        <p>
+          Titulaire d'une licence en systèmes embarqués, j'ai travaillé quatre ans en R&D
+          automobile avant de me reconvertir dans le développement web en 2022. Cette double
+          culture me permet d'aborder des environnements techniques complexes et des contraintes
+          métier variées avec un regard différent.
+        </p>
+        <p>
+          Aujourd'hui freelance, je conçois et développe des applications web et mobile
+          sur mesure — principalement pour des PME qui ont besoin d'outils connectés à leur
+          écosystème existant : ERP, APIs tierces, outils internes. J'apporte autant d'attention
+          à l'expérience utilisateur qu'à la qualité technique.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-400 uppercase tracking-widest mb-6">Ce que je construis</h2>
+      <ul class="flex flex-col gap-3 text-sm text-zinc-600">
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 text-zinc-300">—</span>
+          Applications web — SPA, dashboards, outils internes
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 text-zinc-300">—</span>
+          Applications mobile — React Native / Expo
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 text-zinc-300">—</span>
+          Intégrations API REST &amp; OAuth2 — Jira, Microsoft Graph, ERP...
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="mt-0.5 text-zinc-300">—</span>
+          Mise en place d'environnements Docker et déploiement
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-400 uppercase tracking-widest mb-8">Parcours</h2>
+      <div class="flex flex-col gap-8">
+
+        <div class="flex gap-6">
+          <span class="text-xs font-mono text-zinc-400 w-24 shrink-0 pt-0.5">2026</span>
+          <div>
+            <p class="text-sm font-medium text-zinc-900">Développeur freelance</p>
+            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
+              Hub de planification interne pour une ESN — agrégation de Jira, Tempo et Microsoft
+              Graph pour la saisie de temps, la planification de tickets et l'affichage des
+              disponibilités collaborateurs.
+            </p>
+            <p class="text-xs font-mono text-zinc-400 mt-2.5">React 19 · Bun · Hono · Docker · OAuth2</p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <span class="text-xs font-mono text-zinc-400 w-24 shrink-0 pt-0.5">2022 — 2026</span>
+          <div>
+            <p class="text-sm font-medium text-zinc-900">Développeur fullstack — CDI</p>
+            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
+              Développement de plusieurs applications en autonomie : outil de backup avec suivi
+              temps réel et notifications Slack, application mobile pour installateurs
+              chauffagistes (scan, formulaires dynamiques, communication ERP), outil RH et
+              planification. Mise en place d'une méthodologie Agile et migration Jira.
+            </p>
+            <p class="text-xs font-mono text-zinc-400 mt-2.5">React · React Native · Next.js · NestJS · Symfony · PostgreSQL · Docker · AWS</p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <span class="text-xs font-mono text-zinc-400 w-24 shrink-0 pt-0.5">2017 — 2021</span>
+          <div>
+            <p class="text-sm font-medium text-zinc-900">Technicien d'essais & intégration véhicule — Automobile</p>
+            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
+              Quatre ans dans l'industrie automobile après une licence en systèmes embarqués.
+              Une formation à la rigueur et aux environnements contraints qui oriente encore
+              ma façon d'appréhender les projets techniques.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-400 uppercase tracking-widest mb-5">Stack</h2>
+      <div class="flex flex-wrap gap-2">
+        {stack.map(tech => (
+          <span class="text-xs font-mono px-3 py-1 rounded-full border border-zinc-200 text-zinc-500">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </div>
+
+  </section>
+</BaseLayout>
