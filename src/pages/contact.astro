@@ -1,10 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import ContactForm from '../components/ContactForm'
 ---
 
-<BaseLayout title="Contact — Maxime Derycke">
+<BaseLayout
+  title="Contact — Maxime Derycke"
+  description="Démarrer un projet avec Maxime Derycke, développeur fullstack JS/TS freelance."
+>
   <section class="max-w-3xl mx-auto px-6 py-16">
-    <h1 class="text-3xl font-semibold text-zinc-900 mb-4">Contact</h1>
-    <p class="text-zinc-500">Formulaire à venir.</p>
+    <div class="mb-12">
+      <h1 class="text-3xl font-semibold text-zinc-900 mb-3">Démarrer un projet</h1>
+      <p class="text-zinc-500">
+        Quelques questions pour mieux cerner votre besoin — cela prend 2 minutes.
+      </p>
+    </div>
+
+    <ContactForm client:load />
   </section>
 </BaseLayout>

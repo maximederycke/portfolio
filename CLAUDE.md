@@ -22,7 +22,7 @@ Un portfolio personnel professionnel, avec :
 | Composants interactifs | React (islands) | Pour le formulaire uniquement |
 | Style | Tailwind v4 (custom uniquement) | Utilitaires, zéro lib de composants (pas de shadcn/ReUI) |
 | Hébergement | Scaleway Object Storage + CDN | Souverain, ~1-2 €/mois |
-| Formulaire → Notion | Scaleway Serverless Container (Node.js) | Proxy sécurisé pour clé API Notion |
+| Formulaire → Notion | Scaleway Serverless Function (Node.js) | Proxy sécurisé pour clé API Notion |
 | Versionning | GitHub public | github.com/maximederycke/portfolio |
 
 ## Environnement local
