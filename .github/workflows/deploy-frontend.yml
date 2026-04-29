@@ -43,4 +43,4 @@ jobs:
           RCLONE_CONFIG_SCW_REGION: fr-par
           RCLONE_CONFIG_SCW_ENDPOINT: s3.fr-par.scw.cloud
           RCLONE_CONFIG_SCW_ACL: public-read
-        run: rclone sync dist/ scw:maximederycke-portfolio --progress
+        run: rclone sync dist/ scw:maximederycke.dev --progress

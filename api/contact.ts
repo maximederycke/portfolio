@@ -1,4 +1,4 @@
-import { FnEvent, FnResponse, reply } from './lib/http.ts'
+import { type FnEvent, type FnResponse, reply } from './lib/http.ts'
 import { bullet, h2, notionPost, para } from './lib/notion.ts'
 import { checkRate } from './lib/rate-limit.ts'
 
