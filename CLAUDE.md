@@ -20,7 +20,7 @@ Un portfolio personnel professionnel, avec :
 | Framework | Astro | Statique, 0 JS par défaut, parfait pour portfolio |
 | Langage | TypeScript (strict) | Stack JS/TS cohérent |
 | Composants interactifs | React (islands) | Pour le formulaire uniquement |
-| Style | CSS Modules | Zéro dépendance, contrôle total, pas de licence |
+| Style | Tailwind v4 (custom uniquement) | Utilitaires, zéro lib de composants (pas de shadcn/ReUI) |
 | Hébergement | Scaleway Object Storage + CDN | Souverain, ~1-2 €/mois |
 | Formulaire → Notion | Scaleway Serverless Container (Node.js) | Proxy sécurisé pour clé API Notion |
 | Versionning | GitHub public | github.com/maximederycke/portfolio |
@@ -95,32 +95,25 @@ La serverless function Node.js doit :
 - **Inspiration** : Tailwind Spotlight (structure) mais design 100% original — aucun code Tailwind, CSS Modules uniquement
 - Pas de framework CSS (pas de Tailwind, pas de Bootstrap)
 
-## Design tokens à créer (src/styles/tokens.css)
-```css
-:root {
-  --color-bg: #ffffff;
-  --color-text: #111111;
-  --color-text-secondary: #666666;
-  --color-accent: /* à définir */;
-  --color-border: #e5e5e5;
-  --font-sans: /* à définir */;
-  --font-mono: /* à définir */;
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 2rem;
-  --space-lg: 4rem;
-  --space-xl: 8rem;
-  --max-width: 680px;
-  --border-radius: 8px;
-}
-```
+## Thème Tailwind (src/styles/global.css)
+Tailwind v4 — tokens définis via `@theme` :
+- `--font-sans` : DM Sans
+- `--font-mono` : DM Mono
+- Accent : `teal-500` (`#14B8A6`), hover `teal-600`
+- Neutre : zinc
+- `max-w-2xl` comme largeur max de contenu, `px-6` comme padding horizontal
 
-## Ce qui reste à décider (à demander à Maxime)
-- [ ] Couleur d'accent
-- [ ] Typographie (Google Fonts ou système ?)
+## Décisions design arrêtées
+- **Couleur d'accent** : Teal 500 `#14B8A6` — uniquement sur les liens de navigation (actif + hover). Partout ailleurs : zinc. Les icônes sociales et autres éléments interactifs hors-nav utilisent `hover:text-zinc-600`
+- **Neutre** : Zinc pour tout le reste
+- **Typographie** : DM Sans (corps) + DM Mono (code/tags) via Google Fonts
+- **Nom de domaine** : `maximederycke.dev`
+- **Composants** : custom Tailwind uniquement — pas de shadcn, pas de ReUI
+- **React** : uniquement pour le formulaire de contact (island `client:load`)
+
+## Ce qui reste à décider
 - [ ] Projets à mettre en avant (au moins 2-3)
 - [ ] Photo ou avatar ?
-- [ ] Nom de domaine (maximederycke.fr ? maximedev.fr ?)
 
 ## Tâches immédiates (dans l'ordre)
 
