@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Services — Maxime Derycke"
+  description="Deux modes de collaboration selon votre projet : Agile pour les projets évolutifs, Forfait pour les périmètres définis."
+>
+  <section class="max-w-3xl mx-auto px-6 py-16">
+
+    <h1 class="text-3xl font-semibold text-zinc-900 mb-3">Services</h1>
+    <p class="text-zinc-500 mb-10">
+      Deux façons de travailler ensemble — selon la maturité de votre projet.
+    </p>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto]">
+
+      <!-- Mode Agile -->
+      <div class="border border-zinc-200 rounded-2xl p-7 flex flex-col gap-6 sm:row-span-4 sm:grid sm:grid-rows-subgrid">
+        <div>
+          <span class="text-xs font-mono text-zinc-400 uppercase tracking-widest">Mode</span>
+          <h2 class="text-xl font-semibold text-zinc-900 mt-1">Agile</h2>
+        </div>
+
+        <p class="text-sm text-zinc-500 leading-relaxed">
+          Vous avez une idée mais pas encore de spec précise. On avance ensemble par itérations,
+          en ajustant le projet au fil des retours et des découvertes.
+        </p>
+
+        <ul class="flex flex-col gap-2.5 text-sm text-zinc-600">
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Budget indicatif, pas figé
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Priorités revues à chaque cycle
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Livraisons régulières et testables
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Idéal pour les projets exploratoires ou les MVPs
+          </li>
+        </ul>
+
+        <div>
+          <a
+            href="/contact"
+            class="text-sm font-medium text-zinc-900 hover:text-zinc-500 transition-colors"
+          >
+            Démarrer en Agile →
+          </a>
+        </div>
+      </div>
+
+      <!-- Mode Forfait -->
+      <div class="border border-zinc-200 rounded-2xl p-7 flex flex-col gap-6 bg-zinc-50 sm:row-span-4 sm:grid sm:grid-rows-subgrid">
+        <div>
+          <span class="text-xs font-mono text-zinc-400 uppercase tracking-widest">Mode</span>
+          <h2 class="text-xl font-semibold text-zinc-900 mt-1">Forfait</h2>
+        </div>
+
+        <p class="text-sm text-zinc-500 leading-relaxed">
+          Vous avez un cahier des charges défini et avez besoin d'une estimation précise.
+          Le périmètre est fixé en amont — toute modification fait l'objet d'un devis complémentaire.
+        </p>
+
+        <ul class="flex flex-col gap-2.5 text-sm text-zinc-600">
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Prix et délais fixés avant démarrage
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Scope contractualisé
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Facturation supplémentaire hors-scope
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-zinc-300">—</span>
+            Idéal si vous avez besoin de visibilité budgétaire
+          </li>
+        </ul>
+
+        <div>
+          <a
+            href="/contact"
+            class="text-sm font-medium text-zinc-900 hover:text-zinc-500 transition-colors"
+          >
+            Démarrer en Forfait →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bloc "Pas sûr ?" -->
+    <div class="mt-10 border border-zinc-100 rounded-2xl p-7 text-center">
+      <p class="text-sm text-zinc-500 mb-4">
+        Pas sûr du mode qui vous convient ? Décrivez-moi votre projet,
+        on trouve ensemble la formule adaptée.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors"
+      >
+        Décrire mon projet
+      </a>
+    </div>
+
+  </section>
+</BaseLayout>
