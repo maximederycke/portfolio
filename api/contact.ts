@@ -1,5 +1,3 @@
-import { Client } from '@notionhq/client'
-
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface FnEvent {
@@ -16,11 +14,28 @@ interface FnResponse {
 
 // ─── Notion ───────────────────────────────────────────────────────────────────
 
-const notion = new Client({ auth: process.env.NOTION_API_KEY })
-// Dossier "Clients" dans Freelance HQ
-const CLIENTS_FOLDER = process.env.NOTION_CLIENTS_FOLDER_ID!
+const NOTION_API = 'https://api.notion.com/v1'
+const NOTION_VERSION = '2022-06-28'
+
+async function notionPost(path: string, payload: unknown): Promise<{ id: string }> {
+  const res = await fetch(`${NOTION_API}${path}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
+      'Content-Type': 'application/json',
+      'Notion-Version': NOTION_VERSION,
+    },
+    body: JSON.stringify(payload),
+  })
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`Notion ${res.status}: ${err}`)
+  }
+  return res.json() as Promise<{ id: string }>
+}
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
+
 const CORS: Record<string, string> = {
   'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN ?? 'https://maximederycke.dev',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -35,7 +50,6 @@ const reply = (statusCode: number, body?: object): FnResponse => ({
 })
 
 // ─── Rate limiting ────────────────────────────────────────────────────────────
-// In-memory : actif sur les instances chaudes, suffisant pour un portfolio.
 
 const rateMap = new Map<string, number[]>()
 const RATE_LIMIT = 3
@@ -96,17 +110,15 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
   }
 
   try {
-    // 1 — Page client dans le dossier Clients
-    const clientPage = await notion.pages.create({
-      parent: { page_id: CLIENTS_FOLDER },
+    const clientPage = await notionPost('/pages', {
+      parent: { page_id: process.env.NOTION_CLIENTS_FOLDER_ID },
       properties: {
         title: { title: [{ text: { content: nom.trim() } }] },
       },
       children: buildFicheClient({ nom, email, entreprise }),
     })
 
-    // 2 — Recueil de besoins sous la page client
-    await notion.pages.create({
+    await notionPost('/pages', {
       parent: { page_id: clientPage.id },
       properties: {
         title: { title: [{ text: { content: 'Recueil de besoins' } }] },
@@ -121,7 +133,7 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
   }
 }
 
-// ─── Fiche client ────────────────────────────────────────────────────────────
+// ─── Fiche client ─────────────────────────────────────────────────────────────
 
 function buildFicheClient(d: { nom: string; email: string; entreprise: string }) {
   return [

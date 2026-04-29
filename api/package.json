@@ -5,10 +5,8 @@
     "build": "esbuild contact.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/contact.js",
     "dev": "node --env-file=.env --watch --experimental-strip-types dev.ts"
   },
-  "dependencies": {
-    "@notionhq/client": "^2.2.15"
-  },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "@types/node": "^25.6.0",
+    "esbuild": "^0.28.0"
   }
 }
