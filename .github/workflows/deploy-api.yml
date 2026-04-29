@@ -36,4 +36,4 @@ jobs:
           SCW_DEFAULT_REGION: fr-par
         run: |
           zip -j function.zip dist/contact.js
-          scw function function update ${{ secrets.SCW_FUNCTION_ID }} zip-file=@function.zip region=fr-par
+          scw function deploy name=contact-form-handler runtime=node22 zip-file=function.zip namespace-id=${{ secrets.SCW_NAMESPACE_ID }} region=fr-par
