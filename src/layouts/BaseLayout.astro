@@ -1,8 +1,6 @@
 ---
 import '../styles/global.css'
-import LinkedIn from '../components/icons/LinkedIn.astro'
-import Malt from '../components/icons/Malt.astro'
-import GitHub from '../components/icons/GitHub.astro'
+import SocialLinks from '../components/SocialLinks.astro'
 
 interface Props {
   title: string
@@ -26,7 +24,10 @@ const currentPath = Astro.url.pathname
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
     <title>{title}</title>
   </head>
   <body class="bg-white text-zinc-900 min-h-screen flex flex-col">
@@ -127,17 +128,7 @@ const currentPath = Astro.url.pathname
         <p class="text-xs font-mono text-zinc-400">
           © {new Date().getFullYear()} Maxime Derycke
         </p>
-        <div class="flex items-center gap-5">
-          <a href="https://www.linkedin.com/in/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-            <LinkedIn size={18} />
-          </a>
-          <a href="https://www.malt.fr/profile/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="Malt" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-            <Malt size={18} />
-          </a>
-          <a href="https://github.com/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-            <GitHub size={18} />
-          </a>
-        </div>
+        <SocialLinks size={18} />
       </div>
     </footer>
 

@@ -1,0 +1,23 @@
+---
+import LinkedIn from './icons/LinkedIn.astro'
+import Malt from './icons/Malt.astro'
+import GitHub from './icons/GitHub.astro'
+
+interface Props {
+  size?: number
+}
+
+const { size = 20 } = Astro.props
+---
+
+<div class="flex items-center gap-5">
+  <a href="https://www.linkedin.com/in/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+    <LinkedIn size={size} />
+  </a>
+  <a href="https://www.malt.fr/profile/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="Malt" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+    <Malt size={size} />
+  </a>
+  <a href="https://github.com/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-zinc-400 hover:text-zinc-600 transition-colors">
+    <GitHub size={size} />
+  </a>
+</div>

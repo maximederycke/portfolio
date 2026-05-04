@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import LinkedIn from '../components/icons/LinkedIn.astro'
-import Malt from '../components/icons/Malt.astro'
-import GitHub from '../components/icons/GitHub.astro'
+import SocialLinks from '../components/SocialLinks.astro'
 ---
 
 <BaseLayout title="Maxime Derycke — Développeur Fullstack JS/TS">
@@ -56,17 +54,7 @@ import GitHub from '../components/icons/GitHub.astro'
               >
                 Démarrer un projet
               </a>
-              <div class="flex items-center gap-5">
-                <a href="https://www.linkedin.com/in/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-                  <LinkedIn size={20} />
-                </a>
-                <a href="https://www.malt.fr/profile/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="Malt" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-                  <Malt size={20} />
-                </a>
-                <a href="https://github.com/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-zinc-400 hover:text-zinc-600 transition-colors">
-                  <GitHub size={20} />
-                </a>
-              </div>
+              <SocialLinks size={20} />
             </div>
           </div>
 
