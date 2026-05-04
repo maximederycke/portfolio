@@ -284,7 +284,7 @@ function DescriptionStep({ value, onChange }: { value: string; onChange: (v: str
         onChange={e => onChange(e.target.value)}
         rows={6}
         placeholder="Mon projet consiste à..."
-        className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 resize-none transition-colors"
+        className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 resize-none transition-colors"
       />
       <p className="text-xs font-mono text-zinc-400 mt-2 text-right">
         {len < 20 ? `${len} / 20 caractères min.` : '✓'}
@@ -312,7 +312,7 @@ function ContactStep({
             value={nom}
             onChange={e => onChange('nom', e.target.value)}
             placeholder="Jean Dupont"
-            className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 transition-colors"
+            className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 transition-colors"
           />
         </Field>
         <Field label="Email *">
@@ -321,7 +321,7 @@ function ContactStep({
             value={email}
             onChange={e => onChange('email', e.target.value)}
             placeholder="jean@exemple.com"
-            className={`w-full px-4 py-2.5 rounded-xl border text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none transition-colors ${
+            className={`w-full px-4 py-2.5 rounded-xl border text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none transition-colors ${
               email && !isValidEmail(email) ? 'border-red-300 focus:border-red-400' : 'border-zinc-200 focus:border-teal-500'
             }`}
           />
@@ -335,7 +335,7 @@ function ContactStep({
             value={entreprise}
             onChange={e => onChange('entreprise', e.target.value)}
             placeholder="Acme SAS (optionnel)"
-            className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 transition-colors"
+            className="w-full px-4 py-2.5 rounded-xl border border-zinc-200 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 transition-colors"
           />
         </Field>
       </div>
@@ -352,7 +352,7 @@ function Success() {
       <h2 className="text-2xl font-semibold text-zinc-900 mb-3">Merci !</h2>
       <p className="text-zinc-500 leading-relaxed">
         J'ai bien reçu votre demande et reviendrai vers vous rapidement,
-        généralement sous 24h.
+        généralement sous 48h.
       </p>
     </div>
   )
