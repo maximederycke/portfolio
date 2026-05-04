@@ -111,23 +111,16 @@ Tailwind v4 — tokens définis via `@theme` :
 - **Composants** : custom Tailwind uniquement — pas de shadcn, pas de ReUI
 - **React** : uniquement pour le formulaire de contact (island `client:load`)
 
-## Ce qui reste à décider
-- [ ] Projets à mettre en avant (au moins 2-3)
-- [ ] Photo ou avatar ?
+## État du projet (v1)
 
-## Tâches immédiates (dans l'ordre)
+Pages livrées : `/`, `/about`, `/services`, `/contact`
+Formulaire multi-étapes connecté à Notion via Serverless Function.
+Favicons, web manifest, nav responsive (desktop pill + mobile dropdown) en place.
 
-1. Scaffolder Astro avec pnpm dans le repo existant :
-```bash
-pnpm create astro@latest . --template minimal --typescript strict --no-install --no-git
-pnpm install
-pnpm astro add react
-```
+## Ce qui reste à faire
 
-2. Créer la structure de dossiers
-3. Créer le layout de base (BaseLayout.astro) avec les tokens CSS
-4. Créer une première page index.astro avec le hero
-5. Vérifier que `pnpm dev` tourne correctement
+- [ ] Page `/projects` — galerie de réalisations (au moins 2-3 projets à choisir)
+- [ ] Photo ou avatar sur la page À propos
 
 ## Notion — IDs utiles (pour la serverless function)
 - Workspace : Freelance

@@ -115,7 +115,7 @@ function FormInner() {
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className="text-xs font-mono text-zinc-400">Étape {index + 1} / {all.length}</p>
+        <p className="text-xs font-mono text-zinc-500">Étape {index + 1} / {all.length}</p>
       </div>
 
       <div className="min-h-72">
@@ -138,7 +138,7 @@ function FormInner() {
       <div className="flex items-center justify-between mt-10">
         <button
           onClick={() => stepper.navigation.prev()}
-          className={`text-sm text-zinc-400 hover:text-zinc-600 transition-colors ${isFirst ? 'invisible' : ''}`}
+          className={`text-sm text-zinc-500 hover:text-zinc-600 transition-colors ${isFirst ? 'invisible' : ''}`}
         >
           ← Retour
         </button>
@@ -179,7 +179,7 @@ function TypeStep({ value, onChange }: { value: string; onChange: (v: ProjectTyp
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Quel type de projet ?</h2>
-      <p className="text-sm text-zinc-400 mb-6">Sélectionnez la catégorie qui correspond le mieux.</p>
+      <p className="text-sm text-zinc-500 mb-6">Sélectionnez la catégorie qui correspond le mieux.</p>
       <div className="flex flex-col gap-3">
         {projectTypes.map(opt => (
           <SelectCard
@@ -219,7 +219,7 @@ function ModeStep({ value, onChange }: { value: string; onChange: (v: CollabMode
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Mode de collaboration</h2>
-      <p className="text-sm text-zinc-400 mb-6">Comment préférez-vous travailler ensemble ?</p>
+      <p className="text-sm text-zinc-500 mb-6">Comment préférez-vous travailler ensemble ?</p>
       <div className="flex flex-col gap-3">
         {modes.map(opt => (
           <SelectCard
@@ -249,7 +249,7 @@ function BudgetStep({ value, onChange }: { value: string; onChange: (v: Budget) 
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Budget estimatif</h2>
-      <p className="text-sm text-zinc-400 mb-6">Une fourchette approximative suffit.</p>
+      <p className="text-sm text-zinc-500 mb-6">Une fourchette approximative suffit.</p>
       <div className="flex flex-col gap-3">
         {budgets.map(opt => (
           <button
@@ -276,7 +276,7 @@ function DescriptionStep({ value, onChange }: { value: string; onChange: (v: str
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Décrivez votre projet</h2>
-      <p className="text-sm text-zinc-400 mb-6">
+      <p className="text-sm text-zinc-500 mb-6">
         Contexte, objectifs, contraintes, délais… Plus c'est précis, mieux je pourrai vous aider.
       </p>
       <textarea
@@ -286,7 +286,7 @@ function DescriptionStep({ value, onChange }: { value: string; onChange: (v: str
         placeholder="Mon projet consiste à..."
         className="w-full px-4 py-3 rounded-xl border border-zinc-200 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-teal-500 resize-none transition-colors"
       />
-      <p className="text-xs font-mono text-zinc-400 mt-2 text-right">
+      <p className="text-xs font-mono text-zinc-500 mt-2 text-right">
         {len < 20 ? `${len} / 20 caractères min.` : '✓'}
       </p>
     </div>
@@ -304,7 +304,7 @@ function ContactStep({
   return (
     <div>
       <h2 className="text-lg font-medium text-zinc-900 mb-1">Vos coordonnées</h2>
-      <p className="text-sm text-zinc-400 mb-6">Pour qu'on puisse échanger.</p>
+      <p className="text-sm text-zinc-500 mb-6">Pour qu'on puisse échanger.</p>
       <div className="flex flex-col gap-4">
         <Field label="Nom *">
           <input
@@ -371,7 +371,7 @@ function SelectCard({ label, desc, selected, onClick }: {
       }`}
     >
       <p className={`text-sm font-medium ${selected ? 'text-zinc-900' : 'text-zinc-700'}`}>{label}</p>
-      <p className="text-xs text-zinc-400 mt-0.5">{desc}</p>
+      <p className="text-xs text-zinc-500 mt-0.5">{desc}</p>
     </button>
   )
 }
@@ -379,7 +379,7 @@ function SelectCard({ label, desc, selected, onClick }: {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs font-mono text-zinc-400 mb-1.5">{label}</label>
+      <label className="block text-xs font-mono text-zinc-500 mb-1.5">{label}</label>
       {children}
     </div>
   )
