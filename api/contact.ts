@@ -1,5 +1,5 @@
+import { sendEmail } from './lib/email.ts'
 import { type FnEvent, type FnResponse, reply } from './lib/http.ts'
-import { bullet, h2, notionPost, para } from './lib/notion.ts'
 import { checkRate } from './lib/rate-limit.ts'
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
@@ -68,57 +68,35 @@ export const handle = async (event: FnEvent): Promise<FnResponse> => {
   }
 
   try {
-    const clientPage = await notionPost('/pages', {
-      parent: { page_id: process.env.NOTION_CLIENTS_FOLDER_ID },
-      properties: {
-        title: { title: [{ text: { content: nom.trim() } }] },
-      },
-      children: buildFicheClient({ nom, email, entreprise }),
-    })
-
-    await notionPost('/pages', {
-      parent: { page_id: clientPage.id },
-      properties: {
-        title: { title: [{ text: { content: 'Recueil de besoins' } }] },
-      },
-      children: buildRecueil({ nom, email, entreprise, type, mode, budget, description }),
+    await sendEmail({
+      subject: `Nouveau contact — ${nom.trim()}`,
+      text: buildEmailBody({ nom, email, entreprise, type, mode, budget, description }),
+      replyTo: email.trim(),
     })
 
     return reply(200, { ok: true }, origin)
   } catch (err) {
-    console.error('Notion error:', err)
+    console.error('Email error:', err)
     return reply(500, { error: 'Erreur serveur.' }, origin)
   }
 }
 
 // ─── Builders ─────────────────────────────────────────────────────────────────
 
-function buildFicheClient(d: { nom: string; email: string; entreprise: string }) {
-  return [
-    h2('Informations'),
-    bullet(`Email : ${d.email}`),
-    ...(d.entreprise?.trim() ? [bullet(`Entreprise : ${d.entreprise}`)] : []),
-  ]
-}
-
-function buildRecueil(d: {
+function buildEmailBody(d: {
   nom: string; email: string; entreprise: string
   type: string; mode: string; budget: string; description: string
 }) {
   return [
-    h2('Informations client'),
-    bullet(`Nom : ${d.nom}`),
-    bullet(`Email : ${d.email}`),
-    ...(d.entreprise?.trim() ? [bullet(`Entreprise : ${d.entreprise}`)] : []),
-    h2('Contexte projet'),
-    bullet(`Type : ${TYPE[d.type] ?? d.type}`),
-    bullet(`Mode souhaité : ${MODE[d.mode] ?? d.mode}`),
-    bullet(`Budget estimé : ${BUDGET[d.budget] ?? d.budget}`),
-    h2('Description initiale'),
-    para(d.description || '—'),
-    h2('Questions à approfondir'),
-    para('À compléter lors du premier échange.'),
-    h2('Notes'),
-    para(''),
-  ]
+    `Nom : ${d.nom}`,
+    `Email : ${d.email}`,
+    ...(d.entreprise?.trim() ? [`Entreprise : ${d.entreprise}`] : []),
+    '',
+    `Type de projet : ${TYPE[d.type] ?? d.type}`,
+    `Mode souhaité : ${MODE[d.mode] ?? d.mode}`,
+    `Budget estimé : ${BUDGET[d.budget] ?? d.budget}`,
+    '',
+    'Description :',
+    d.description || '—',
+  ].join('\n')
 }
