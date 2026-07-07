@@ -10,8 +10,8 @@ GitHub : @maximederycke
 Un portfolio personnel professionnel, avec :
 - Présentation du profil et des services
 - Présentation des 2 modes de collaboration (Agile / Forfait)
-- Formulaire de contact dynamique multi-étapes connecté à Notion
-- À la soumission : création automatique d'une fiche client + page de recueil de besoins dans Notion
+- Formulaire de contact dynamique multi-étapes
+- À la soumission : envoi d'un email de notification via Scaleway Transactional Email
 
 ## Stack décidée
 
@@ -22,7 +22,7 @@ Un portfolio personnel professionnel, avec :
 | Composants interactifs | React (islands) | Pour le formulaire uniquement |
 | Style | Tailwind v4 (custom uniquement) | Utilitaires, zéro lib de composants (pas de shadcn/ReUI) |
 | Hébergement | Scaleway Object Storage + CDN | Souverain, ~1-2 €/mois |
-| Formulaire → Notion | Scaleway Serverless Function (Node.js) | Proxy sécurisé pour clé API Notion |
+| Formulaire → Email | Scaleway Serverless Function (Node.js) + Scaleway Transactional Email | Notification par email à la soumission, sans dépendance tierce |
 | Versionning | GitHub public | github.com/maximederycke/portfolio |
 
 ## Environnement local
@@ -49,8 +49,8 @@ portfolio/
 │   └── content/
 │       └── projects/    # Projets en MDX
 ├── public/              # favicon, og:image, assets statiques
-├── api/                 # Serverless function Node.js (formulaire → Notion)
-│   └── contact.ts       # Handler : reçoit form, crée page Notion
+├── api/                 # Serverless function Node.js (formulaire → email)
+│   └── contact.ts       # Handler : reçoit form, envoie email via Scaleway TEM
 ├── astro.config.ts
 ├── tsconfig.json
 └── package.json
@@ -77,14 +77,13 @@ portfolio/
 
 ### À la soumission → appel vers `/api/contact`
 La serverless function Node.js doit :
-- Créer une **fiche client** dans la BDD Notion "Freelance – Core" (table Clients)
-- Créer une **page de recueil de besoins** pré-remplie sous `Clients/[Nom du client]/`
+- Envoyer un email de notification (via Scaleway Transactional Email) vers la boîte pro, avec toutes les infos du formulaire et un `Reply-To` réglé sur l'email du contact
 - Renvoyer un 200 ou une erreur propre au formulaire
 
 ### Sécurité
-- La clé API Notion ne doit JAMAIS être dans le code front-end
+- La clé secrète Scaleway ne doit JAMAIS être dans le code front-end
 - Elle doit être en variable d'environnement côté serverless uniquement
-- NOTION_API_KEY et NOTION_DATABASE_ID en .env (jamais committé)
+- SCW_SECRET_KEY, SCW_DEFAULT_PROJECT_ID, EMAIL_FROM, EMAIL_TO en .env (jamais committé)
 
 ## Design
 
@@ -114,20 +113,14 @@ Tailwind v4 — tokens définis via `@theme` :
 ## État du projet (v1)
 
 Pages livrées : `/`, `/about`, `/services`, `/contact`
-Formulaire multi-étapes connecté à Notion via Serverless Function.
+Formulaire multi-étapes connecté à Scaleway Transactional Email (notification par email, sans stockage tiers).
 Favicons, web manifest, nav responsive (desktop pill + mobile dropdown) en place.
 
 ## Ce qui reste à faire
 
 - [ ] Page `/projects` — galerie de réalisations (au moins 2-3 projets à choisir)
 - [ ] Photo ou avatar sur la page À propos
-
-## Notion — IDs utiles (pour la serverless function)
-- Workspace : Freelance
-- Page principale : Freelance HQ (507f2804-aa2a-4ecf-8f68-58f5fd358af6)
-- BDD Freelance – Core : 459f4327-9a23-40b2-ba82-a4c78359e568
-- Dossier Clients : 34f438d2-c17e-8114-b1b6-da06fccc5c2e
-- Template Recueil de besoins : 34f438d2-c17e-8142-b96c-dc78cccaa2ad
+- [ ] Enregistrer et vérifier le domaine `maximederycke.dev` sur Scaleway TEM (SPF/DKIM) avant mise en prod
 
 ## Suivi du projet
 Page Notion du projet : Lab perso → Portfolio — maxime.dev
