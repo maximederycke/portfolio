@@ -16,4 +16,15 @@
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Anneau de focus : encre (zinc-900), ≥ 3:1 sur blanc — le teal-500 n'atteint que ~2,4:1 */
+  :focus-visible {
+    outline: 2px solid var(--color-zinc-900);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-teal-100);
+    color: var(--color-zinc-900);
+  }
 }

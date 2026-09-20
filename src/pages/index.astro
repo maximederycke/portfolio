@@ -1,9 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import SocialLinks from '../components/SocialLinks.astro'
+
+const builds = [
+  { title: 'Applications web', detail: 'SPA, dashboards, outils internes' },
+  { title: 'Applications mobile', detail: 'React Native / Expo' },
+  { title: 'Intégrations', detail: 'API REST & OAuth2 — Jira, Microsoft Graph, ERP…' },
+  { title: 'Déploiement', detail: 'Environnements Docker et mise en production' },
+]
+
+const stack = [
+  { label: 'Web', value: 'TypeScript · React · Node.js' },
+  { label: 'Mobile', value: 'React Native · Expo' },
+  { label: 'Données', value: 'PostgreSQL · Docker' },
+]
 ---
 
-<BaseLayout title="Maxime Derycke — Développeur Fullstack JS/TS">
+<BaseLayout
+  title="Maxime Derycke — Développeur Fullstack JS/TS"
+  description="Maxime Derycke, développeur fullstack TypeScript freelance : applications web et mobile sur mesure pour les PME, de l'UX à la mise en production."
+>
   <div class="relative isolate">
 
     <!-- Grille SVG — remonte derrière le header fixe -->
@@ -19,66 +35,65 @@ import SocialLinks from '../components/SocialLinks.astro'
       <rect width="100%" height="100%" fill="url(#grid)" stroke-width="0" />
     </svg>
 
-    <!-- Blob teal -->
-    <div
-      aria-hidden="true"
-      class="absolute top-0 right-0 left-1/2 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
-    >
-      <div
-        style="clip-path: polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)"
-        class="aspect-801/1036 w-[34rem] bg-linear-to-tr from-teal-200 to-teal-400 opacity-25"
-      ></div>
-    </div>
+    <div class="mx-auto max-w-7xl px-6 pt-24 pb-24 sm:pt-32 lg:px-8 lg:pt-36">
+      <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center lg:justify-between">
 
-    <div>
-      <div class="mx-auto max-w-7xl px-6 pt-24 pb-32 sm:pt-32 lg:px-8 lg:pt-36">
-        <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-
-          <!-- Texte gauche -->
-          <div class="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
-            <p class="text-sm font-mono text-teal-500 mb-5">Disponible pour de nouvelles missions</p>
-            <h1 class="text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
-              Développeur Fullstack<br />TypeScript
-            </h1>
-            <p class="mt-4 text-xl text-zinc-500">
-              Freelance · Remote first
-            </p>
-            <p class="mt-6 text-base text-zinc-500 leading-relaxed sm:max-w-md lg:max-w-none">
-              Je conçois et développe des applications web sur-mesure — de la réflexion UX
-              jusqu'au déploiement. Basé à Beauvais.
-            </p>
-            <div class="mt-10 flex items-center gap-8">
-              <a
-                href="/contact"
-                class="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors"
-              >
-                Démarrer un projet
-              </a>
-              <SocialLinks size={20} />
-            </div>
+        <!-- Texte gauche -->
+        <div class="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
+          <p class="mb-5 flex items-center gap-2.5 text-sm font-mono text-zinc-600">
+            <span aria-hidden="true" class="size-1.5 rounded-full bg-teal-500"></span>
+            Disponible pour de nouvelles missions
+          </p>
+          <h1 class="text-4xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-5xl">
+            Applications web et mobile sur mesure pour les PME
+          </h1>
+          <p class="mt-4 text-xl text-zinc-500">
+            Maxime Derycke, développeur fullstack TypeScript freelance · 100&nbsp;% à distance
+          </p>
+          <p class="mt-6 text-base text-zinc-500 leading-relaxed sm:max-w-md lg:max-w-none">
+            De la réflexion UX à la mise en production : outils internes, applications mobiles,
+            intégrations d'ERP et d'API tierces. Basé à Beauvais.
+          </p>
+          <div class="mt-10 flex items-center gap-x-5">
+            <a
+              href="/contact"
+              class="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors"
+            >
+              Démarrer un projet
+            </a>
+            <SocialLinks size={20} />
           </div>
-
         </div>
+
+        <!-- Note en marge : la pile technique, en clair -->
+        <dl class="mt-14 border-l border-zinc-200 pl-6 font-mono text-sm lg:mt-0 lg:w-72 lg:shrink-0">
+          {stack.map(({ label, value }) => (
+            <div class="py-3 first:pt-0 last:pb-0">
+              <dt class="text-xs text-zinc-500">{label}</dt>
+              <dd class="mt-1 text-zinc-900">{value}</dd>
+            </div>
+          ))}
+        </dl>
+
       </div>
     </div>
 
   </div>
 
-  <!-- Chiffres clés -->
+  <!-- Qui je suis + chiffres -->
   <div class="mx-auto max-w-7xl px-6 lg:px-8 py-16 sm:py-20">
     <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-      <h2 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-10">Maxime Derycke</h2>
+      <h2 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-10">Avec qui vous travaillez</h2>
       <div class="flex flex-col gap-x-8 gap-y-16 lg:flex-row">
         <div class="lg:w-full lg:max-w-2xl lg:flex-auto">
           <p class="text-xl text-zinc-600 leading-relaxed">
-            Je prends en charge des projets web de bout en bout — de la conception UX
-            à la mise en production — avec une vraie attention portée à la qualité du code
-            et à l'expérience utilisateur.
+            Je prends en charge vos projets de bout en bout, avec autant d'attention
+            à la qualité du code qu'à l'expérience utilisateur.
           </p>
           <p class="mt-6 text-base text-zinc-500 leading-relaxed max-w-xl">
-            Basé à Beauvais, je travaille en remote avec des clients partout en France.
-            Disponible pour des déplacements ponctuels en Île-de-France et Hauts-de-France.
-            Réactif, transparent sur l'avancement, et impliqué au-delà du seul périmètre technique.
+            Je travaille à distance avec des clients partout en France, avec des déplacements
+            ponctuels possibles en Île-de-France et Hauts-de-France. Réactif, transparent sur
+            l'avancement, et impliqué au-delà du seul périmètre technique.
           </p>
         </div>
         <div class="lg:flex lg:flex-auto lg:justify-center">
@@ -88,7 +103,7 @@ import SocialLinks from '../components/SocialLinks.astro'
               <dd class="text-5xl font-semibold tracking-tight text-zinc-900">4 ans</dd>
             </div>
             <div class="flex flex-col-reverse gap-y-1">
-              <dt class="text-sm text-zinc-500">Délai de réponse garanti</dt>
+              <dt class="text-sm text-zinc-500">Délai de réponse habituel</dt>
               <dd class="text-5xl font-semibold tracking-tight text-zinc-900">48h</dd>
             </div>
           </dl>
@@ -96,6 +111,19 @@ import SocialLinks from '../components/SocialLinks.astro'
       </div>
     </div>
   </div>
+
+  <!-- Ce que je construis -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-8 py-16">
+    <h2 class="text-xl font-semibold text-zinc-900 mb-8">Ce que je construis</h2>
+    <ul class="max-w-2xl divide-y divide-zinc-100 border-y border-zinc-100">
+      {builds.map(({ title, detail }) => (
+        <li class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
+          <span class="text-sm font-medium text-zinc-900 sm:w-48 sm:shrink-0">{title}</span>
+          <span class="text-sm text-zinc-500">{detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
 
   <!-- Services en bref -->
   <section class="mx-auto max-w-7xl px-6 lg:px-8 py-16">
@@ -108,7 +136,8 @@ import SocialLinks from '../components/SocialLinks.astro'
       <div class="border border-zinc-200 rounded-2xl p-6">
         <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest">Agile</span>
         <p class="text-sm text-zinc-500 leading-relaxed mt-3">
-          TJM fixe, sprints de 2 semaines. Idéal si le périmètre évolue — on ajuste les priorités à chaque cycle.
+          Tarif journalier fixe, livraisons toutes les 2 semaines. Le budget total reste indicatif :
+          on ajuste les priorités à chaque cycle.
         </p>
       </div>
 
@@ -118,6 +147,22 @@ import SocialLinks from '../components/SocialLinks.astro'
           Périmètre et prix fixés en amont. Idéal si vous avez besoin de visibilité budgétaire sur une mission définie.
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- Prochaine étape -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-8 pt-8 pb-24">
+    <div class="max-w-2xl border-t border-zinc-100 pt-16">
+      <h2 class="text-3xl font-semibold tracking-tight text-zinc-900">Un projet à discuter ?</h2>
+      <p class="mt-3 text-zinc-500">
+        Quelques questions, deux minutes : je reviens vers vous rapidement.
+      </p>
+      <a
+        href="/contact"
+        class="mt-8 inline-flex px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors"
+      >
+        Démarrer un projet
+      </a>
     </div>
   </section>
 
