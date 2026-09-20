@@ -49,23 +49,77 @@
           "oklch(98.5% 0 0)"
         ]
       },
-      "graphite": { "role": "neutral", "displayName": "Graphite", "canonical": "oklch(37% 0.013 285.805)" },
-      "slate": { "role": "neutral", "displayName": "Slate", "canonical": "oklch(44.2% 0.017 285.786)" },
-      "pencil": { "role": "neutral", "displayName": "Pencil", "canonical": "oklch(55.2% 0.016 285.938)" },
-      "placeholder": { "role": "neutral", "displayName": "Placeholder", "canonical": "oklch(70.5% 0.015 286.067)" },
-      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "oklch(92% 0.004 286.32)" },
-      "hairline-faint": { "role": "neutral", "displayName": "Hairline Faint", "canonical": "oklch(96.7% 0.001 286.375)" },
-      "paper-tint": { "role": "neutral", "displayName": "Paper Tint", "canonical": "oklch(98.5% 0 0)" },
-      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff" },
-      "error": { "role": "error", "displayName": "Error", "canonical": "oklch(63.7% 0.237 25.331)" }
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(37% 0.013 285.805)"
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "oklch(44.2% 0.017 285.786)"
+      },
+      "pencil": {
+        "role": "neutral",
+        "displayName": "Pencil",
+        "canonical": "oklch(55.2% 0.016 285.938)"
+      },
+      "placeholder": {
+        "role": "neutral",
+        "displayName": "Placeholder",
+        "canonical": "oklch(70.5% 0.015 286.067)"
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(92% 0.004 286.32)"
+      },
+      "hairline-faint": {
+        "role": "neutral",
+        "displayName": "Hairline Faint",
+        "canonical": "oklch(96.7% 0.001 286.375)"
+      },
+      "paper-tint": {
+        "role": "neutral",
+        "displayName": "Paper Tint",
+        "canonical": "oklch(98.5% 0 0)"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff"
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error",
+        "canonical": "oklch(63.7% 0.237 25.331)"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Home hero headline and large stat numbers (3rem, 3.75rem from sm)." },
-      "headline": { "displayName": "Headline", "purpose": "Page titles and home section headings." },
-      "title": { "displayName": "Title", "purpose": "Card titles such as Agile and Forfait." },
-      "body": { "displayName": "Body", "purpose": "Lead and long-form paragraphs in slate or pencil." },
-      "body-sm": { "displayName": "Body Small", "purpose": "Card copy, list items, buttons, nav." },
-      "label": { "displayName": "Label", "purpose": "DM Mono metadata: eyebrows, tags, dates, step counters, status." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Large stat numbers (3rem). The home hero headline is one step down (2.25rem, 3rem from sm)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page titles and home section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles such as Agile and Forfait."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Lead and long-form paragraphs in slate or pencil."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Card copy, list items, buttons, nav."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "DM Mono metadata: eyebrows, tags, dates, step counters, status."
+      }
     },
     "shadows": [
       {
@@ -92,9 +146,18 @@
       }
     ],
     "breakpoints": [
-      { "name": "sm", "value": "640px" },
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" }
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
     ]
   },
   "components": [
@@ -104,7 +167,7 @@
       "refersTo": "button-primary",
       "description": "The one filled action: Ink fill, white text, 8px radius.",
       "html": "<button class=\"ds-btn-primary\">Démarrer un projet</button>",
-      "css": ".ds-btn-primary { font-family: 'DM Sans Variable', system-ui, sans-serif; background: oklch(21% 0.006 285.885); color: #fff; padding: 0.625rem 1.25rem; border: 0; border-radius: 0.5rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: oklch(37% 0.013 285.805); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(70.4% 0.14 182.503); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }"
+      "css": ".ds-btn-primary { font-family: 'DM Sans Variable', system-ui, sans-serif; background: oklch(21% 0.006 285.885); color: #fff; padding: 0.625rem 1.25rem; border: 0; border-radius: 0.5rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: oklch(37% 0.013 285.805); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }"
     },
     {
       "name": "Text Link",
@@ -112,7 +175,7 @@
       "refersTo": "button-text",
       "description": "Unfilled action with a trailing arrow; pencil at rest, slate on hover.",
       "html": "<a class=\"ds-link\" href=\"#\">Voir les services →</a>",
-      "css": ".ds-link { font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; color: oklch(55.2% 0.016 285.938); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-link:hover { color: oklch(44.2% 0.017 285.786); } .ds-link:focus-visible { outline: 2px solid oklch(70.4% 0.14 182.503); outline-offset: 2px; }"
+      "css": ".ds-link { font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; color: oklch(55.2% 0.016 285.938); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-link:hover { color: oklch(44.2% 0.017 285.786); } .ds-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; }"
     },
     {
       "name": "Choice Card",
@@ -120,7 +183,7 @@
       "refersTo": "select-card",
       "description": "Selectable answer in the contact form; selected state takes the teal border and wash.",
       "html": "<button class=\"ds-choice ds-choice-selected\"><p class=\"ds-choice-title\">Application web</p><p class=\"ds-choice-desc\">SPA, dashboard, outil interne</p></button>",
-      "css": ".ds-choice { display: block; width: 100%; max-width: 28rem; text-align: left; padding: 0.875rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; cursor: pointer; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-choice:hover { border-color: oklch(87.1% 0.006 286.286); } .ds-choice-selected, .ds-choice-selected:hover { border-color: oklch(70.4% 0.14 182.503); background: oklch(98.4% 0.014 180.72 / 0.5); } .ds-choice-title { margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: oklch(37% 0.013 285.805); } .ds-choice-selected .ds-choice-title { color: oklch(21% 0.006 285.885); } .ds-choice-desc { margin: 0.125rem 0 0; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-choice:focus-visible { outline: 2px solid oklch(70.4% 0.14 182.503); outline-offset: 2px; }"
+      "css": ".ds-choice { display: block; width: 100%; max-width: 28rem; text-align: left; padding: 0.875rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; cursor: pointer; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-choice:hover { border-color: oklch(87.1% 0.006 286.286); } .ds-choice-selected, .ds-choice-selected:hover { border-color: oklch(70.4% 0.14 182.503); background: oklch(98.4% 0.014 180.72 / 0.5); } .ds-choice-title { margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: oklch(37% 0.013 285.805); } .ds-choice-selected .ds-choice-title { color: oklch(21% 0.006 285.885); } .ds-choice-desc { margin: 0.125rem 0 0; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-choice:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; }"
     },
     {
       "name": "Text Field",
@@ -152,7 +215,7 @@
       "refersTo": "nav-pill",
       "description": "Floating desktop nav: translucent white pill, hairline border, small shadow; active and hover links turn teal with a fading underline.",
       "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Maxime</a><span class=\"ds-nav-sep\"></span><a class=\"ds-nav-link ds-nav-active\" href=\"#\">À propos</a><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border: 1px solid oklch(92% 0.004 286.32); border-radius: 9999px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; color: oklch(55.2% 0.016 285.938); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(70.4% 0.14 182.503); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-sep { width: 1px; height: 1rem; margin: 0 0.25rem; background: oklch(92% 0.004 286.32); } .ds-nav-link:focus-visible { outline: 2px solid oklch(70.4% 0.14 182.503); outline-offset: 2px; border-radius: 9999px; }"
+      "css": ".ds-nav { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border: 1px solid oklch(92% 0.004 286.32); border-radius: 9999px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; color: oklch(55.2% 0.016 285.938); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(70.4% 0.14 182.503); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-sep { width: 1px; height: 1rem; margin: 0 0.25rem; background: oklch(92% 0.004 286.32); } .ds-nav-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; border-radius: 9999px; }"
     },
     {
       "name": "Form Progress",
@@ -164,7 +227,7 @@
   ],
   "narrative": {
     "northStar": "The Technical Letter",
-    "overview": "The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.\n\nThe mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint drafting-grid and a soft teal wash sit behind the headline.",
+    "overview": "The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.\n\nThe mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline.",
     "keyCharacteristics": [
       "Light-only, white paper with zinc ink; no dark mode.",
       "Flat surfaces with hairline zinc borders; shadow exists only on the floating nav.",
@@ -200,7 +263,9 @@
       "Do use teal only as a stroke, border, short label or hover/active text color, per The Drafting Pen Rule.",
       "Do reserve shadows for surfaces that float over content (the nav pill and its dropdown).",
       "Do match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.",
-      "Do give social icons pencil at rest and slate on hover, not teal."
+      "Do give social icons pencil at rest and slate on hover, not teal.",
+      "Do give icon-only links a 44px hit area even when the glyph is 18-20px.",
+      "Do keep the global 2px ink focus outline (2px offset) on every focusable element; fields replace it with the teal border."
     ],
     "donts": [
       "Don't fill a button, card or heading with teal, or add a second accent hue.",

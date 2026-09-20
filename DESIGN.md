@@ -116,7 +116,7 @@ components:
 
 The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.
 
-The mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint drafting-grid and a soft teal wash sit behind the headline.
+The mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline.
 
 **Key Characteristics:**
 - Light-only, white paper with zinc ink; no dark mode.
@@ -130,7 +130,7 @@ The mood is calm, precise, unhurried. Space does most of the structural work; bo
 A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chroma) plus one teal. The canonical values are Tailwind v4's `oklch` tokens; `CLAUDE.md` still lists the v3 hex `#14B8A6`, which is not what renders.
 
 ### Primary
-- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`, about `#00BBA7`): the drafting-pen mark. Active and hovered nav links, the form progress line, the border of a selected choice or a focused field, the "Disponible…" and "Message envoyé" mono status labels, and the hero wash. Never a button fill, never body text.
+- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`, about `#00BBA7`): the drafting-pen mark. Active and hovered nav links, the form progress line, the border of a selected choice or a focused field, the availability dot before "Disponible…", and the "Message envoyé" mono status label. Never a button fill, never body text.
 - **Drafting Teal Wash** (oklch(98.4% 0.014 180.72), `teal-50`, used at 50% opacity): the fill behind a selected choice card.
 
 ### Neutral
@@ -160,7 +160,7 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 **Character:** A friendly geometric sans for reading paired with a matching mono for the "typewriter margin". Hierarchy comes from size and weight (semibold 600 for headings, regular for text), not from colour or decoration.
 
 ### Hierarchy
-- **Display** (600, 3rem → 3.75rem from `sm`, line-height 1, tracking -0.025em): the home hero headline and the large stat numbers.
+- **Display** (600, 3rem, line-height 1, tracking -0.025em): the large stat numbers. The home hero headline is a full sentence, so it runs one step down (2.25rem, 3rem from `sm`, balanced wrapping).
 - **Headline** (600, 1.875rem, line-height ~1.2, tracking -0.025em): page titles (`h1`) and home section headings.
 - **Title** (600, 1.25rem): card titles ("Agile", "Forfait"). Form step titles are a step down (500, 1.125rem).
 - **Body** (400, 1rem, relaxed 1.625): lead and long-form text in `slate` or `pencil`; the home lead runs at 1.25rem in `slate`. Line length is capped by the container (`max-w-xl` to `max-w-2xl`).
@@ -172,7 +172,7 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 
 ## Layout
 
-A single centered column on a white page. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. Note: `CLAUDE.md` names `max-w-2xl` as the content width, but shipped inner pages use `max-w-3xl`.
+A single centered column on a white page. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is two columns from `lg`: the message on the left and, on the right, a hairline-bordered DM Mono margin note (`dl`) listing the stack; it stacks below the button on mobile. Note: `CLAUDE.md` names `max-w-2xl` as the content width, but shipped inner pages use `max-w-3xl`.
 
 Content is stacked with generous, uneven rhythm: 3.5rem between About blocks, 2rem to 3rem between headings and their content, 0.75rem between selectable cards. Two-up layouts use a simple two-column grid that collapses to one column below `sm`; the two collaboration cards share row tracks via subgrid so their internal sections align. Below `sm` the desktop nav pill becomes a compact pill with a hamburger and a dropdown card. The header is fixed, so `main` reserves `4rem` at the top.
 
@@ -223,7 +223,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Style:** a 1px track in `hairline-faint` with a 1px Drafting Teal fill that grows over 300ms; below it a mono counter "Étape n / N" in `pencil`.
 
 ### Status Label
-- **Style:** short DM Mono line in Drafting Teal above a headline ("Disponible pour de nouvelles missions", "Message envoyé"). It is the one use of teal as text at reading size, and it is a label, not a link.
+- **Style:** a short DM Mono line above a headline. On the home it reads "Disponible pour de nouvelles missions" in `slate` with a 6px Drafting Teal dot as the state marker (so text contrast holds); the form success "Message envoyé" is still set in teal text. Labels, not links.
 
 ## Do's and Don'ts
 
@@ -233,7 +233,8 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Do** use teal only as a stroke, border, short label or hover/active text color, per The Drafting Pen Rule.
 - **Do** reserve shadows for surfaces that float over content (the nav pill and its dropdown).
 - **Do** match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.
-- **Do** give social icons `pencil` at rest and `slate` on hover, not teal.
+- **Do** give social icons `pencil` at rest and `slate` on hover, not teal. Their hit area is 44px even though the glyph is 18-20px.
+- **Do** keep the global 2px `ink` focus outline (2px offset) on every focusable element; fields replace it with the teal border. Selected text uses the `teal-100` wash on `ink`.
 
 ### Don't:
 - **Don't** fill a button, card or heading with teal, or add a second accent hue.
