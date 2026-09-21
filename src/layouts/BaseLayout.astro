@@ -31,7 +31,7 @@ const currentPath = Astro.url.pathname
     <script defer src="https://analytics.mdigitalstudio.fr/script.js" data-website-id="95f5f130-9f60-4c4c-abad-c1a1485086b6"></script>
     <title>{title}</title>
   </head>
-  <body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+  <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
     <header class="fixed inset-x-0 top-0 z-10 pt-5 pb-2 flex justify-center px-6 pointer-events-none">
 
@@ -120,18 +120,23 @@ const currentPath = Astro.url.pathname
 
     </header>
 
-    <main class="flex-1 pt-16">
-      <slot />
-    </main>
+    <!-- La feuille : page blanche à filets fins posée sur le fond zinc-50 (dès lg) -->
+    <div class="mx-auto flex w-full max-w-7xl flex-1 lg:px-8">
+      <div class="flex w-full flex-col overflow-hidden bg-white lg:ring-1 lg:ring-zinc-100">
+        <main class="flex-1 pt-16">
+          <slot />
+        </main>
 
-    <footer class="border-t border-zinc-100 py-8">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
-        <p class="text-xs font-mono text-zinc-500">
-          © {new Date().getFullYear()} Maxime Derycke
-        </p>
-        <SocialLinks size={18} class="-mr-3" />
+        <footer class="border-t border-zinc-100 py-8">
+          <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+            <p class="text-xs font-mono text-zinc-500">
+              © {new Date().getFullYear()} Maxime Derycke
+            </p>
+            <SocialLinks size={18} class="-mr-3" />
+          </div>
+        </footer>
       </div>
-    </footer>
+    </div>
 
   </body>
 </html>
