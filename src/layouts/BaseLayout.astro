@@ -58,7 +58,7 @@ const isHome = currentPath === '/'
           </div>
 
           <!-- Centre (desktop) : pilule de navigation. Droite (mobile) : bouton Menu -->
-          <div class="flex flex-1 justify-end sm:justify-center">
+          <div class="flex flex-1 justify-end sm:flex-none sm:justify-center">
             <button
               id="menu-toggle"
               type="button"
@@ -82,7 +82,7 @@ const isHome = currentPath === '/'
                       <a
                         href={href}
                         aria-current={isActive ? 'page' : undefined}
-                        class:list={['relative block px-3 py-2 transition hover:text-teal-500', isActive && 'text-teal-500']}
+                        class:list={['relative block whitespace-nowrap px-3 py-2 transition hover:text-teal-700', isActive && 'text-teal-700']}
                       >
                         {label}
                         {isActive && (

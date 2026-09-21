@@ -147,7 +147,7 @@ function FormInner() {
           <button
             onClick={handleSubmit}
             disabled={!canProceed() || submitting}
-            className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {submitting ? 'Envoi en cours…' : 'Envoyer'}
           </button>
@@ -155,7 +155,7 @@ function FormInner() {
           <button
             onClick={() => stepper.navigation.next()}
             disabled={!canProceed()}
-            className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Continuer →
           </button>
@@ -348,7 +348,7 @@ function ContactStep({
 function Success() {
   return (
     <div className="max-w-xl">
-      <p className="text-xs font-mono text-teal-500 mb-4">Message envoyé</p>
+      <p className="text-xs font-mono text-teal-700 mb-4">Message envoyé</p>
       <h2 className="text-2xl font-semibold text-zinc-900 mb-3">Merci !</h2>
       <p className="text-zinc-500 leading-relaxed">
         J'ai bien reçu votre demande et reviendrai vers vous rapidement,
