@@ -13,8 +13,21 @@ import ContactForm from '../components/ContactForm'
       <p class="text-zinc-500">
         Quelques questions pour mieux cerner votre besoin — cela prend 2 minutes.
       </p>
+      <p class="mt-3 text-sm text-zinc-500">
+        Je travaille à distance avec des clients partout en France, avec des déplacements
+        ponctuels possibles en <span class="whitespace-nowrap">Île-de-France</span> et
+        <span class="whitespace-nowrap">Hauts-de-France</span>.
+      </p>
     </div>
 
     <ContactForm client:load />
+
+    <p class="mt-12 max-w-xl border-t border-zinc-100 pt-6 text-sm text-zinc-500">
+      Vous préférez écrire directement ?
+      <a
+        href="mailto:maxime@mdigitalstudio.fr"
+        class="text-zinc-900 underline underline-offset-2 hover:text-zinc-600 transition-colors"
+      >maxime@mdigitalstudio.fr</a>
+    </p>
   </section>
 </BaseLayout>

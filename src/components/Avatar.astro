@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets'
+import { avatar } from '../lib/avatar'
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+{
+  avatar && (
+    <Image
+      src={avatar}
+      alt="Portrait de Maxime Derycke"
+      width={160}
+      height={160}
+      loading="eager"
+      class:list={['size-16 rounded-full object-cover ring-1 ring-zinc-200 sm:size-20', className]}
+    />
+  )
+}
