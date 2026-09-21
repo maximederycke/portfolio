@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import { Image } from 'astro:assets'
+import { Image, getImage } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
 import { avatar } from '../lib/avatar'
 
@@ -19,6 +19,12 @@ const navLinks = [
 
 const currentPath = Astro.url.pathname
 const isHome = currentPath === '/'
+
+// Partage (LinkedIn, Malt, messageries) : URL canonique + image carrée tirée du portrait
+const canonical = new URL(currentPath, Astro.site).href
+const ogImage = avatar
+  ? new URL((await getImage({ src: avatar, width: 1200, height: 1200, format: 'jpeg' })).src, Astro.site).href
+  : new URL('/apple-touch-icon.png', Astro.site).href
 ---
 
 <html lang="fr">
@@ -27,6 +33,16 @@ const isHome = currentPath === '/'
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Maxime Derycke" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Portrait de Maxime Derycke" />
+    <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32x32.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
