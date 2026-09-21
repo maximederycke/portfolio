@@ -52,6 +52,7 @@ rounded:
   lg: "0.5rem"
   xl: "0.75rem"
   2xl: "1rem"
+  3xl: "1.5rem"
   full: "9999px"
 spacing:
   gutter: "1.5rem"
@@ -101,7 +102,7 @@ components:
     padding: "0.25rem 0.75rem"
   nav-pill:
     backgroundColor: "{colors.paper}"
-    textColor: "{colors.pencil}"
+    textColor: "{colors.graphite}"
     typography: "{typography.body-sm}"
     rounded: "{rounded.full}"
   nav-link-active:
@@ -120,7 +121,7 @@ The mood is calm, precise, unhurried. Space does most of the structural work; bo
 
 **Key Characteristics:**
 - Light-only, white paper with zinc ink; no dark mode.
-- Flat surfaces with hairline zinc borders; shadow exists only on the floating nav.
+- Flat surfaces with hairline zinc borders; shadow exists only on the floating header elements.
 - One sans (DM Sans) for reading, one mono (DM Mono) for labels, tags and metadata.
 - Generous rounding (8-16px) and pill forms for floating and tag elements.
 - Teal is a marker of state and place, never a fill or a headline color.
@@ -174,18 +175,18 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 
 A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `hairline-faint` ring on a Paper Tint ground (up to `max-w-7xl`, 2rem outer gutters), and below `lg` it is simply the white page. Header, content and footer all sit on the sheet; only the floating nav pill lives above it. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is a single left-aligned column with the drafting grid behind it; the grid fades out before the hero ends, so its lines never run behind text or cards. Below the hero the home splits into two columns from `lg`: the work on the left (who, what is built, how the collaboration runs) and flat cards on the right (Parcours with the two figures, then the contact card). On mobile the right column stacks after the left, so the contact card closes the page.
 
-Content is stacked with generous, uneven rhythm: 3.5rem between About blocks, 2rem to 3rem between headings and their content, 0.75rem between selectable cards. Two-up layouts use a simple two-column grid that collapses to one column below `sm`; the two collaboration cards share row tracks via subgrid so their internal sections align. Below `sm` the desktop nav pill becomes a compact pill with a hamburger and a dropdown card. The header is fixed, so `main` reserves `4rem` at the top.
+Content is stacked with generous, uneven rhythm: 3.5rem between About blocks, 2rem to 3rem between headings and their content, 0.75rem between selectable cards. Two-up layouts use a simple two-column grid that collapses to one column below `sm`; the two collaboration cards share row tracks via subgrid so their internal sections align. Below `sm` the desktop nav pill becomes a "Menu" button that opens a modal panel. The header is fixed, so `main` reserves `4rem` at the top.
 
 ## Elevation & Depth
 
-Flat by default. Depth is conveyed by hairline borders (`hairline`), a one-step tint on the second card (`paper-tint`), and whitespace. The only shadows are on the two floating navigation surfaces because they overlay scrolling content: a small shadow on the pill (`0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`) and a medium one on the mobile dropdown (`0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)`). The pill also uses a 90% white fill with a backdrop blur.
+Flat by default. Depth is conveyed by hairline borders (`hairline`), a one-step tint on the second card (`paper-tint`), and whitespace. The only shadows are on the floating header elements (the home avatar circle, the desktop nav pill and the mobile Menu button) because they overlay scrolling content: one soft shadow tinted from the ink (`0 10px 15px -3px rgb(39 39 42 / 0.05), 0 4px 6px -4px rgb(39 39 42 / 0.05)`) plus a 1px ring at 5% ink. They use a 90% white fill with a backdrop blur. The mobile menu panel is a modal card with a 1px ring and no shadow, over a 40% zinc scrim with a light blur.
 
 ### Named Rules
 **The Flat-By-Default Rule.** Cards, fields, chips and buttons never carry a shadow. A surface earns a shadow only when it floats over other content.
 
 ## Shapes
 
-Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields and selectable choice cards, 16px (`2xl`) for large content cards and the mobile dropdown, and a full pill for the desktop nav, mobile nav and tag chips. Borders are always 1px hairlines. The only other geometry is a 1px gradient underline under the active nav link (teal fading to transparent at both ends) and a faint 200px square grid behind the home hero, masked with a radial fade and a vertical fade so it ends with the hero.
+Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields and selectable choice cards, 16px (`2xl`) for large content cards, 24px (`3xl`) for the mobile menu panel, and a full pill for the desktop nav, the mobile Menu button, the header avatar circle and tag chips. Borders are always 1px hairlines. The only other geometry is a 1px gradient underline under the active nav link (teal fading to transparent at both ends) and a faint 200px square grid behind the home hero, masked with a radial fade and a vertical fade so it ends with the hero.
 
 ## Components
 
@@ -224,8 +225,10 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **State:** unselected has a `hairline` border that darkens slightly on hover; selected has a Drafting Teal border with the wash fill at 50%, and the title moves from Graphite to Ink.
 
 ### Navigation
-- **Desktop:** a floating white pill (90% opacity, backdrop blur, 1px hairline border, small shadow) centered at the top. Links are 0.875rem in `pencil`; hover and active turn Drafting Teal. The active link gets a 1px teal-to-transparent underline gradient. A 1px vertical hairline separates the home link from the rest.
-- **Mobile:** a compact pill with the name and a hamburger; the dropdown is a 16px card with 12px rows, and the active row gets a 2px teal left border and `paper-tint` fill.
+The header is a three-part row over the sheet, modelled on the Tailwind UI Spotlight header: a round avatar on the left, the navigation centred, and nothing on the right (it only keeps the pill centred).
+- **Home link:** a 40px round button (ring plus soft shadow) holding the portrait, or an "M" monogram until a photo exists. It is hidden on the home, where the portrait sits in the hero. There is no "home" item inside the pill.
+- **Desktop:** a floating white pill (90% opacity, backdrop blur, 1px ink-5% ring, soft shadow) listing À propos, Services and Contact in 0.875rem medium `graphite`. Hover and the current page turn Drafting Teal, and the current page gets a 1px teal-to-transparent underline; it also carries `aria-current="page"`.
+- **Mobile:** a "Menu" pill with a small chevron on the right. It opens a modal panel (native `<dialog>`, so focus is trapped and Escape closes it): 24px radius, 2rem padding, a "Navigation" title with a close button, and a list of large links separated by `hairline-faint` rules. The current page is set in semibold Ink, with no coloured side border. The page behind does not scroll while it is open.
 
 ### Progress (form)
 - **Style:** a 1px track in `hairline-faint` with a 1px Drafting Teal fill that grows over 300ms; below it a mono counter "Étape n / N" in `pencil`.
@@ -239,7 +242,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Do** keep surfaces white or `paper-tint`, with 1px `hairline` borders for structure.
 - **Do** set metadata (dates, tags, step counters, status) in DM Mono at 0.75rem in `pencil`.
 - **Do** use teal only as a stroke, border, short label or hover/active text color, per The Drafting Pen Rule.
-- **Do** reserve shadows for surfaces that float over content (the nav pill and its dropdown).
+- **Do** reserve shadows for surfaces that float over content (the header avatar, nav pill and Menu button).
 - **Do** match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.
 - **Do** give social icons `pencil` at rest and `slate` on hover, not teal. Their hit area is 44px even though the glyph is 18-20px.
 - **Do** keep motion to one sequence (the home load) plus scroll-drawn list rules: 600ms exponential ease-out, 70ms stagger, about 1s in total, CSS only, with content visible by default and a plain 250ms fade under `prefers-reduced-motion`.

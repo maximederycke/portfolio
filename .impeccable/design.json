@@ -123,14 +123,9 @@
     },
     "shadows": [
       {
-        "name": "nav-pill",
-        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-        "purpose": "The only shadow at rest: the floating desktop and mobile nav pill."
-      },
-      {
-        "name": "nav-dropdown",
-        "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-        "purpose": "The mobile menu dropdown card floating over content."
+        "name": "header-float",
+        "value": "0 10px 15px -3px rgb(39 39 42 / 0.05), 0 4px 6px -4px rgb(39 39 42 / 0.05)",
+        "purpose": "The only shadow at rest: the floating header elements (avatar circle, desktop nav pill, mobile Menu button), plus a 1px ring at 5% ink."
       }
     ],
     "motion": [
@@ -228,9 +223,9 @@
       "name": "Navigation Pill",
       "kind": "nav",
       "refersTo": "nav-pill",
-      "description": "Floating desktop nav: translucent white pill, hairline border, small shadow; active and hover links turn teal with a fading underline.",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Maxime</a><span class=\"ds-nav-sep\"></span><a class=\"ds-nav-link ds-nav-active\" href=\"#\">À propos</a><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border: 1px solid oklch(92% 0.004 286.32); border-radius: 9999px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; color: oklch(55.2% 0.016 285.938); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(70.4% 0.14 182.503); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-sep { width: 1px; height: 1rem; margin: 0 0.25rem; background: oklch(92% 0.004 286.32); } .ds-nav-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; border-radius: 9999px; }"
+      "description": "Floating desktop nav modelled on Tailwind UI Spotlight: translucent white pill, 5% ink ring, soft shadow, medium-weight graphite links; hover and the current page turn teal with a fading underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-active\" href=\"#\">À propos</a><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
+      "css": ".ds-nav { display: inline-flex; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border-radius: 9999px; box-shadow: 0 0 0 1px rgb(24 24 27 / 0.05), 0 10px 15px -3px rgb(39 39 42 / 0.05), 0 4px 6px -4px rgb(39 39 42 / 0.05); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; } .ds-nav-link { position: relative; display: block; padding: 0.5rem 0.75rem; color: oklch(37% 0.013 285.805); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(70.4% 0.14 182.503); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; border-radius: 9999px; }"
     },
     {
       "name": "Form Progress",
@@ -252,7 +247,7 @@
     "overview": "The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.\n\nThe mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline. Motion is one authored moment, not a coat of effects: on load the sheet is ruled (the grid is swept in left to right) and the hero is set down in reading order, then the list rules draw as they scroll into view.",
     "keyCharacteristics": [
       "Light-only, white paper with zinc ink; no dark mode.",
-      "Flat surfaces with hairline zinc borders; shadow exists only on the floating nav.",
+      "Flat surfaces with hairline zinc borders; shadow exists only on the floating header elements.",
       "One sans (DM Sans) for reading, one mono (DM Mono) for labels, tags and metadata.",
       "Generous rounding (8-16px) and pill forms for floating and tag elements.",
       "Teal is a marker of state and place, never a fill or a headline color."
@@ -283,7 +278,7 @@
       "Do keep surfaces white or paper-tint, with 1px hairline borders for structure.",
       "Do set metadata (dates, tags, step counters, status) in DM Mono at 0.75rem in pencil.",
       "Do use teal only as a stroke, border, short label or hover/active text color, per The Drafting Pen Rule.",
-      "Do reserve shadows for surfaces that float over content (the nav pill and its dropdown).",
+      "Do reserve shadows for surfaces that float over content (the header avatar, nav pill and Menu button).",
       "Do match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.",
       "Do give social icons pencil at rest and slate on hover, not teal.",
       "Do give icon-only links a 44px hit area even when the glyph is 18-20px.",
