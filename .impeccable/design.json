@@ -93,12 +93,17 @@
         "role": "error",
         "displayName": "Error",
         "canonical": "oklch(63.7% 0.237 25.331)"
+      },
+      "drafting-teal-ink": {
+        "role": "primary",
+        "displayName": "Drafting Teal Ink",
+        "canonical": "oklch(51.1% 0.096 186.391)"
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Large stat numbers (3rem). The home hero headline is one step down (2.25rem, 3rem from sm)."
+        "purpose": "Home hero headline only: 2.25rem on mobile, 3rem from sm. No big-number stats."
       },
       "headline": {
         "displayName": "Headline",
@@ -225,7 +230,7 @@
       "refersTo": "nav-pill",
       "description": "Floating desktop nav modelled on Tailwind UI Spotlight: translucent white pill, 5% ink ring, soft shadow, medium-weight graphite links; hover and the current page turn teal with a fading underline.",
       "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-active\" href=\"#\">À propos</a><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display: inline-flex; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border-radius: 9999px; box-shadow: 0 0 0 1px rgb(24 24 27 / 0.05), 0 10px 15px -3px rgb(39 39 42 / 0.05), 0 4px 6px -4px rgb(39 39 42 / 0.05); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; } .ds-nav-link { position: relative; display: block; padding: 0.5rem 0.75rem; color: oklch(37% 0.013 285.805); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(70.4% 0.14 182.503); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; border-radius: 9999px; }"
+      "css": ".ds-nav { display: inline-flex; padding: 0 0.75rem; background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border-radius: 9999px; box-shadow: 0 0 0 1px rgb(24 24 27 / 0.05), 0 10px 15px -3px rgb(39 39 42 / 0.05), 0 4px 6px -4px rgb(39 39 42 / 0.05); font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; } .ds-nav-link { position: relative; display: block; padding: 0.5rem 0.75rem; color: oklch(37% 0.013 285.805); text-decoration: none; transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link:hover, .ds-nav-active { color: oklch(51.1% 0.096 186.391); } .ds-nav-active::after { content: ''; position: absolute; left: 0.25rem; right: 0.25rem; bottom: -1px; height: 1px; background: linear-gradient(to right, oklch(70.4% 0.14 182.503 / 0), oklch(70.4% 0.14 182.503 / 0.4), oklch(70.4% 0.14 182.503 / 0)); } .ds-nav-link:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; border-radius: 9999px; }"
     },
     {
       "name": "Form Progress",
@@ -255,7 +260,7 @@
     "rules": [
       {
         "name": "The Drafting Pen Rule",
-        "body": "Teal marks state and place (\"you are here\", \"this is chosen\", \"we are 3 of 5\"). It is used in small strokes, borders and short mono labels, never as a surface. If a screen has more than a few teal marks, remove some.",
+        "body": "Teal marks state and place (\"you are here\", \"this is chosen\", \"we are 3 of 5\"). It is used in small strokes, dots and borders, never as a surface; when it must be read as text it uses the darker Ink shade. If a screen has more than a few teal marks, remove some.",
         "section": "colors"
       },
       {
@@ -281,7 +286,7 @@
       "Do reserve shadows for surfaces that float over content (the header avatar, nav pill and Menu button).",
       "Do match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.",
       "Do give social icons pencil at rest and slate on hover, not teal.",
-      "Do give icon-only links a 44px hit area even when the glyph is 18-20px.",
+      "Do give icon-only links a 44px hit area even when the glyph is 18-20px, and the same for text links with an arrow and, below sm, for primary buttons.",
       "Do keep the global 2px ink focus outline (2px offset) on every focusable element; fields replace it with the teal border.",
       "Do keep motion to one sequence (the home load) plus scroll-drawn list rules: 600ms exponential ease-out, 70ms stagger, about 1s in total, CSS only, with content visible by default and a plain 250ms fade under prefers-reduced-motion."
     ],
@@ -291,7 +296,7 @@
       "Don't use a component library (shadcn, ReUI, etc.); components are custom Tailwind.",
       "Don't set body or paragraph text in teal.",
       "Don't introduce a dark mode or a heavier type weight than 600.",
-      "Don't animate the nav, stat numbers or cards, add count-ups or carousels, or load a motion library."
+      "Don't animate the nav or cards, add count-ups or carousels, or load a motion library."
     ]
   }
 }

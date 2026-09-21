@@ -4,6 +4,7 @@ description: A calm, flat, zinc-and-white portfolio set like a technical letter,
 colors:
   drafting-teal: "oklch(70.4% 0.14 182.503)"
   drafting-teal-wash: "oklch(98.4% 0.014 180.72)"
+  drafting-teal-ink: "oklch(51.1% 0.096 186.391)"
   ink: "oklch(21% 0.006 285.885)"
   graphite: "oklch(37% 0.013 285.805)"
   slate: "oklch(44.2% 0.017 285.786)"
@@ -106,7 +107,7 @@ components:
     typography: "{typography.body-sm}"
     rounded: "{rounded.full}"
   nav-link-active:
-    textColor: "{colors.drafting-teal}"
+    textColor: "{colors.drafting-teal-ink}"
 ---
 
 # Design System: Portfolio Maxime Derycke
@@ -131,7 +132,8 @@ The mood is calm, precise, unhurried. Space does most of the structural work; bo
 A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chroma) plus one teal. The canonical values are Tailwind v4's `oklch` tokens; `CLAUDE.md` still lists the v3 hex `#14B8A6`, which is not what renders.
 
 ### Primary
-- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`, about `#00BBA7`): the drafting-pen mark. Active and hovered nav links, the form progress line, the border of a selected choice or a focused field, the availability dot before "Disponible…", and the "Message envoyé" mono status label. Never a button fill, never body text.
+- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`, about `#00BBA7`): the drafting-pen mark, used as strokes and dots: the underline of the current nav link, the form progress line, the border of a selected choice or a focused field, and the availability dot before "Disponible…". Never a button fill, never text.
+- **Drafting Teal Ink** (oklch(51.1% 0.096 186.391), Tailwind `teal-700`, about `#0F766E`, 5.5:1 on white): the same teal when it has to be read as text: the current or hovered nav link and the "Message envoyé" label. `teal-500` on white is only about 2.4:1, so it is never used for text.
 - **Drafting Teal Wash** (oklch(98.4% 0.014 180.72), `teal-50`, used at 50% opacity): the fill behind a selected choice card.
 
 ### Neutral
@@ -149,7 +151,7 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 - **Error** (oklch(63.7% 0.237 25.331), `red-500`; softer `red-400` / `red-300` for inline hints and invalid borders): form errors only.
 
 ### Named Rules
-**The Drafting Pen Rule.** Teal marks state and place ("you are here", "this is chosen", "we are 3 of 5"). It is used in small strokes, borders and short mono labels, never as a surface. If a screen has more than a few teal marks, remove some.
+**The Drafting Pen Rule.** Teal marks state and place ("you are here", "this is chosen", "we are 3 of 5"). It is used in small strokes, dots and borders, never as a surface; when it must be read as text it uses the darker Ink shade. If a screen has more than a few teal marks, remove some.
 
 **The Paper Rule.** Everything that is not teal or an error is zinc on white. No second hue joins the system.
 
@@ -161,10 +163,10 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 **Character:** A friendly geometric sans for reading paired with a matching mono for the "typewriter margin". Hierarchy comes from size and weight (semibold 600 for headings, regular for text), not from colour or decoration.
 
 ### Hierarchy
-- **Display** (600, 3rem, line-height 1, tracking -0.025em): the large stat numbers. The home hero headline is a full sentence, so it runs one step down (2.25rem, 3rem from `sm`, balanced wrapping).
+- **Display** (600, 3rem, line-height 1, tracking -0.025em): the home hero headline only. It is a full sentence, so it starts at 2.25rem on mobile and reaches 3rem from `sm`, with balanced wrapping. There are no big-number stats.
 - **Headline** (600, 1.875rem, line-height ~1.2, tracking -0.025em): page titles (`h1`) and home section headings.
 - **Title** (600, 1.25rem): card titles ("Agile", "Forfait"). Form step titles are a step down (500, 1.125rem).
-- **Body** (400, 1rem, relaxed 1.625): lead and long-form text in `slate` or `pencil`; the home lead runs at 1.25rem in `slate`. Line length is capped by the container (`max-w-xl` to `max-w-2xl`).
+- **Body** (400, 1rem, relaxed 1.625): lead and long-form text in `slate` or `pencil`; the single hero sentence under the headline runs at 1.125rem, 1.25rem from `sm`, in `pencil`, held to `max-w-xl`. Line length is capped by the container (`max-w-xl` to `max-w-2xl`).
 - **Body Small** (400, 0.875rem, relaxed): card copy, list items, buttons, nav.
 - **Label** (DM Mono 400, 0.75rem, tracking 0.1em, uppercase for section labels): section eyebrows, tags, timeline dates, step counters, footer copyright. Sentence case (no uppercase) for status labels and counters.
 
@@ -173,7 +175,7 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 
 ## Layout
 
-A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `hairline-faint` ring on a Paper Tint ground (up to `max-w-7xl`, 2rem outer gutters), and below `lg` it is simply the white page. Header, content and footer all sit on the sheet; only the floating nav pill lives above it. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is a single left-aligned column with the drafting grid behind it; the grid fades out before the hero ends, so its lines never run behind text or cards. Below the hero the home splits into two columns from `lg`: the work on the left (who, what is built, how the collaboration runs) and flat cards on the right (Parcours with the two figures, then the contact card). On mobile the right column stacks after the left, so the contact card closes the page.
+A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `hairline-faint` ring on a Paper Tint ground (up to `max-w-7xl`, 2rem outer gutters), and below `lg` it is simply the white page. Header, content and footer all sit on the sheet; only the floating nav pill lives above it. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is a single left-aligned column with the drafting grid behind it; the grid fades out before the hero ends, so its lines never run behind text or cards. Below the hero the home splits into two columns from `lg`: the work on the left (what is built, then how the collaboration runs) and flat cards on the right (Parcours, then the contact card). Each fact appears once on the home: the detail lives on `/about` and `/services`, the home only points to them. The hero is one headline, one sentence and one action, so the first screen holds no other content. On mobile the right column stacks after the left, so the contact card closes the page.
 
 Content is stacked with generous, uneven rhythm: 3.5rem between About blocks, 2rem to 3rem between headings and their content, 0.75rem between selectable cards. Two-up layouts use a simple two-column grid that collapses to one column below `sm`; the two collaboration cards share row tracks via subgrid so their internal sections align. Below `sm` the desktop nav pill becomes a "Menu" button that opens a modal panel. The header is fixed, so `main` reserves `4rem` at the top.
 
@@ -192,7 +194,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 
 ### Buttons
 - **Shape:** gently curved (8px), 0.875rem medium-weight text, padding 0.625rem 1.25rem.
-- **Primary:** Ink fill, white text. Hover shifts to Graphite over 150ms. Disabled drops to 40% opacity with a not-allowed cursor.
+- **Primary:** Ink fill, white text. Hover shifts to Graphite over 150ms, and pressing nudges it down 1px. Focus shows the global 2px ink outline. Disabled drops to 40% opacity with a not-allowed cursor.
 - **Text button / link:** no fill or border, `pencil` text with a trailing arrow ("Voir les services →", "← Retour"), hovering to `slate`. On the services cards the CTA is Ink text that softens to `pencil` on hover.
 - There is no secondary filled button and no teal button.
 
@@ -204,7 +206,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Background:** white; the second collaboration card uses `paper-tint`.
 - **Shadow Strategy:** none (see Elevation).
 - **Border:** 1px `hairline`; the "Pas sûr ?" block uses the fainter `hairline-faint`.
-- **Internal Padding:** 1.75rem on the services page, 1.5rem on the home summary.
+- **Internal Padding:** 1.75rem (the home uses list rows and the sidebar cards instead of these cards).
 
 ### Sidebar Cards
 - **Style:** the right-column cards on the home: 16px radius, 1px `hairline` border, transparent fill, 1.5rem padding, flat.
@@ -227,14 +229,14 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 ### Navigation
 The header is a three-part row over the sheet, modelled on the Tailwind UI Spotlight header: a round avatar on the left, the navigation centred, and nothing on the right (it only keeps the pill centred).
 - **Home link:** a 40px round button (ring plus soft shadow) holding the portrait, or an "M" monogram until a photo exists. It is hidden on the home, where the portrait sits in the hero. There is no "home" item inside the pill.
-- **Desktop:** a floating white pill (90% opacity, backdrop blur, 1px ink-5% ring, soft shadow) listing À propos, Services and Contact in 0.875rem medium `graphite`. Hover and the current page turn Drafting Teal, and the current page gets a 1px teal-to-transparent underline; it also carries `aria-current="page"`.
+- **Desktop:** a floating white pill (90% opacity, backdrop blur, 1px ink-5% ring, soft shadow) listing À propos, Services and Contact in 0.875rem medium `graphite`. Hover and the current page turn Drafting Teal Ink (`teal-700`), and the current page gets a 1px teal-to-transparent underline (`teal-500`); it also carries `aria-current="page"`.
 - **Mobile:** a "Menu" pill with a small chevron on the right. It opens a modal panel (native `<dialog>`, so focus is trapped and Escape closes it): 24px radius, 2rem padding, a "Navigation" title with a close button, and a list of large links separated by `hairline-faint` rules. The current page is set in semibold Ink, with no coloured side border. The page behind does not scroll while it is open.
 
 ### Progress (form)
 - **Style:** a 1px track in `hairline-faint` with a 1px Drafting Teal fill that grows over 300ms; below it a mono counter "Étape n / N" in `pencil`.
 
 ### Status Label
-- **Style:** a short DM Mono line above a headline. On the home it reads "Disponible pour de nouvelles missions" in `slate` with a 6px Drafting Teal dot as the state marker (so text contrast holds); the form success "Message envoyé" is still set in teal text. Labels, not links.
+- **Style:** a short DM Mono line above a headline. On the home it reads "Disponible pour de nouvelles missions" in `slate` with a 6px Drafting Teal dot as the state marker (so text contrast holds); the form success "Message envoyé" is set in Drafting Teal Ink. Labels, not links.
 
 ## Do's and Don'ts
 
@@ -244,7 +246,7 @@ The header is a three-part row over the sheet, modelled on the Tailwind UI Spotl
 - **Do** use teal only as a stroke, border, short label or hover/active text color, per The Drafting Pen Rule.
 - **Do** reserve shadows for surfaces that float over content (the header avatar, nav pill and Menu button).
 - **Do** match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.
-- **Do** give social icons `pencil` at rest and `slate` on hover, not teal. Their hit area is 44px even though the glyph is 18-20px.
+- **Do** give social icons `pencil` at rest and `slate` on hover, not teal. Their hit area is 44px even though the glyph is 18-20px, and the same holds for text links with an arrow and, below `sm`, for primary buttons (12px vertical padding).
 - **Do** keep motion to one sequence (the home load) plus scroll-drawn list rules: 600ms exponential ease-out, 70ms stagger, about 1s in total, CSS only, with content visible by default and a plain 250ms fade under `prefers-reduced-motion`.
 - **Do** keep the global 2px `ink` focus outline (2px offset) on every focusable element; fields replace it with the teal border. Selected text uses the `teal-100` wash on `ink`.
 
@@ -253,5 +255,5 @@ The header is a three-part row over the sheet, modelled on the Tailwind UI Spotl
 - **Don't** add shadows to cards, buttons, fields or chips.
 - **Don't** use a component library (shadcn, ReUI, etc.); components are custom Tailwind.
 - **Don't** set body or paragraph text in teal.
-- **Don't** animate the nav, stat numbers or cards, add count-ups or carousels, or load a motion library.
+- **Don't** animate the nav or cards, add count-ups or carousels, or load a motion library.
 - **Don't** introduce a dark mode or a heavier type weight than 600.

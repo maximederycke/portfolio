@@ -35,6 +35,10 @@ pnpm preview    # Prévisualisation du build
 
 Prérequis : Node.js ≥ 22.12, pnpm 11+
 
+## Photo
+
+Pour afficher le portrait (hero de l'accueil et bouton d'accueil de l'en-tête), déposer l'image dans `src/assets/` sous le nom `avatar.jpg` (ou `.jpeg`, `.png`, `.webp`). Astro la redimensionne et l'optimise. Sans fichier, un monogramme « M » s'affiche dans l'en-tête et rien dans le hero.
+
 ## API du formulaire de contact
 
 Le formulaire envoie une notification par email (Scaleway Transactional Email) via une Serverless Function située dans `api/`, avec un `Reply-To` réglé sur l'email du visiteur.
