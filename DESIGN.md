@@ -148,7 +148,8 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 - **Paper** (#ffffff): the page sheet.
 
 ### Error
-- **Error** (oklch(63.7% 0.237 25.331), `red-500`; softer `red-400` / `red-300` for inline hints and invalid borders): form errors only.
+- **Error** (oklch(63.7% 0.237 25.331), `red-500`, about 3.7:1): the border of an invalid field. Form errors only.
+- **Error Ink** (oklch(50.5% 0.213 27.518), `red-700`, about 6:1 on white): every error message set as text (the email hint and the send error). Small red text in lighter shades is not used because it fails contrast.
 
 ### Named Rules
 **The Drafting Pen Rule.** Teal marks state and place ("you are here", "this is chosen", "we are 3 of 5"). It is used in small strokes, dots and borders, never as a surface; when it must be read as text it uses the darker Ink shade. If a screen has more than a few teal marks, remove some.
@@ -219,12 +220,13 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 ### Inputs / Fields
 - **Style:** 1px `hairline` border, white, 12px radius, padding 0.625rem 1rem (0.75rem vertical on the textarea), text 1rem on mobile and 0.875rem from `md`, `placeholder` in zinc-400.
 - **Focus:** the outline is removed and the border turns Drafting Teal over 150ms. This is the only focus indicator on fields, so it is a single hairline color change.
-- **Error:** invalid email switches the border to the soft red and adds a 0.75rem red hint below.
-- **Labels:** DM Mono label in `pencil`, above the field.
+- **Error:** an invalid email switches the border to `red-500` and adds a 0.75rem `red-700` hint below that says what is missing. The hint appears once an "@" is typed or the field is left, not on the first keystroke, and is tied to the field (`aria-invalid`, `aria-describedby`). The send error is a `red-700` line with `role="alert"` that names the cause (rate limit, timeout or generic) and offers the address as a `mailto:` link; the entered data is always kept.
+- **Labels:** DM Mono label in `pencil`, above the field, programmatically tied to the input (`htmlFor`). A required asterisk is decorative (`aria-hidden`) and the input carries `aria-required`. Fields declare `autocomplete` (name, email, organization) and length limits that match the API (100, 200, 2000).
 
 ### Choice Cards (form)
 - **Style:** full-width, left-aligned, 12px radius, 1px border; a title in 0.875rem medium and a `pencil` description below.
-- **State:** unselected has a `hairline` border that darkens slightly on hover; selected has a Drafting Teal border with the wash fill at 50%, and the title moves from Graphite to Ink.
+- **State:** unselected has a `hairline` border that darkens slightly on hover; selected has a Drafting Teal border with the wash fill at 50%, and the title moves from Graphite to Ink. A 16px radio dot on the right (empty ring, or a filled Ink dot when chosen) carries the state without relying on colour.
+- **Semantics:** the choices form a `radiogroup` labelled by the step title; each card is a `radio` with `aria-checked`, only the selected one (or the first) is tabbable, and the arrow keys move and select. On each step change the focus moves to the step title.
 
 ### Navigation
 The header is a three-part row over the sheet, modelled on the Tailwind UI Spotlight header: a round avatar on the left, the navigation centred, and nothing on the right (it only keeps the pill centred).

@@ -98,6 +98,11 @@
         "role": "primary",
         "displayName": "Drafting Teal Ink",
         "canonical": "oklch(51.1% 0.096 186.391)"
+      },
+      "error-ink": {
+        "role": "error",
+        "displayName": "Error Ink",
+        "canonical": "oklch(50.5% 0.213 27.518)"
       }
     },
     "typographyMeta": {
@@ -197,8 +202,8 @@
       "kind": "card",
       "refersTo": "select-card",
       "description": "Selectable answer in the contact form; selected state takes the teal border and wash.",
-      "html": "<button class=\"ds-choice ds-choice-selected\"><p class=\"ds-choice-title\">Application web</p><p class=\"ds-choice-desc\">SPA, dashboard, outil interne</p></button>",
-      "css": ".ds-choice { display: block; width: 100%; max-width: 28rem; text-align: left; padding: 0.875rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; cursor: pointer; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-choice:hover { border-color: oklch(87.1% 0.006 286.286); } .ds-choice-selected, .ds-choice-selected:hover { border-color: oklch(70.4% 0.14 182.503); background: oklch(98.4% 0.014 180.72 / 0.5); } .ds-choice-title { margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: oklch(37% 0.013 285.805); } .ds-choice-selected .ds-choice-title { color: oklch(21% 0.006 285.885); } .ds-choice-desc { margin: 0.125rem 0 0; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-choice:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; }"
+      "html": "<button class=\"ds-choice ds-choice-selected\"><p class=\"ds-choice-title\">Application web</p><p class=\"ds-choice-desc\">SPA, dashboard, outil interne</p><span class=\"ds-choice-dot\"><i></i></span></button>",
+      "css": ".ds-choice { display: block; width: 100%; max-width: 28rem; text-align: left; padding: 0.875rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; cursor: pointer; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-choice:hover { border-color: oklch(87.1% 0.006 286.286); } .ds-choice-selected, .ds-choice-selected:hover { border-color: oklch(70.4% 0.14 182.503); background: oklch(98.4% 0.014 180.72 / 0.5); } .ds-choice-title { margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: oklch(37% 0.013 285.805); } .ds-choice-selected .ds-choice-title { color: oklch(21% 0.006 285.885); } .ds-choice-desc { margin: 0.125rem 0 0; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-choice:focus-visible { outline: 2px solid oklch(21% 0.006 285.885); outline-offset: 2px; } .ds-choice { display: flex; gap: 0.75rem; } .ds-choice > div { flex: 1 1 auto; } .ds-choice-dot { flex: none; margin-top: 0.125rem; width: 1rem; height: 1rem; border: 1px solid oklch(87.1% 0.006 286.286); border-radius: 9999px; display: flex; align-items: center; justify-content: center; } .ds-choice-selected .ds-choice-dot { border-color: oklch(21% 0.006 285.885); } .ds-choice-selected .ds-choice-dot i { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: oklch(21% 0.006 285.885); }"
     },
     {
       "name": "Text Field",
@@ -206,7 +211,7 @@
       "refersTo": "field",
       "description": "Hairline field with a mono label; focus is a single teal border change.",
       "html": "<div class=\"ds-field-wrap\"><label class=\"ds-field-label\">Email *</label><input class=\"ds-field\" type=\"email\" placeholder=\"jean@exemple.com\"></div>",
-      "css": ".ds-field-wrap { max-width: 28rem; } .ds-field-label { display: block; margin-bottom: 0.375rem; font-family: 'DM Mono', ui-monospace, monospace; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-field { box-sizing: border-box; width: 100%; padding: 0.625rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; color: oklch(21% 0.006 285.885); outline: none; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-field::placeholder { color: oklch(70.5% 0.015 286.067); } .ds-field:focus { border-color: oklch(70.4% 0.14 182.503); } .ds-field:invalid:not(:placeholder-shown) { border-color: oklch(80.8% 0.114 19.571); }"
+      "css": ".ds-field-wrap { max-width: 28rem; } .ds-field-label { display: block; margin-bottom: 0.375rem; font-family: 'DM Mono', ui-monospace, monospace; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-field { box-sizing: border-box; width: 100%; padding: 0.625rem 1rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 0.75rem; background: #fff; font-family: 'DM Sans Variable', system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; color: oklch(21% 0.006 285.885); outline: none; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-field::placeholder { color: oklch(70.5% 0.015 286.067); } .ds-field:focus { border-color: oklch(70.4% 0.14 182.503); } .ds-field:invalid:not(:placeholder-shown) { border-color: oklch(63.7% 0.237 25.331); }"
     },
     {
       "name": "Collaboration Card",

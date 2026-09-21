@@ -21,7 +21,6 @@ Portfolio personnel de [Maxime Derycke](https://maximederycke.dev), développeur
 | `/` | Accueil — Hero, accroche, CTA |
 | `/about` | Parcours, stack, compétences |
 | `/services` | Modes Agile & Forfait |
-| `/projects` | Galerie de réalisations (page à venir) |
 | `/contact` | Formulaire multi-étapes (React island) |
 
 ## Développement local
@@ -37,7 +36,7 @@ Prérequis : Node.js ≥ 22.12, pnpm 11+
 
 ## Photo
 
-Pour afficher le portrait (hero de l'accueil et bouton d'accueil de l'en-tête), déposer l'image dans `src/assets/` sous le nom `avatar.jpg` (ou `.jpeg`, `.png`, `.webp`). Astro la redimensionne et l'optimise. Sans fichier, un monogramme « M » s'affiche dans l'en-tête et rien dans le hero.
+Pour afficher le portrait (hero de l'accueil, bouton d'accueil de l'en-tête et image de partage), déposer l'image dans `src/assets/` sous le nom `avatar.jpg` (ou `.jpeg`, `.png`, `.webp`). Astro la redimensionne et l'optimise ; viser un carré d'environ 1200 px, sans métadonnées (EXIF), pour garder le dépôt léger. Sans fichier, un monogramme « M » s'affiche dans l'en-tête et rien dans le hero.
 
 ## API du formulaire de contact
 
@@ -71,3 +70,7 @@ Deux workflows GitHub Actions se déclenchent sur `main` (et à la demande) :
 
 - **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`) puis `rclone sync` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev`.
 - **Deploy API** — bundle esbuild de `api/contact.ts` puis déploiement de la fonction `contact-form-handler` (Node 22, `fr-par`) avec la CLI Scaleway.
+
+## Référencement et partage
+
+`astro.config.mjs` déclare `site: 'https://maximederycke.dev'`. Le layout génère l'URL canonique et les balises Open Graph / Twitter (image carrée tirée du portrait), le sitemap est produit à la build par `@astrojs/sitemap` (`/sitemap-index.xml`) et `public/robots.txt` le référence. `sharp` est une dépendance directe : avec pnpm, la build échoue sans elle dès qu'une image est optimisée.
