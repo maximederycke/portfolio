@@ -143,6 +143,21 @@
         "name": "progress-grow",
         "value": "300ms cubic-bezier(0.4, 0, 0.2, 1)",
         "purpose": "Form progress line width."
+      },
+      {
+        "name": "set-in",
+        "value": "600ms cubic-bezier(0.16, 1, 0.3, 1), delay 120ms + 70ms per element",
+        "purpose": "Hero elements set down in reading order (rise 0.75rem, blur 6px to 0)."
+      },
+      {
+        "name": "sweep-in",
+        "value": "1100ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The hairline grid ruled in left to right on load."
+      },
+      {
+        "name": "draw-rule",
+        "value": "scroll-driven (view timeline), entry 10% to 90%",
+        "purpose": "List rules draw as rows scroll in; no animation where unsupported."
       }
     ],
     "breakpoints": [
@@ -223,11 +238,18 @@
       "description": "Signature detail: a 1px teal line filling a faint track, with a mono step counter.",
       "html": "<div class=\"ds-progress\"><div class=\"ds-progress-track\"><div class=\"ds-progress-fill\"></div></div><p class=\"ds-progress-count\">Étape 2 / 5</p></div>",
       "css": ".ds-progress { max-width: 28rem; } .ds-progress-track { height: 1px; width: 100%; margin-bottom: 0.75rem; background: oklch(96.7% 0.001 286.375); } .ds-progress-fill { height: 1px; width: 40%; background: oklch(70.4% 0.14 182.503); transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-progress-count { margin: 0; font-family: 'DM Mono', ui-monospace, monospace; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); }"
+    },
+    {
+      "name": "Sidebar Card",
+      "kind": "card",
+      "description": "Flat right-column card on the home: hairline border, 16px radius, icon plus semibold title, then compact rows with mono dates.",
+      "html": "<div class=\"ds-side\"><h3 class=\"ds-side-title\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"7\" width=\"18\" height=\"13\" rx=\"2\"/><path d=\"M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2\"/><path d=\"M3 13h18\"/></svg>Parcours</h3><div class=\"ds-side-row\"><div><p class=\"ds-side-name\">Développeur fullstack — CDI</p><p class=\"ds-side-detail\">Applications web et mobile</p></div><span class=\"ds-side-date\">2022 — 2026</span></div></div>",
+      "css": ".ds-side { box-sizing: border-box; max-width: 24rem; padding: 1.5rem; border: 1px solid oklch(92% 0.004 286.32); border-radius: 1rem; font-family: 'DM Sans Variable', system-ui, sans-serif; } .ds-side-title { display: flex; align-items: center; gap: 0.75rem; margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; color: oklch(21% 0.006 285.885); } .ds-side-title svg { flex: none; color: oklch(70.5% 0.015 286.067); } .ds-side-row { display: flex; gap: 1rem; margin-top: 1.5rem; } .ds-side-row > div { flex: 1 1 auto; } .ds-side-name { margin: 0; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: oklch(21% 0.006 285.885); } .ds-side-detail { margin: 0.125rem 0 0; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); } .ds-side-date { flex: none; padding-top: 0.125rem; font-family: 'DM Mono', ui-monospace, monospace; font-size: 0.75rem; line-height: 1rem; color: oklch(55.2% 0.016 285.938); }"
     }
   ],
   "narrative": {
     "northStar": "The Technical Letter",
-    "overview": "The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.\n\nThe mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline.",
+    "overview": "The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.\n\nThe mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline. Motion is one authored moment, not a coat of effects: on load the sheet is ruled (the grid is swept in left to right) and the hero is set down in reading order, then the list rules draw as they scroll into view.",
     "keyCharacteristics": [
       "Light-only, white paper with zinc ink; no dark mode.",
       "Flat surfaces with hairline zinc borders; shadow exists only on the floating nav.",
@@ -265,14 +287,16 @@
       "Do match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.",
       "Do give social icons pencil at rest and slate on hover, not teal.",
       "Do give icon-only links a 44px hit area even when the glyph is 18-20px.",
-      "Do keep the global 2px ink focus outline (2px offset) on every focusable element; fields replace it with the teal border."
+      "Do keep the global 2px ink focus outline (2px offset) on every focusable element; fields replace it with the teal border.",
+      "Do keep motion to one sequence (the home load) plus scroll-drawn list rules: 600ms exponential ease-out, 70ms stagger, about 1s in total, CSS only, with content visible by default and a plain 250ms fade under prefers-reduced-motion."
     ],
     "donts": [
       "Don't fill a button, card or heading with teal, or add a second accent hue.",
       "Don't add shadows to cards, buttons, fields or chips.",
       "Don't use a component library (shadcn, ReUI, etc.); components are custom Tailwind.",
       "Don't set body or paragraph text in teal.",
-      "Don't introduce a dark mode or a heavier type weight than 600."
+      "Don't introduce a dark mode or a heavier type weight than 600.",
+      "Don't animate the nav, stat numbers or cards, add count-ups or carousels, or load a motion library."
     ]
   }
 }

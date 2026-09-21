@@ -116,7 +116,7 @@ components:
 
 The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Nothing performs. Restraint is the credential: the calm hierarchy tells a PME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.
 
-The mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline.
+The mood is calm, precise, unhurried. Space does most of the structural work; borders are hairlines; type weight and size carry hierarchy. Color is rationed to the point that the teal accent is noticed when it appears. The one place the system allows atmosphere is the home hero, where a faint hairline drafting-grid sits behind the headline. Motion is one authored moment, not a coat of effects: on load the sheet is ruled (the grid is swept in left to right) and the hero is set down in reading order, then the list rules draw as they scroll into view.
 
 **Key Characteristics:**
 - Light-only, white paper with zinc ink; no dark mode.
@@ -141,8 +141,8 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 - **Placeholder** (oklch(70.5% 0.015 286.067), `zinc-400`): input placeholder text only.
 - **Hairline** (oklch(92% 0.004 286.32), `zinc-200`): all borders on cards, fields, chips and the nav pill; the hero grid strokes.
 - **Hairline Faint** (oklch(96.7% 0.001 286.375), `zinc-100`): footer rule and form progress track.
-- **Paper Tint** (oklch(98.5% 0 0), `zinc-50`): the second collaboration card and the mobile menu's active row.
-- **Paper** (#ffffff): the page.
+- **Paper Tint** (oklch(98.5% 0 0), `zinc-50`): the second collaboration card, the mobile menu's active row, and the ground around the page sheet from `lg`.
+- **Paper** (#ffffff): the page sheet.
 
 ### Error
 - **Error** (oklch(63.7% 0.237 25.331), `red-500`; softer `red-400` / `red-300` for inline hints and invalid borders): form errors only.
@@ -172,7 +172,7 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 
 ## Layout
 
-A single centered column on a white page. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is two columns from `lg`: the message on the left and, on the right, a hairline-bordered DM Mono margin note (`dl`) listing the stack; it stacks below the button on mobile. Note: `CLAUDE.md` names `max-w-2xl` as the content width, but shipped inner pages use `max-w-3xl`.
+A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `hairline-faint` ring on a Paper Tint ground (up to `max-w-7xl`, 2rem outer gutters), and below `lg` it is simply the white page. Header, content and footer all sit on the sheet; only the floating nav pill lives above it. Inner pages sit in a `max-w-3xl` (48rem) column with 1.5rem side gutters and 4rem vertical section padding; the home page opens to `max-w-7xl` with 2rem gutters at `lg`, with hero text held to `max-w-2xl`, and the contact form is held to `max-w-xl`. The home hero is a single left-aligned column with the drafting grid behind it; the grid fades out before the hero ends, so its lines never run behind text or cards. Below the hero the home splits into two columns from `lg`: the work on the left (who, what is built, how the collaboration runs) and flat cards on the right (Parcours with the two figures, then the contact card). On mobile the right column stacks after the left, so the contact card closes the page.
 
 Content is stacked with generous, uneven rhythm: 3.5rem between About blocks, 2rem to 3rem between headings and their content, 0.75rem between selectable cards. Two-up layouts use a simple two-column grid that collapses to one column below `sm`; the two collaboration cards share row tracks via subgrid so their internal sections align. Below `sm` the desktop nav pill becomes a compact pill with a hamburger and a dropdown card. The header is fixed, so `main` reserves `4rem` at the top.
 
@@ -185,7 +185,7 @@ Flat by default. Depth is conveyed by hairline borders (`hairline`), a one-step 
 
 ## Shapes
 
-Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields and selectable choice cards, 16px (`2xl`) for large content cards and the mobile dropdown, and a full pill for the desktop nav, mobile nav and tag chips. Borders are always 1px hairlines. The only other geometry is a 1px gradient underline under the active nav link (teal fading to transparent at both ends) and a faint 200px square grid behind the home hero, masked to a radial fade.
+Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields and selectable choice cards, 16px (`2xl`) for large content cards and the mobile dropdown, and a full pill for the desktop nav, mobile nav and tag chips. Borders are always 1px hairlines. The only other geometry is a 1px gradient underline under the active nav link (teal fading to transparent at both ends) and a faint 200px square grid behind the home hero, masked with a radial fade and a vertical fade so it ends with the hero.
 
 ## Components
 
@@ -204,6 +204,14 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Shadow Strategy:** none (see Elevation).
 - **Border:** 1px `hairline`; the "Pas sûr ?" block uses the fainter `hairline-faint`.
 - **Internal Padding:** 1.75rem on the services page, 1.5rem on the home summary.
+
+### Sidebar Cards
+- **Style:** the right-column cards on the home: 16px radius, 1px `hairline` border, transparent fill, 1.5rem padding, flat.
+- **Header:** a 20px inline line icon (1.5 stroke, `placeholder` colour) plus a 0.875rem semibold Ink title. Rows below use a medium 0.875rem title, a 0.75rem `pencil` detail, and DM Mono dates aligned right.
+- **Action:** a text link with a trailing arrow, or a full-width primary button in the contact card.
+
+### Avatar (optional)
+- **Style:** a round portrait (64px, 80px from `sm`) with a 1px `hairline` ring, placed above the status label in the hero. It renders only when `src/assets/avatar.{jpg,jpeg,png,webp}` exists, so nothing shows until a photo is added.
 
 ### Inputs / Fields
 - **Style:** 1px `hairline` border, white, 12px radius, padding 0.625rem 1rem (0.75rem vertical on the textarea), text 1rem on mobile and 0.875rem from `md`, `placeholder` in zinc-400.
@@ -234,6 +242,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Do** reserve shadows for surfaces that float over content (the nav pill and its dropdown).
 - **Do** match radius to role: 8px buttons, 12px fields and choice cards, 16px content cards, full pill for nav and tags.
 - **Do** give social icons `pencil` at rest and `slate` on hover, not teal. Their hit area is 44px even though the glyph is 18-20px.
+- **Do** keep motion to one sequence (the home load) plus scroll-drawn list rules: 600ms exponential ease-out, 70ms stagger, about 1s in total, CSS only, with content visible by default and a plain 250ms fade under `prefers-reduced-motion`.
 - **Do** keep the global 2px `ink` focus outline (2px offset) on every focusable element; fields replace it with the teal border. Selected text uses the `teal-100` wash on `ink`.
 
 ### Don't:
@@ -241,4 +250,5 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Don't** add shadows to cards, buttons, fields or chips.
 - **Don't** use a component library (shadcn, ReUI, etc.); components are custom Tailwind.
 - **Don't** set body or paragraph text in teal.
+- **Don't** animate the nav, stat numbers or cards, add count-ups or carousels, or load a motion library.
 - **Don't** introduce a dark mode or a heavier type weight than 600.
