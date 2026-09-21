@@ -1,7 +1,7 @@
 import { defineStepper } from '@stepperize/react'
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 
-const CONTACT_EMAIL = 'mderycke.pro@gmail.com'
+const CONTACT_EMAIL = 'maxime@mdigitalstudio.fr'
 
 // Limites alignées sur la validation de api/contact.ts
 const MAX = { nom: 100, email: 200, entreprise: 100, description: 2000 }
