@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css'
+import { Image } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
+import { avatar } from '../lib/avatar'
 
 interface Props {
   title: string
@@ -16,6 +18,7 @@ const navLinks = [
 ]
 
 const currentPath = Astro.url.pathname
+const isHome = currentPath === '/'
 ---
 
 <html lang="fr">
@@ -33,92 +36,106 @@ const currentPath = Astro.url.pathname
   </head>
   <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
-    <header class="fixed inset-x-0 top-0 z-10 pt-5 pb-2 flex justify-center px-6 pointer-events-none">
+    <header class="pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
+      <div class="mx-auto max-w-7xl lg:px-8">
+        <div class="relative flex items-center gap-4 px-6 lg:px-8">
 
-      <!-- Nav desktop : pill complète -->
-      <nav class="hidden sm:flex items-center gap-1 bg-white/90 backdrop-blur border border-zinc-200 rounded-full px-3 shadow-sm text-sm pointer-events-auto">
-        <a
-          href="/"
-          class:list={[
-            'relative px-3 py-2 font-medium transition',
-            currentPath === '/' ? 'text-teal-500' : 'text-zinc-500 hover:text-teal-500',
-          ]}
-        >
-          Maxime
-          {currentPath === '/' && (
-            <span class="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
-          )}
-        </a>
-        <span class="w-px h-4 bg-zinc-200 mx-1"></span>
-        {navLinks.map(({ href, label }) => {
-          const isActive = currentPath.startsWith(href)
-          return (
-            <a
-              href={href}
-              class:list={[
-                'relative px-3 py-2 transition',
-                isActive ? 'text-teal-500' : 'text-zinc-500 hover:text-teal-500',
-              ]}
+          <!-- Gauche : retour à l'accueil (masqué sur l'accueil, où l'avatar est dans le hero) -->
+          <div class="flex flex-1">
+            {!isHome && (
+              <a
+                href="/"
+                aria-label="Accueil"
+                class="pointer-events-auto h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm"
+              >
+                {avatar ? (
+                  <Image src={avatar} alt="" width={72} height={72} class="size-9 rounded-full bg-zinc-100 object-cover" />
+                ) : (
+                  <span class="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-sm font-semibold text-zinc-900">M</span>
+                )}
+              </a>
+            )}
+          </div>
+
+          <!-- Centre (desktop) : pilule de navigation. Droite (mobile) : bouton Menu -->
+          <div class="flex flex-1 justify-end sm:justify-center">
+            <button
+              id="menu-toggle"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="mobile-nav"
+              aria-expanded="false"
+              class="group pointer-events-auto flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm sm:hidden"
             >
-              {label}
-              {isActive && (
-                <span class="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
-              )}
-            </a>
-          )
-        })}
-      </nav>
+              Menu
+              <svg viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700">
+                <path d="M1.75 1.75 4 4.25l2.25-2.5" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
 
-      <!-- Nav mobile : pill compacte + hamburger -->
-      <div class="sm:hidden flex items-center justify-between w-full bg-white/90 backdrop-blur border border-zinc-200 rounded-full px-4 py-2.5 shadow-sm pointer-events-auto">
-        <a
-          href="/"
-          class:list={[
-            'text-sm font-medium transition-colors',
-            currentPath === '/' ? 'text-zinc-900' : 'text-zinc-500',
-          ]}
-        >
-          Maxime Derycke
-        </a>
-        <button
-          id="menu-toggle"
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-          class="text-zinc-500 p-1 -mr-1"
-        >
-          <svg id="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-          <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
+            <nav aria-label="Navigation principale" class="pointer-events-auto hidden sm:block">
+              <ul class="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-700 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm">
+                {navLinks.map(({ href, label }) => {
+                  const isActive = currentPath.startsWith(href)
+                  return (
+                    <li>
+                      <a
+                        href={href}
+                        aria-current={isActive ? 'page' : undefined}
+                        class:list={['relative block px-3 py-2 transition hover:text-teal-500', isActive && 'text-teal-500']}
+                      >
+                        {label}
+                        {isActive && (
+                          <span class="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
+                        )}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Droite (desktop) : espace qui garde la pilule centrée -->
+          <div class="hidden sm:flex sm:flex-1"></div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Menu mobile : panneau modal (focus piégé et Échap gérés par <dialog>) -->
+    <dialog
+      id="mobile-nav"
+      aria-labelledby="mobile-nav-title"
+      class="fixed inset-x-4 top-8 bottom-auto m-0 w-auto max-w-none rounded-3xl bg-white p-8 text-zinc-800 ring-1 ring-zinc-900/5 backdrop:bg-zinc-800/40 backdrop:backdrop-blur-xs sm:hidden"
+    >
+      <div class="flex flex-row-reverse items-center justify-between">
+        <button type="button" data-close aria-label="Fermer le menu" class="-m-1 p-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-zinc-500">
+            <path d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
+        <h2 id="mobile-nav-title" class="text-sm font-medium text-zinc-600">Navigation</h2>
       </div>
-
-      <!-- Dropdown mobile -->
-      <div
-        id="mobile-menu"
-        class="sm:hidden hidden absolute top-full mt-2 w-[calc(100%-3rem)] bg-white border border-zinc-200 rounded-2xl shadow-md p-2 pointer-events-auto"
-      >
-        {navLinks.map(({ href, label }) => (
-          <a
-            href={href}
-            class:list={[
-              'block px-4 py-2.5 rounded-xl text-sm transition-colors border-l-2',
-              currentPath.startsWith(href)
-                ? 'text-zinc-900 font-medium border-teal-500 bg-zinc-50'
-                : 'text-zinc-600 border-transparent hover:bg-zinc-50 hover:text-zinc-900',
-            ]}
-          >
-            {label}
-          </a>
-        ))}
-      </div>
-
-    </header>
+      <nav aria-label="Menu mobile" class="mt-6">
+        <ul class="-my-2 divide-y divide-zinc-100 text-base text-zinc-800">
+          {navLinks.map(({ href, label }) => {
+            const isActive = currentPath.startsWith(href)
+            return (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive ? 'page' : undefined}
+                  class:list={['block py-2', isActive && 'font-semibold text-zinc-900']}
+                >
+                  {label}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+    </dialog>
 
     <!-- La feuille : page blanche à filets fins posée sur le fond zinc-50 (dès lg) -->
     <div class="mx-auto flex w-full max-w-7xl flex-1 lg:px-8">
@@ -143,25 +160,23 @@ const currentPath = Astro.url.pathname
 
 <script>
   const toggle = document.getElementById('menu-toggle')
-  const menu = document.getElementById('mobile-menu')
-  const iconOpen = document.getElementById('icon-open')
-  const iconClose = document.getElementById('icon-close')
+  const dialog = document.getElementById('mobile-nav') as HTMLDialogElement | null
 
   toggle?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden')
-    menu?.classList.toggle('hidden', isOpen)
-    iconOpen?.classList.toggle('hidden', !isOpen)
-    iconClose?.classList.toggle('hidden', isOpen)
-    toggle.setAttribute('aria-expanded', String(!isOpen))
+    dialog?.showModal()
+    toggle.setAttribute('aria-expanded', 'true')
   })
 
-  // Ferme le menu au clic sur un lien
-  menu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden')
-      iconOpen?.classList.remove('hidden')
-      iconClose?.classList.add('hidden')
-      toggle?.setAttribute('aria-expanded', 'false')
-    })
+  const close = () => dialog?.close()
+  dialog?.querySelectorAll('[data-close], a').forEach(el => el.addEventListener('click', close))
+
+  // Clic sur le fond (hors du panneau) : ferme
+  dialog?.addEventListener('click', event => {
+    const r = dialog.getBoundingClientRect()
+    const outside =
+      event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom
+    if (outside) close()
   })
+
+  dialog?.addEventListener('close', () => toggle?.setAttribute('aria-expanded', 'false'))
 </script>

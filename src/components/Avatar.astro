@@ -1,18 +1,12 @@
 ---
 import { Image } from 'astro:assets'
+import { avatar } from '../lib/avatar'
 
 interface Props {
   class?: string
 }
 
 const { class: className } = Astro.props
-
-// Déposer la photo dans src/assets/ sous le nom avatar.jpg (ou .jpeg / .png / .webp) :
-// elle apparaît ici, redimensionnée et optimisée par Astro. Sans fichier, rien ne s'affiche.
-const found = import.meta.glob<{ default: ImageMetadata }>('../assets/avatar.{jpg,jpeg,png,webp}', {
-  eager: true,
-})
-const avatar = Object.values(found)[0]?.default
 ---
 
 {
