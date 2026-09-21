@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// Déposer la photo dans src/assets/ sous le nom avatar.jpg (ou .jpeg / .png / .webp) :
+// elle apparaît ici, redimensionnée et optimisée par Astro. Sans fichier, rien ne s'affiche.
+const found = import.meta.glob<{ default: ImageMetadata }>('../assets/avatar.{jpg,jpeg,png,webp}', {
+  eager: true,
+})
+const avatar = Object.values(found)[0]?.default
+---
+
+{
+  avatar && (
+    <Image
+      src={avatar}
+      alt="Portrait de Maxime Derycke"
+      width={160}
+      height={160}
+      loading="eager"
+      class:list={['size-16 rounded-full object-cover ring-1 ring-zinc-200 sm:size-20', className]}
+    />
+  )
+}
