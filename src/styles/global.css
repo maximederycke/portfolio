@@ -28,3 +28,102 @@
     color: var(--color-zinc-900);
   }
 }
+
+/* ── Mouvement : « la lettre se compose » ───────────────────────────────────
+   Une séquence à l'arrivée sur l'accueil (grille tracée, puis hero posé dans
+   l'ordre de lecture) + des filets qui se tracent au scroll. Contenu visible
+   par défaut ; tout est en CSS. */
+
+@keyframes set-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sweep-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes draw-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.set-in {
+  animation: set-in 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(120ms + var(--i, 0) * 70ms);
+}
+
+.sweep-in {
+  animation: sweep-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Grille du hero : fondu radial autour du titre + fondu vertical, pour qu'elle
+   s'éteigne avant le contenu qui suit (aucun trait derrière le texte ou les cartes). */
+.grid-fade {
+  mask-image:
+    radial-gradient(20rem 20rem at 60% 40%, #000, transparent),
+    linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+@media (min-width: 40rem) {
+  .grid-fade {
+    mask-image:
+      radial-gradient(40rem 40rem at 60% 40%, #000, transparent),
+      linear-gradient(to bottom, #000 55%, transparent 100%);
+  }
+}
+
+/* Filets d'une liste : le trait du haut de chaque ligne + le trait final */
+.rules {
+  position: relative;
+}
+.rules > li {
+  position: relative;
+}
+.rules > li::before,
+.rules > li:last-child::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--color-zinc-100);
+  transform-origin: left;
+}
+.rules > li::before { top: 0; }
+.rules > li:last-child::after { bottom: 0; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rules > li::before,
+    .rules > li:last-child::after {
+      animation: draw-rule linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 90%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .set-in {
+    animation: fade-in 250ms ease-out both;
+    animation-delay: 0ms;
+  }
+  .sweep-in {
+    animation: fade-in 400ms ease-out both;
+  }
+}
