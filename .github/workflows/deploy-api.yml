@@ -36,11 +36,8 @@ jobs:
         working-directory: api
         run: pnpm install --frozen-lockfile && pnpm run build
 
-      # Action officielle (installe seulement, sans args) plutôt que get.sh pipé dans sudo sh ;
-      # version figée : par défaut elle prendrait la dernière publiée
+      # Action officielle (installe seulement la dernière version de la CLI, sans args) plutôt que get.sh pipé dans sudo sh
       - uses: scaleway/action-scw@v0.0.3
-        with:
-          version: v2.63.0
 
       - name: Deploy
         working-directory: api
