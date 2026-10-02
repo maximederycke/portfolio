@@ -1,6 +1,7 @@
 {
   "name": "portfolio-api",
   "version": "1.0.0",
+  "packageManager": "pnpm@11.10.0",
   "scripts": {
     "build": "esbuild contact.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/contact.js",
     "dev": "node --env-file=.env --watch --experimental-strip-types dev.ts"

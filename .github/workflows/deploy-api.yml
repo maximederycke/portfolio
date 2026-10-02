@@ -6,36 +6,41 @@ on:
     paths: [api/**, .github/workflows/deploy-api.yml]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+# Un seul déploiement à la fois ; le suivant attend au lieu d'interrompre celui en cours
+concurrency:
+  group: deploy-api
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # Version figée : ubuntu-latest bascule sur Ubuntu 26 à partir du 19/10/2026
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      # Même version majeure que le runtime de la fonction (runtime=node22 ci-dessous)
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
 
-      - uses: pnpm/action-setup@v4
+      # Version de pnpm lue dans le champ packageManager de api/package.json
+      - uses: pnpm/action-setup@v6
         with:
-          version: latest
+          package_json_file: api/package.json
 
       - name: Build
         working-directory: api
         run: pnpm install --frozen-lockfile && pnpm run build
 
-      # Binaire épinglé et vérifié plutôt que get.sh : la copie de la branche master (figée, remplacée par main)
-      # échouait en silence depuis la v2.63.0, et un script distant pipé dans sudo sh peut changer sans prévenir
-      - name: Install Scaleway CLI
-        env:
-          SCW_CLI_VERSION: 2.63.0
-        run: |
-          file="scaleway-cli_${SCW_CLI_VERSION}_linux_amd64"
-          base="https://github.com/scaleway/scaleway-cli/releases/download/v${SCW_CLI_VERSION}"
-          curl -fsSL -o "$file" "$base/$file"
-          curl -fsSL "$base/SHA256SUMS" | grep " ${file}\$" | sha256sum -c -
-          sudo install -m 755 "$file" /usr/local/bin/scw
-          scw version
+      # Action officielle (installe seulement, sans args) plutôt que get.sh pipé dans sudo sh ;
+      # version figée : par défaut elle prendrait la dernière publiée
+      - uses: scaleway/action-scw@v0.0.3
+        with:
+          version: v2.63.0
 
       - name: Deploy
         working-directory: api
@@ -45,6 +50,7 @@ jobs:
           SCW_DEFAULT_ORGANIZATION_ID: ${{ secrets.SCW_ORG_ID }}
           SCW_DEFAULT_PROJECT_ID: ${{ secrets.SCW_PROJECT_ID }}
           SCW_DEFAULT_REGION: fr-par
+          SCW_NAMESPACE_ID: ${{ secrets.SCW_NAMESPACE_ID }}
         run: |
           zip -j function.zip dist/contact.js
-          scw function deploy name=contact-form-handler runtime=node22 zip-file=function.zip namespace-id=${{ secrets.SCW_NAMESPACE_ID }} region=fr-par
+          scw function deploy name=contact-form-handler runtime=node22 zip-file=function.zip namespace-id="$SCW_NAMESPACE_ID" region=fr-par
