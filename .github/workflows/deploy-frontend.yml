@@ -43,17 +43,9 @@ jobs:
         env:
           PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
 
-      # Binaire épinglé et vérifié, comme la CLI Scaleway côté API, plutôt que install.sh pipé dans sudo bash
       - name: Install rclone
-        env:
-          RCLONE_VERSION: 1.75.1
         run: |
-          file="rclone-v${RCLONE_VERSION}-linux-amd64.zip"
-          base="https://github.com/rclone/rclone/releases/download/v${RCLONE_VERSION}"
-          curl -fsSL -o "$file" "$base/$file"
-          curl -fsSL "$base/SHA256SUMS" | grep " ${file}\$" | sha256sum -c -
-          unzip -q "$file"
-          sudo install -m 755 "rclone-v${RCLONE_VERSION}-linux-amd64/rclone" /usr/local/bin/rclone
+          curl -fsSL https://rclone.org/install.sh | sudo bash
           rclone version
 
       - name: Deploy to Scaleway Object Storage
