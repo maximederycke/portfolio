@@ -43,4 +43,22 @@ jobs:
           RCLONE_CONFIG_SCW_REGION: fr-par
           RCLONE_CONFIG_SCW_ENDPOINT: s3.fr-par.scw.cloud
           RCLONE_CONFIG_SCW_ACL: public-read
-        run: rclone sync dist/ scw:maximederycke.dev --progress
+        # --ignore-times réenvoie tout (< 1 Mo) pour que chaque objet porte son Cache-Control.
+        # Ordre : assets d'abord, puis le HTML qui les référence, puis suppression des fichiers obsolètes.
+        run: |
+          rclone copy dist/_astro scw:maximederycke.dev/_astro --ignore-times \
+            --header-upload "Cache-Control: public, max-age=31536000, immutable"
+          rclone copy dist/ scw:maximederycke.dev --ignore-times --exclude "_astro/**" \
+            --header-upload "Cache-Control: public, max-age=0, must-revalidate"
+          rclone sync dist/ scw:maximederycke.dev
+
+      # Le HTML est gardé 1 mois en cache par Cloudflare (Cache Rule) : on vide le cache à chaque déploiement
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
