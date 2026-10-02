@@ -24,7 +24,8 @@ jobs:
         working-directory: api
         run: pnpm install --frozen-lockfile && pnpm run build
 
-      # Binaire épinglé et vérifié : get.sh échoue en silence depuis la v2.63.0 (son grep attrape aussi les .deb/.rpm)
+      # Binaire épinglé et vérifié plutôt que get.sh : la copie de la branche master (figée, remplacée par main)
+      # échouait en silence depuis la v2.63.0, et un script distant pipé dans sudo sh peut changer sans prévenir
       - name: Install Scaleway CLI
         env:
           SCW_CLI_VERSION: 2.63.0
