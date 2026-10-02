@@ -51,3 +51,14 @@ jobs:
           rclone copy dist/ scw:maximederycke.dev --ignore-times --exclude "_astro/**" \
             --header-upload "Cache-Control: public, max-age=0, must-revalidate"
           rclone sync dist/ scw:maximederycke.dev
+
+      # Le HTML est gardé 1 mois en cache par Cloudflare (Cache Rule) : on vide le cache à chaque déploiement
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
