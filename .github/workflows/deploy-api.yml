@@ -24,8 +24,17 @@ jobs:
         working-directory: api
         run: pnpm install --frozen-lockfile && pnpm run build
 
+      # Binaire épinglé et vérifié : get.sh échoue en silence depuis la v2.63.0 (son grep attrape aussi les .deb/.rpm)
       - name: Install Scaleway CLI
-        run: curl -s https://raw.githubusercontent.com/scaleway/scaleway-cli/master/scripts/get.sh | sudo sh
+        env:
+          SCW_CLI_VERSION: 2.63.0
+        run: |
+          file="scaleway-cli_${SCW_CLI_VERSION}_linux_amd64"
+          base="https://github.com/scaleway/scaleway-cli/releases/download/v${SCW_CLI_VERSION}"
+          curl -fsSL -o "$file" "$base/$file"
+          curl -fsSL "$base/SHA256SUMS" | grep " ${file}\$" | sha256sum -c -
+          sudo install -m 755 "$file" /usr/local/bin/scw
+          scw version
 
       - name: Deploy
         working-directory: api
