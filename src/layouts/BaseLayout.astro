@@ -3,6 +3,8 @@ import '../styles/global.css'
 import { Image, getImage } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
 import { avatar } from '../lib/avatar'
+// Fichier latin de DM Sans, préchargé pour éviter le changement de police au premier affichage
+import dmSansLatin from '@fontsource-variable/dm-sans/files/dm-sans-latin-opsz-normal.woff2?url'
 
 interface Props {
   title: string
@@ -33,6 +35,7 @@ const ogImage = avatar
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="preload" href={dmSansLatin} as="font" type="font/woff2" crossorigin />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Maxime Derycke" />
