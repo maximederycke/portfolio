@@ -7,24 +7,36 @@ on:
       - src/**
       - public/**
       - astro.config.*
+      - tsconfig.json
       - package.json
       - pnpm-lock.yaml
+      - pnpm-workspace.yaml
       - .github/workflows/deploy-frontend.yml
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+# Deux rclone sync en parallèle pourraient s'entremêler : le déploiement suivant attend la fin du précédent
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # Version figée : ubuntu-latest bascule sur Ubuntu 26 à partir du 19/10/2026
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      # Même version majeure qu'en local
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      # Version de pnpm lue dans le champ packageManager de package.json
+      - uses: pnpm/action-setup@v6
 
       - name: Build
         run: pnpm install --frozen-lockfile && pnpm run build
@@ -32,7 +44,9 @@ jobs:
           PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
 
       - name: Install rclone
-        run: curl https://rclone.org/install.sh | sudo bash
+        run: |
+          curl -fsSL https://rclone.org/install.sh | sudo bash
+          rclone version
 
       - name: Deploy to Scaleway Object Storage
         env:
