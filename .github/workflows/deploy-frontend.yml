@@ -43,4 +43,11 @@ jobs:
           RCLONE_CONFIG_SCW_REGION: fr-par
           RCLONE_CONFIG_SCW_ENDPOINT: s3.fr-par.scw.cloud
           RCLONE_CONFIG_SCW_ACL: public-read
-        run: rclone sync dist/ scw:maximederycke.dev --progress
+        # --ignore-times réenvoie tout (< 1 Mo) pour que chaque objet porte son Cache-Control.
+        # Ordre : assets d'abord, puis le HTML qui les référence, puis suppression des fichiers obsolètes.
+        run: |
+          rclone copy dist/_astro scw:maximederycke.dev/_astro --ignore-times \
+            --header-upload "Cache-Control: public, max-age=31536000, immutable"
+          rclone copy dist/ scw:maximederycke.dev --ignore-times --exclude "_astro/**" \
+            --header-upload "Cache-Control: public, max-age=0, must-revalidate"
+          rclone sync dist/ scw:maximederycke.dev
