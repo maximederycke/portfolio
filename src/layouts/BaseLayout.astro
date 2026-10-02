@@ -3,6 +3,8 @@ import '../styles/global.css'
 import { Image, getImage } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
 import { avatar } from '../lib/avatar'
+// Fichier latin de DM Sans, préchargé pour éviter le changement de police au premier affichage
+import dmSansLatin from '@fontsource-variable/dm-sans/files/dm-sans-latin-opsz-normal.woff2?url'
 
 interface Props {
   title: string
@@ -12,9 +14,9 @@ interface Props {
 const { title, description = 'Développeur Fullstack JS/TS freelance' } = Astro.props
 
 const navLinks = [
-  { href: '/about', label: 'À propos' },
-  { href: '/services', label: 'Services' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/about/', label: 'À propos' },
+  { href: '/services/', label: 'Services' },
+  { href: '/contact/', label: 'Contact' },
 ]
 
 const currentPath = Astro.url.pathname
@@ -33,6 +35,7 @@ const ogImage = avatar
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="preload" href={dmSansLatin} as="font" type="font/woff2" crossorigin />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Maxime Derycke" />
@@ -52,7 +55,7 @@ const ogImage = avatar
   </head>
   <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
-    <header class="pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
+    <header class="site-header pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
       <div class="mx-auto max-w-7xl lg:px-8">
         <div class="relative flex items-center gap-4 px-6 lg:px-8">
 
@@ -102,7 +105,7 @@ const ogImage = avatar
                       >
                         {label}
                         {isActive && (
-                          <span class="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
+                          <span class="nav-marker absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
                         )}
                       </a>
                     </li>
