@@ -12,9 +12,9 @@ interface Props {
 const { title, description = 'Développeur Fullstack JS/TS freelance' } = Astro.props
 
 const navLinks = [
-  { href: '/about', label: 'À propos' },
-  { href: '/services', label: 'Services' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/about/', label: 'À propos' },
+  { href: '/services/', label: 'Services' },
+  { href: '/contact/', label: 'Contact' },
 ]
 
 const currentPath = Astro.url.pathname
@@ -52,7 +52,7 @@ const ogImage = avatar
   </head>
   <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
-    <header class="pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
+    <header class="site-header pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
       <div class="mx-auto max-w-7xl lg:px-8">
         <div class="relative flex items-center gap-4 px-6 lg:px-8">
 
@@ -102,7 +102,7 @@ const ogImage = avatar
                       >
                         {label}
                         {isActive && (
-                          <span class="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
+                          <span class="nav-marker absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
                         )}
                       </a>
                     </li>

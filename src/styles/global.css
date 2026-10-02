@@ -132,3 +132,16 @@
     animation: fade-in 400ms ease-out both;
   }
 }
+
+/* Navigation entre pages : fondu court du contenu, en-tête fixe, trait actif qui glisse vers le nouveau lien */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  .site-header { view-transition-name: site-header; }
+  .nav-marker { view-transition-name: nav-marker; }
+  ::view-transition-group(*) {
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+  }
+}
