@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 transition-colors'
+---
+
+<BaseLayout
+  title="Politique de confidentialité — Maxime Derycke"
+  description="Comment maximederycke.dev traite vos données : mesure d'audience sans cookie, échanges par e-mail et vos droits."
+>
+  <section class="max-w-3xl mx-auto px-6 py-16 space-y-12">
+
+    <div>
+      <h1 class="text-3xl font-semibold text-zinc-900 mb-4">Politique de confidentialité</h1>
+      <p class="text-xs font-mono text-zinc-500">Dernière mise à jour : novembre 2026</p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Qui est responsable de vos données ?</h2>
+      <p class="text-zinc-500 leading-relaxed">
+        Maxime Derycke, entrepreneur individuel (EI), M Digital Studio — voir les
+        <a href="/mentions-legales/" class={link}>mentions légales</a>. Pour toute question :
+        <a href="mailto:maxime@mdigitalstudio.fr" class={link}>maxime@mdigitalstudio.fr</a>.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-6">Ce que ce site collecte, et pourquoi</h2>
+      <div class="flex flex-col gap-8">
+
+        <div>
+          <h3 class="text-sm font-medium text-zinc-900 mb-2">Mesure d'audience</h3>
+          <div class="space-y-3 text-zinc-500 leading-relaxed">
+            <p>
+              J'utilise Umami, un outil de mesure d'audience que j'héberge moi-même sur un serveur
+              situé en France. Umami ne dépose aucun cookie et ne conserve pas votre adresse IP.
+              Il enregistre les pages consultées, le site d'où vous venez, le type d'appareil,
+              le navigateur et le pays. Ces statistiques servent uniquement à améliorer le site.
+            </p>
+            <ul class="flex flex-col gap-2">
+              <li class="flex items-start gap-2.5">
+                <span class="text-zinc-300">—</span>
+                <span>Base légale : mon intérêt légitime à savoir comment le site est utilisé.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-zinc-300">—</span>
+                <span>Durée de conservation : 25 mois.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-zinc-900 mb-2">Échanges par e-mail et formulaire de contact</h3>
+          <div class="space-y-3 text-zinc-500 leading-relaxed">
+            <p>
+              Quand vous m'écrivez, je reçois votre nom, votre adresse e-mail, votre message et
+              les informations que vous choisissez de me donner (entreprise, téléphone, projet).
+              Je les utilise pour vous répondre et, le cas échéant, préparer une proposition.
+            </p>
+            <ul class="flex flex-col gap-2">
+              <li class="flex items-start gap-2.5">
+                <span class="text-zinc-300">—</span>
+                <span>
+                  Base légale : les mesures précontractuelles prises à votre demande, ou mon intérêt
+                  légitime à répondre aux demandes professionnelles.
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-zinc-300">—</span>
+                <span>
+                  Durée de conservation : 3 ans après notre dernier échange si aucun contrat n'est
+                  signé ; pendant la durée de la relation commerciale sinon, puis selon les durées
+                  légales (10 ans pour les pièces comptables).
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Qui a accès à vos données ?</h2>
+      <div class="space-y-3 text-zinc-500 leading-relaxed">
+        <p>
+          Moi seul. Je ne vends ni ne cède vos données. Elles passent par des prestataires
+          techniques qui agissent sur mes instructions :
+        </p>
+        <ul class="flex flex-col gap-2">
+          <li class="flex items-start gap-2.5">
+            <span class="text-zinc-300">—</span>
+            <span>
+              Scaleway SAS (France) : hébergement du site et des statistiques, envoi des e-mails
+              du formulaire de contact ;
+            </span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-zinc-300">—</span>
+            <span>Microsoft Ireland Operations Ltd : messagerie ;</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-zinc-300">—</span>
+            <span>
+              Cloudflare, Inc. : acheminement du trafic du site. Cette société américaine peut
+              traiter votre adresse IP aux États-Unis ; ce transfert est encadré par le
+              Data Privacy Framework UE–États-Unis.
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Cookies</h2>
+      <p class="text-zinc-500 leading-relaxed">
+        Ce site ne dépose aucun cookie de mesure d'audience ni de publicité.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Vos droits</h2>
+      <div class="space-y-3 text-zinc-500 leading-relaxed">
+        <p>
+          Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, la
+          limitation de leur traitement, leur portabilité, ou vous opposer à leur traitement.
+          Écrivez à <a href="mailto:maxime@mdigitalstudio.fr" class={link}>maxime@mdigitalstudio.fr</a> ;
+          je réponds sous un mois.
+        </p>
+        <p>
+          Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une
+          réclamation à la CNIL
+          (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" class={link}>www.cnil.fr</a>).
+        </p>
+      </div>
+    </div>
+
+  </section>
+</BaseLayout>

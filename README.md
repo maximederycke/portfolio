@@ -22,6 +22,8 @@ Portfolio personnel de [Maxime Derycke](https://maximederycke.dev), développeur
 | `/about` | Parcours, stack, compétences |
 | `/services` | Modes Agile & Forfait |
 | `/contact` | Formulaire multi-étapes (React island) |
+| `/mentions-legales` | Mentions légales |
+| `/confidentialite` | Politique de confidentialité |
 
 ## Développement local
 
@@ -71,10 +73,14 @@ Le workflow **Check** tourne sur chaque pull request : vérification des types (
 
 Deux workflows de déploiement se déclenchent sur `main` (et à la demande) :
 
-- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev` (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
+- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
 - **Deploy API** — bundle esbuild de `api/contact.ts` puis déploiement de la fonction `contact-form-handler` (Node 22, `fr-par`) avec la CLI Scaleway.
 
-Secrets GitHub requis : `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`, `SCW_ORG_ID`, `SCW_PROJECT_ID`, `SCW_NAMESPACE_ID`, `PUBLIC_API_URL`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`.
+Secrets GitHub requis : `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`, `SCW_ORG_ID`, `SCW_PROJECT_ID`, `SCW_NAMESPACE_ID`, `PUBLIC_API_URL`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`. Variables GitHub requises : `SCW_BUCKET` (nom du bucket ; le déploiement s'arrête si elle manque), `LEGAL_ADDRESS` et `LEGAL_PHONE` (coordonnées des mentions légales).
+
+## Pages légales
+
+L'adresse et le téléphone des mentions légales viennent des variables `LEGAL_ADDRESS` et `LEGAL_PHONE` (`.env` en local, variables GitHub en CI). Tant qu'un marqueur (`[ADRESSE]`, `[TÉLÉPHONE]`, `[À VÉRIFIER]`) reste dans le HTML généré, `pnpm build` échoue : une page incomplète ne peut pas être publiée. En `pnpm dev`, les marqueurs s'affichent.
 
 ## Référencement et partage
 
