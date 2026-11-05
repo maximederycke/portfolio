@@ -1,0 +1,57 @@
+name: Check
+
+on:
+  pull_request:
+  # Appelé par les deux workflows de déploiement, qui ne déploient que si les vérifications passent
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - uses: pnpm/action-setup@v6
+
+      - run: pnpm install --frozen-lockfile
+
+      # astro check couvre les .astro, le .tsx du formulaire et les .ts
+      - name: Type check
+        run: pnpm run check
+
+      - name: Build
+        run: pnpm run build
+
+  api:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: api/package.json
+
+      - run: pnpm install --frozen-lockfile
+
+      # esbuild ne vérifie pas les types : sans cette étape, une erreur TypeScript partirait en prod
+      - name: Type check
+        run: pnpm run check
+
+      - name: Build
+        run: pnpm run build

@@ -28,7 +28,6 @@ GitHub : @maximederycke — repo public github.com/maximederycke/portfolio
 
 ## Ce qui reste à faire
 - [ ] Page `/projects` — galerie de réalisations (au moins 2-3 projets à choisir)
-- [ ] Photo : le portrait (`src/assets/avatar.jpg`) est en place dans le hero et l'en-tête ; reste à l'ajouter sur la page À propos
 - [ ] Enregistrer et vérifier le domaine `maximederycke.dev` sur Scaleway TEM (SPF/DKIM) avant mise en prod
 
 ## Suivi du projet

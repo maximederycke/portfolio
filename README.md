@@ -30,6 +30,7 @@ pnpm install
 pnpm dev        # http://localhost:4321
 pnpm build      # Production build → ./dist/
 pnpm preview    # Prévisualisation du build
+pnpm check      # Vérification des types (astro check)
 ```
 
 Prérequis : Node.js ≥ 22.12 (Node 24 recommandé, c'est la version de la CI frontend), pnpm 11+
@@ -66,7 +67,9 @@ PUBLIC_API_URL=http://localhost:8080/api/contact pnpm dev
 
 ## Déploiement
 
-Deux workflows GitHub Actions se déclenchent sur `main` (et à la demande) :
+Le workflow **Check** tourne sur chaque pull request : vérification des types (`astro check` côté site, `tsc --noEmit` côté API) puis build des deux. Les workflows de déploiement l'appellent aussi et ne déploient que s'il passe.
+
+Deux workflows de déploiement se déclenchent sur `main` (et à la demande) :
 
 - **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev` (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
 - **Deploy API** — bundle esbuild de `api/contact.ts` puis déploiement de la fonction `contact-form-handler` (Node 22, `fr-par`) avec la CLI Scaleway.
