@@ -71,10 +71,10 @@ Le workflow **Check** tourne sur chaque pull request : vérification des types (
 
 Deux workflows de déploiement se déclenchent sur `main` (et à la demande) :
 
-- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev` (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
+- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
 - **Deploy API** — bundle esbuild de `api/contact.ts` puis déploiement de la fonction `contact-form-handler` (Node 22, `fr-par`) avec la CLI Scaleway.
 
-Secrets GitHub requis : `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`, `SCW_ORG_ID`, `SCW_PROJECT_ID`, `SCW_NAMESPACE_ID`, `PUBLIC_API_URL`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`.
+Secrets GitHub requis : `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`, `SCW_ORG_ID`, `SCW_PROJECT_ID`, `SCW_NAMESPACE_ID`, `PUBLIC_API_URL`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`. Variable GitHub requise : `SCW_BUCKET` (nom du bucket ; le déploiement s'arrête si elle manque).
 
 ## Référencement et partage
 
