@@ -34,12 +34,12 @@ Fullstack JS/TS delivery **with a real UX sense**: he takes projects end to end,
 - Static site (Astro) deployed to Scaleway Object Storage + CDN; the only interactive piece is the React contact-form island; the form posts to a separate Scaleway Serverless Function.
 - Domain `maximederycke.dev`; sending domain must still be registered and verified (SPF/DKIM) on Scaleway TEM before production.
 - Pages live: `/`, `/about`, `/services`, `/contact`. `/projects` does not exist yet: the placeholder was removed before the first deploy and will return with real content.
-- Open decisions: what work can be shown on `/projects` (public projects, anonymised NDA work, or nothing yet); whether the About page gets a photo or avatar.
+- Open decisions: what work can be shown on `/projects` (public projects, anonymised NDA work, or nothing yet).
 
 ## Brand Commitments
 
 - Name: Maxime Derycke. Voice: sober and direct, first person ("je"), no hype.
-- Accent color and typographic/component decisions already settled in `CLAUDE.md` (teal accent on navigation only, zinc neutrals, DM Sans + DM Mono, custom Tailwind with no component library) are binding project constraints; this file does not restate or extend them.
+- Accent color and typographic/component decisions already settled in `CLAUDE.md` (teal accent as a marker of state and place only, zinc neutrals, DM Sans + DM Mono, custom Tailwind with no component library) are binding project constraints; this file does not restate or extend them.
 
 ## Evidence on Hand
 

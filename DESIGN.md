@@ -4,7 +4,7 @@ description: A calm, flat, zinc-and-white portfolio set like a technical letter,
 colors:
   drafting-teal: "oklch(70.4% 0.14 182.503)"
   drafting-teal-wash: "oklch(98.4% 0.014 180.72)"
-  drafting-teal-ink: "oklch(51.1% 0.096 186.391)"
+  drafting-teal-ink: "oklch(43.7% 0.078 188.216)"
   ink: "oklch(21% 0.006 285.885)"
   graphite: "oklch(37% 0.013 285.805)"
   slate: "oklch(44.2% 0.017 285.786)"
@@ -129,11 +129,11 @@ The mood is calm, precise, unhurried. Space does most of the structural work; bo
 
 ## Colors
 
-A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chroma) plus one teal. The canonical values are Tailwind v4's `oklch` tokens; `CLAUDE.md` still lists the v3 hex `#14B8A6`, which is not what renders.
+A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chroma) plus one teal. The canonical values are Tailwind v4's `oklch` tokens, not the v3 hex values (the v3 `teal-500` `#14B8A6` is not what renders).
 
 ### Primary
 - **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`, about `#00BBA7`): the drafting-pen mark, used as strokes and dots: the underline of the current nav link, the form progress line, the border of a selected choice or a focused field, and the availability dot before "Disponible…". Never a button fill, never text.
-- **Drafting Teal Ink** (oklch(51.1% 0.096 186.391), Tailwind `teal-700`, about `#0F766E`, 5.5:1 on white): the same teal when it has to be read as text: the current or hovered nav link and the "Message envoyé" label. `teal-500` on white is only about 2.4:1, so it is never used for text.
+- **Drafting Teal Ink** (oklch(43.7% 0.078 188.216), Tailwind `teal-700`, about `#0F766E`, 5.5:1 on white): the same teal when it has to be read as text: the current or hovered nav link and the "Message envoyé" label. `teal-500` on white is only about 2.4:1, so it is never used for text.
 - **Drafting Teal Wash** (oklch(98.4% 0.014 180.72), `teal-50`, used at 50% opacity): the fill behind a selected choice card.
 
 ### Neutral
@@ -215,7 +215,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - **Action:** a text link with a trailing arrow, or a full-width primary button in the contact card.
 
 ### Avatar (optional)
-- **Style:** a round portrait (64px, 80px from `sm`) with a 1px `hairline` ring, placed above the status label in the hero. It renders only when `src/assets/avatar.{jpg,jpeg,png,webp}` exists, so nothing shows until a photo is added.
+- **Style:** a round portrait (64px, 80px from `sm`) with a 1px `hairline` ring, placed above the status label in the hero. It renders from `src/assets/avatar.{jpg,jpeg,png,webp}` (the portrait is in place); without that file the hero shows no avatar and the header falls back to an "M" monogram.
 
 ### Inputs / Fields
 - **Style:** 1px `hairline` border, white, 12px radius, padding 0.625rem 1rem (0.75rem vertical on the textarea), text 1rem on mobile and 0.875rem from `md`, `placeholder` in zinc-400.

@@ -6,12 +6,12 @@ Portfolio personnel de [Maxime Derycke](https://maximederycke.dev), développeur
 
 | Couche | Technologie |
 |---|---|
-| Framework | Astro 6 |
+| Framework | Astro 7 |
 | Langage | TypeScript (strict) |
 | Composants interactifs | React 19 (islands) |
 | Style | Tailwind v4 (custom uniquement) |
 | Typographie | DM Sans + DM Mono |
-| Hébergement | Scaleway Object Storage + CDN |
+| Hébergement | Scaleway Object Storage + CDN Cloudflare |
 | Formulaire → email | Scaleway Serverless Function (Node.js 22) + Scaleway Transactional Email |
 
 ## Pages
@@ -30,13 +30,14 @@ pnpm install
 pnpm dev        # http://localhost:4321
 pnpm build      # Production build → ./dist/
 pnpm preview    # Prévisualisation du build
+pnpm check      # Vérification des types (astro check)
 ```
 
-Prérequis : Node.js ≥ 22.12, pnpm 11+
+Prérequis : Node.js ≥ 22.12 (Node 24 recommandé, c'est la version de la CI frontend), pnpm 11+
 
 ## Photo
 
-Pour afficher le portrait (hero de l'accueil, bouton d'accueil de l'en-tête et image de partage), déposer l'image dans `src/assets/` sous le nom `avatar.jpg` (ou `.jpeg`, `.png`, `.webp`). Astro la redimensionne et l'optimise ; viser un carré d'environ 1200 px, sans métadonnées (EXIF), pour garder le dépôt léger. Sans fichier, un monogramme « M » s'affiche dans l'en-tête et rien dans le hero.
+Le portrait (hero de l'accueil, bouton d'accueil de l'en-tête et image de partage) est `src/assets/avatar.jpg` (`.jpeg`, `.png` et `.webp` sont aussi acceptés). Astro le redimensionne et l'optimise ; pour le remplacer, viser un carré d'environ 1200 px, sans métadonnées (EXIF), pour garder le dépôt léger. Sans fichier, un monogramme « M » s'affiche dans l'en-tête et rien dans le hero.
 
 ## API du formulaire de contact
 
@@ -66,10 +67,14 @@ PUBLIC_API_URL=http://localhost:8080/api/contact pnpm dev
 
 ## Déploiement
 
-Deux workflows GitHub Actions se déclenchent sur `main` (et à la demande) :
+Le workflow **Check** tourne sur chaque pull request : vérification des types (`astro check` côté site, `tsc --noEmit` côté API) puis build des deux. Les workflows de déploiement l'appellent aussi et ne déploient que s'il passe.
 
-- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`) puis `rclone sync` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev`.
+Deux workflows de déploiement se déclenchent sur `main` (et à la demande) :
+
+- **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage `maximederycke.dev` (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
 - **Deploy API** — bundle esbuild de `api/contact.ts` puis déploiement de la fonction `contact-form-handler` (Node 22, `fr-par`) avec la CLI Scaleway.
+
+Secrets GitHub requis : `SCW_ACCESS_KEY`, `SCW_SECRET_KEY`, `SCW_ORG_ID`, `SCW_PROJECT_ID`, `SCW_NAMESPACE_ID`, `PUBLIC_API_URL`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`.
 
 ## Référencement et partage
 
