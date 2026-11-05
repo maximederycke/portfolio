@@ -19,6 +19,11 @@ const navLinks = [
   { href: '/contact/', label: 'Contact' },
 ]
 
+const legalLinks = [
+  { href: '/mentions-legales/', label: 'Mentions légales' },
+  { href: '/confidentialite/', label: 'Confidentialité' },
+]
+
 const currentPath = Astro.url.pathname
 const isHome = currentPath === '/'
 
@@ -164,10 +169,24 @@ const ogImage = avatar
         </main>
 
         <footer class="border-t border-zinc-100 py-8">
-          <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
-            <p class="text-xs font-mono text-zinc-500">
-              © {new Date().getFullYear()} Maxime Derycke
-            </p>
+          <!-- Sous sm : © et icônes sur la première ligne, liens légaux sur toute la largeur dessous -->
+          <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-between sm:justify-start gap-x-4 text-xs font-mono text-zinc-500">
+            <p>© {new Date().getFullYear()} Maxime Derycke</p>
+            <nav aria-label="Informations légales" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto">
+              <ul class="flex gap-4">
+                {legalLinks.map(({ href, label }) => (
+                  <li>
+                    <a
+                      href={href}
+                      aria-current={currentPath.startsWith(href) ? 'page' : undefined}
+                      class="inline-flex min-h-11 items-center whitespace-nowrap hover:text-zinc-600 transition-colors"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
             <SocialLinks size={18} class="-mr-3" />
           </div>
         </footer>
