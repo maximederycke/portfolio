@@ -11,7 +11,7 @@ GitHub : @maximederycke — repo public github.com/maximederycke/portfolio
 - **Composants** : custom Tailwind uniquement — pas de shadcn, pas de ReUI, pas de lib de composants
 - **React** : uniquement pour le formulaire de contact (island `client:load`)
 - **Nom de domaine** : `maximederycke.dev`
-- **Hébergement** : Scaleway Object Storage + CDN ; formulaire → Scaleway Serverless Function (`api/`) + Transactional Email, sans dépendance tierce
+- **Hébergement** : Scaleway Object Storage, derrière le CDN Cloudflare (cache purgé à chaque déploiement) ; formulaire → Scaleway Serverless Function (`api/`) + Transactional Email, sans stockage tiers des messages
 
 ## Design
 - Minimaliste et épuré, beaucoup d'espace blanc, light mode par défaut
@@ -24,11 +24,11 @@ GitHub : @maximederycke — repo public github.com/maximederycke/portfolio
 ## Sécurité
 - La clé secrète Scaleway ne doit JAMAIS être dans le code front-end
 - Elle doit être en variable d'environnement côté serverless uniquement
-- SCW_SECRET_KEY, SCW_DEFAULT_PROJECT_ID, EMAIL_FROM, EMAIL_TO en .env (jamais committé)
+- Variables de l'API (`SCW_*`, `EMAIL_FROM`, `EMAIL_TO`, `ALLOWED_ORIGINS`) dans `api/.env` (jamais committé) ; en CI, dans les secrets GitHub
 
 ## Ce qui reste à faire
 - [ ] Page `/projects` — galerie de réalisations (au moins 2-3 projets à choisir)
-- [ ] Photo : déposer `src/assets/avatar.jpg` (elle apparaît dans le hero et l'en-tête) ; reste à l'ajouter aussi sur la page À propos
+- [ ] Photo : le portrait (`src/assets/avatar.jpg`) est en place dans le hero et l'en-tête ; reste à l'ajouter sur la page À propos
 - [ ] Enregistrer et vérifier le domaine `maximederycke.dev` sur Scaleway TEM (SPF/DKIM) avant mise en prod
 
 ## Suivi du projet
