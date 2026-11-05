@@ -27,8 +27,12 @@ jobs:
       - name: Type check
         run: pnpm run check
 
+      # Coordonnées des mentions légales : sans elles, la build échoue (vérification dans astro.config.mjs)
       - name: Build
         run: pnpm run build
+        env:
+          LEGAL_ADDRESS: ${{ vars.LEGAL_ADDRESS }}
+          LEGAL_PHONE: ${{ vars.LEGAL_PHONE }}
 
   api:
     runs-on: ubuntu-24.04
