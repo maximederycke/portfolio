@@ -39,7 +39,7 @@ Fullstack JS/TS delivery **with a real UX sense**: he takes projects end to end,
 ## Brand Commitments
 
 - Name: Maxime Derycke. Voice: sober and direct, first person ("je"), no hype.
-- Accent color and typographic/component decisions already settled in `CLAUDE.md` (teal accent as a marker of state and place only, zinc neutrals, DM Sans + DM Mono, custom Tailwind with no component library) are binding project constraints; this file does not restate or extend them.
+- Accent color and typographic/component decisions already settled in `AGENTS.md` (teal accent as a marker of state and place only, zinc neutrals, DM Sans + DM Mono, custom Tailwind with no component library) are binding project constraints; this file does not restate or extend them.
 
 ## Evidence on Hand
 
