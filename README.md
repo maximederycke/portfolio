@@ -71,6 +71,8 @@ PUBLIC_API_URL=http://localhost:8080/api/contact pnpm dev
 
 Le workflow **Check** tourne sur chaque pull request : vérification des types (`astro check` côté site, `tsc --noEmit` côté API) puis build des deux. Les workflows de déploiement l'appellent aussi et ne déploient que s'il passe.
 
+Les pull requests visent la branche `develop`, qui n'est jamais déployée. La mise en ligne se fait par une PR `develop` → `main`, fusionnée par commit de fusion.
+
 Deux workflows de déploiement se déclenchent sur `main` (et à la demande) :
 
 - **Deploy Frontend** — build statique (avec le secret `PUBLIC_API_URL`), `rclone` de `dist/` vers le bucket Scaleway Object Storage (assets `_astro/` en cache immuable, HTML revalidé), puis purge du cache Cloudflare.
