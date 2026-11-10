@@ -1,22 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import ContactForm from '../components/ContactForm'
+import PageColumn from '../components/PageColumn.astro'
+import { h1, lede, inlineLink } from '../lib/typography'
 
 // Variable GitHub injectée au build, comme sur les mentions légales. Sans valeur, le marqueur reste et la build échoue (astro.config.mjs)
 const phone = import.meta.env.LEGAL_PHONE || '[TÉLÉPHONE]'
 const phoneHref = `tel:${phone.replace(/[^\d+]/g, '')}`
-
-const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 transition-colors'
 ---
 
 <BaseLayout
   title="Prendre rendez-vous — Maxime Derycke"
   description="Rendez-vous de découverte offert de 30 minutes, au téléphone ou sur place, avec Maxime Derycke, développeur à Beauvais (Oise)."
 >
-  <section class="max-w-3xl mx-auto px-6 py-16">
-    <div class="mb-12">
-      <h1 class="text-3xl font-semibold text-zinc-900 mb-3">Prendre rendez-vous</h1>
-      <p class="text-zinc-500">30 min offertes, au téléphone ou sur place.</p>
+  <PageColumn class="space-y-12">
+    <div>
+      <h1 class={h1}>Prendre rendez-vous</h1>
+      <p class={lede}>30 min offertes, au téléphone ou sur place.</p>
       <p class="mt-3 text-sm text-zinc-500">
         Je vous rappelle sous 48 h ouvrées pour fixer le rendez-vous.
       </p>
@@ -24,15 +24,15 @@ const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 tra
 
     <ContactForm client:load />
 
-    <div class="mt-12 max-w-xl border-t border-zinc-100 pt-6 text-sm text-zinc-500 space-y-2">
+    <div class="max-w-xl space-y-2 border-t border-zinc-100 pt-6 text-sm text-zinc-500">
       <p>
         Vous préférez écrire directement ?
-        <a href="mailto:maxime@mdigitalstudio.fr" class={link}>maxime@mdigitalstudio.fr</a>
+        <a href="mailto:maxime@mdigitalstudio.fr" class={inlineLink}>maxime@mdigitalstudio.fr</a>
       </p>
       <p>
         Ou appelez-moi :
-        <a href={phoneHref} class={`${link} whitespace-nowrap`}>{phone}</a>
+        <a href={phoneHref} class={`${inlineLink} whitespace-nowrap`}>{phone}</a>
       </p>
     </div>
-  </section>
+  </PageColumn>
 </BaseLayout>

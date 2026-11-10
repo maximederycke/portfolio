@@ -1,27 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import PageColumn from '../components/PageColumn.astro'
+import { h1, h2, body, inlineLink } from '../lib/typography'
 
 // Variables GitHub injectées au build. Sans valeur, le marqueur reste et la build échoue (astro.config.mjs)
 const address = import.meta.env.LEGAL_ADDRESS || '[ADRESSE]'
 const phone = import.meta.env.LEGAL_PHONE || '[TÉLÉPHONE]'
-
-const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 transition-colors'
 ---
 
 <BaseLayout
   title="Mentions légales — Maxime Derycke"
   description="Mentions légales de maximederycke.dev : éditeur, hébergement et propriété intellectuelle."
 >
-  <section class="max-w-3xl mx-auto px-6 py-16 space-y-12">
+  <PageColumn>
 
     <div>
-      <h1 class="text-3xl font-semibold text-zinc-900 mb-4">Mentions légales</h1>
-      <p class="text-xs font-mono text-zinc-500">Dernière mise à jour : novembre 2026</p>
+      <h1 class={h1}>Mentions légales</h1>
+      <p class="mt-4 font-mono text-xs text-zinc-500">Dernière mise à jour : novembre 2026</p>
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Éditeur du site</h2>
-      <div class="space-y-4 text-zinc-500 leading-relaxed">
+      <h2 class={h2}>Éditeur du site</h2>
+      <div class:list={[body, 'space-y-4']}>
         <p>
           Le site maximederycke.dev est édité par Maxime Derycke, entrepreneur individuel (EI),
           sous le nom commercial M Digital Studio.
@@ -29,30 +29,30 @@ const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 tra
         <ul class="flex flex-col gap-2">
           <li>Adresse : {address}</li>
           <li>Téléphone : {phone}</li>
-          <li>E-mail : <a href="mailto:maxime@mdigitalstudio.fr" class={link}>maxime@mdigitalstudio.fr</a></li>
+          <li>E-mail : <a href="mailto:maxime@mdigitalstudio.fr" class={inlineLink}>maxime@mdigitalstudio.fr</a></li>
           <li>SIRET : 103 286 845 00013</li>
         </ul>
       </div>
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Directeur de la publication</h2>
-      <p class="text-zinc-500 leading-relaxed">Maxime Derycke</p>
+      <h2 class={h2}>Directeur de la publication</h2>
+      <p class={body}>Maxime Derycke</p>
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Hébergement</h2>
-      <ul class="flex flex-col gap-2 text-zinc-500 leading-relaxed">
+      <h2 class={h2}>Hébergement</h2>
+      <ul class:list={[body, 'flex flex-col gap-2']}>
         <li>Scaleway SAS</li>
         <li>8, rue de la Ville-l'Évêque, 75008 Paris, France</li>
         <li>Téléphone : 01 84 13 00 00</li>
-        <li><a href="https://www.scaleway.com" target="_blank" rel="noopener noreferrer" class={link}>www.scaleway.com</a></li>
+        <li><a href="https://www.scaleway.com" target="_blank" rel="noopener noreferrer" class={inlineLink}>www.scaleway.com</a></li>
       </ul>
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Propriété intellectuelle</h2>
-      <p class="text-zinc-500 leading-relaxed">
+      <h2 class={h2}>Propriété intellectuelle</h2>
+      <p class={body}>
         Les textes, visuels, logos et le code de ce site appartiennent à Maxime Derycke,
         sauf mention contraire. Toute reproduction sans autorisation écrite est interdite.
       </p>
@@ -60,12 +60,12 @@ const link = 'text-zinc-900 underline underline-offset-2 hover:text-zinc-600 tra
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-4">Données personnelles</h2>
-      <p class="text-zinc-500 leading-relaxed">
+      <h2 class={h2}>Données personnelles</h2>
+      <p class={body}>
         Pour savoir comment vos données sont traitées, consultez la
-        <a href="/confidentialite/" class={link}>politique de confidentialité</a>.
+        <a href="/confidentialite/" class={inlineLink}>politique de confidentialité</a>.
       </p>
     </div>
 
-  </section>
+  </PageColumn>
 </BaseLayout>

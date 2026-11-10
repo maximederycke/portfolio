@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Malt from '../components/icons/Malt.astro'
+import PageColumn from '../components/PageColumn.astro'
+import ArrowLink from '../components/ArrowLink.astro'
+import ContactCard from '../components/ContactCard.astro'
+import { h1, lede, h2, body, bullet } from '../lib/typography'
 
 // Page du public secondaire (équipes techniques) : hors du menu, liée depuis le pied de page.
 // Jamais de tarif ici, et les preuves restent anonymes (dépôt public).
@@ -41,35 +45,32 @@ const ways = [
 
 const email = 'maxime@mdigitalstudio.fr'
 const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique')}`
-
-const eyebrow = 'text-xs font-mono text-zinc-500 uppercase tracking-widest'
 ---
 
 <BaseLayout
   title="Renfort technique — Maxime Derycke"
   description="Développeur fullstack TypeScript en renfort d'une équipe technique : applications web et mobile en production, conception, reprise de l'existant."
 >
-  <section class="max-w-3xl mx-auto px-6 py-16 space-y-14">
-
-    <!-- Renvoi pour le dirigeant arrivé ici par erreur -->
-    <p class="text-sm text-zinc-500">
-      Vous dirigez une PME et cherchez un outil pour vos équipes ?
-      <a href="/offres/" class="py-3 font-medium whitespace-nowrap text-zinc-900 hover:text-zinc-500 transition-colors">Offres et tarifs →</a>
-    </p>
+  <PageColumn>
 
     <div>
-      <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-4">Renfort technique</h1>
-      <p class="text-zinc-600 leading-relaxed">
+      <h1 class={h1}>Renfort technique</h1>
+      <p class={lede}>
         Je rejoins votre équipe pour faire évoluer une application web ou mobile déjà en production.
+      </p>
+      <!-- Renvoi pour le dirigeant arrivé ici par erreur : sous le chapeau, pour ne pas décaler le titre -->
+      <p class="mt-6 flex flex-wrap items-center gap-x-2 text-sm text-zinc-500">
+        Vous dirigez une PME et cherchez un outil pour vos équipes ?
+        <ArrowLink href="/offres/">Offres et tarifs</ArrowLink>
       </p>
     </div>
 
     <div>
-      <h2 class={`${eyebrow} mb-6`}>Missions</h2>
-      <ul class="flex flex-col gap-3 text-sm text-zinc-600">
+      <h2 class={h2}>Missions</h2>
+      <ul class="flex flex-col gap-3 text-zinc-600">
         {missions.map(item => (
-          <li class="flex items-start gap-2.5">
-            <span class="mt-0.5 text-zinc-300" aria-hidden="true">—</span>
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class={bullet}></span>
             {item}
           </li>
         ))}
@@ -77,7 +78,7 @@ const eyebrow = 'text-xs font-mono text-zinc-500 uppercase tracking-widest'
     </div>
 
     <div>
-      <h2 class={`${eyebrow} mb-5`}>Stack</h2>
+      <h2 class={h2}>Stack</h2>
       <ul class="flex flex-wrap gap-2">
         {stack.map(tech => (
           <li class="text-xs font-mono px-3 py-1 rounded-full border border-zinc-200 text-zinc-500">
@@ -88,27 +89,27 @@ const eyebrow = 'text-xs font-mono text-zinc-500 uppercase tracking-widest'
     </div>
 
     <div>
-      <h2 class={`${eyebrow} mb-8`}>Réalisations</h2>
-      <div class="flex flex-col gap-8">
+      <h2 class={h2}>Réalisations</h2>
+      <ol class="rules">
         {proofs.map(({ date, title, text, tech }) => (
-          <div class="flex flex-col gap-2 sm:flex-row sm:gap-6">
-            <span class="text-xs font-mono text-zinc-500 sm:w-24 shrink-0 sm:pt-0.5">{date}</span>
+          <li class="flex flex-col gap-2 py-6 sm:flex-row sm:gap-8">
+            <span class="shrink-0 font-mono text-xs text-zinc-500 sm:w-28 sm:pt-1">{date}</span>
             <div>
-              <p class="text-sm font-medium text-zinc-900">{title}</p>
-              <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">{text}</p>
-              <p class="text-xs font-mono text-zinc-500 mt-2.5">{tech}</p>
+              <p class="font-medium text-zinc-900">{title}</p>
+              <p class="mt-2 text-sm leading-relaxed text-zinc-600">{text}</p>
+              <p class="mt-3 font-mono text-xs text-zinc-500">{tech}</p>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
 
     <div>
-      <h2 class={`${eyebrow} mb-6`}>Façon de travailler</h2>
-      <ul class="flex flex-col gap-3 text-sm text-zinc-600">
+      <h2 class={h2}>Façon de travailler</h2>
+      <ul class="flex flex-col gap-3 text-zinc-600">
         {ways.map(item => (
-          <li class="flex items-start gap-2.5">
-            <span class="mt-0.5 text-zinc-300" aria-hidden="true">—</span>
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class={bullet}></span>
             {item}
           </li>
         ))}
@@ -116,22 +117,21 @@ const eyebrow = 'text-xs font-mono text-zinc-500 uppercase tracking-widest'
     </div>
 
     <div>
-      <h2 class={`${eyebrow} mb-5`}>Disponibilité</h2>
-      <p class="text-zinc-600 leading-relaxed">
+      <h2 class={h2}>Disponibilité</h2>
+      <p class={body}>
         2 à 3 jours par semaine, ou à temps plein sur une mission de 3 à 6 mois.
         À distance, ou sur site à Beauvais et dans les environs.
       </p>
     </div>
 
-    <div class="border border-zinc-200 rounded-2xl p-7">
-      <h2 class={`${eyebrow} mb-3`}>Contact</h2>
-      <p class="text-sm text-zinc-500 leading-relaxed mb-6">
-        Décrivez-moi le contexte de l'équipe et la mission, je vous réponds rapidement.
-      </p>
-      <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
+    <ContactCard
+      title="Parlons de votre mission"
+      text="Décrivez-moi le contexte de l'équipe et la mission, je vous réponds rapidement."
+    >
+      <div slot="actions" class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-6">
         <a
           href={mailto}
-          class="inline-flex px-5 py-3 sm:py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition"
+          class="inline-flex min-h-11 items-center rounded-lg bg-zinc-900 px-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-700 active:translate-y-px"
         >
           Écrire un e-mail
         </a>
@@ -139,13 +139,13 @@ const eyebrow = 'text-xs font-mono text-zinc-500 uppercase tracking-widest'
           href="https://www.malt.fr/profile/maximederycke"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-500 hover:text-zinc-600 transition-colors"
+          class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-zinc-900 decoration-zinc-900/30 underline-offset-4 hover:underline"
         >
           <Malt size={18} />
-          Voir mon profil Malt →
+          Voir mon profil Malt
         </a>
       </div>
-    </div>
+    </ContactCard>
 
-  </section>
+  </PageColumn>
 </BaseLayout>

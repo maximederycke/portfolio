@@ -1,0 +1,26 @@
+---
+// Le seul lien d'action du site : encre, flèche qui glisse au survol, soulignement au survol.
+// Les liens dans le texte courant utilisent `inlineLink` (src/lib/typography.ts).
+interface Props {
+  href: string
+  external?: boolean
+  class?: string
+}
+
+const { href, external = false, class: className } = Astro.props
+---
+
+<a
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  class:list={[
+    'group/arrow inline-flex min-h-11 items-center gap-1.5 text-sm font-medium whitespace-nowrap text-zinc-900 decoration-zinc-900/30 underline-offset-4 hover:underline',
+    className,
+  ]}
+>
+  <slot />
+  <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 transition-transform duration-300 ease-out group-hover/arrow:translate-x-0.5 motion-reduce:transition-none">
+    <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</a>

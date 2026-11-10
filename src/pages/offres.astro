@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import PageColumn from '../components/PageColumn.astro'
+import ArrowLink from '../components/ArrowLink.astro'
+import ContactCard from '../components/ContactCard.astro'
 import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
+import { h1, lede, h2, h3 } from '../lib/typography'
 
 // Déroulé d'un projet, dans l'ordre chronologique : chaque étape a son prix (ou « Offert »).
 // Jamais de tarif journalier sur cette page.
@@ -67,11 +71,11 @@ const guarantees = [
   title="Offres et tarifs — Maxime Derycke"
   description="Planning, interventions, ressaisie entre le terrain et le bureau : un outil sur mesure pour votre PME, livré par étapes à prix ferme. Rendez-vous de découverte offert."
 >
-  <section class="max-w-3xl mx-auto px-6 py-16 space-y-16">
+  <PageColumn>
 
     <div>
-      <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-4">Offres et tarifs</h1>
-      <p class="text-zinc-600 leading-relaxed max-w-2xl">
+      <h1 class={h1}>Offres et tarifs</h1>
+      <p class={lede}>
         Le planning dans un tableur, les comptes rendus d'intervention sur papier ou par messages,
         et le bureau qui ressaisit tout ? Je construis l'outil qui relie le terrain au bureau.
         Le projet avance par étapes, et vous connaissez le prix de chacune avant qu'elle commence.
@@ -79,7 +83,7 @@ const guarantees = [
     </div>
 
     <div>
-      <h2 class="text-xl font-semibold tracking-tight text-zinc-900 mb-10">Comment se passe un projet</h2>
+      <h2 class:list={[h2, 'mb-10']}>Comment se passe un projet</h2>
 
       <!-- Frise : un rail vertical relie les étapes, numérotées parce que l'ordre compte -->
       <ol class="flex flex-col">
@@ -102,7 +106,7 @@ const guarantees = [
 
               <div class:list={['pt-1', !isLast && 'pb-12']}>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-                  <h3 class="text-lg font-semibold text-zinc-900">{title}</h3>
+                  <h3 class={h3}>{title}</h3>
                   <dl class="flex flex-col gap-1 sm:items-end sm:text-right shrink-0">
                     {prices.map(({ label, amount }) => (
                       <div class="flex items-baseline gap-2 sm:justify-end">
@@ -114,14 +118,9 @@ const guarantees = [
                     ))}
                   </dl>
                 </div>
-                <p class="mt-3 text-sm text-zinc-600 leading-relaxed max-w-xl">{text}</p>
+                <p class="mt-3 max-w-xl leading-relaxed text-pretty text-zinc-600">{text}</p>
                 {link && (
-                  <a
-                    href={link.href}
-                    class="inline-flex min-h-11 items-center text-sm font-medium text-zinc-900 hover:text-zinc-500 transition-colors"
-                  >
-                    {link.label} →
-                  </a>
+                  <ArrowLink href={link.href} class="mt-2">{link.label}</ArrowLink>
                 )}
               </div>
             </li>
@@ -135,33 +134,18 @@ const guarantees = [
     </div>
 
     <div>
-      <h2 class="text-xl font-semibold tracking-tight text-zinc-900 mb-6">Trois garanties</h2>
+      <h2 class={h2}>Trois garanties</h2>
       <ul class="rules">
         {guarantees.map(({ title, text }) => (
           <li class="py-5 sm:grid sm:grid-cols-[14rem_1fr] sm:gap-8">
-            <p class="text-sm font-medium text-zinc-900">{title}</p>
-            <p class="mt-1.5 sm:mt-0 text-sm text-zinc-500 leading-relaxed">{text}</p>
+            <p class="font-medium text-zinc-900">{title}</p>
+            <p class="mt-1.5 leading-relaxed text-pretty text-zinc-600 sm:mt-0">{text}</p>
           </li>
         ))}
       </ul>
     </div>
 
-    <div class="border border-zinc-200 rounded-2xl p-7">
-      <h2 class="text-lg font-semibold text-zinc-900 mb-2">On en parle ?</h2>
-      <p class="text-sm text-zinc-500 leading-relaxed mb-6">
-        Dites-moi ce qui vous fait perdre du temps aujourd'hui. On voit ensemble si un outil peut
-        régler le problème, et ce que ça coûterait.
-      </p>
-      <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
-        <a
-          href="/contact/"
-          class="inline-flex px-5 py-3 sm:py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition"
-        >
-          Prendre rendez-vous
-        </a>
-        <span class="font-mono text-xs text-zinc-500">30 min offertes</span>
-      </div>
-    </div>
+    <ContactCard />
 
-  </section>
+  </PageColumn>
 </BaseLayout>

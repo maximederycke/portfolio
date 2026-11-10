@@ -1,16 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import PageColumn from '../components/PageColumn.astro'
+import ContactCard from '../components/ContactCard.astro'
+import { h1, h2, body, bullet } from '../lib/typography'
+
+const builds = [
+  'Applications web — SPA, dashboards, outils internes',
+  'Applications mobile — React Native / Expo',
+  'Intégrations API REST & OAuth2 — Jira, Microsoft Graph, ERP...',
+  'Mise en place d\'environnements Docker et déploiement',
+]
+
+const timeline = [
+  {
+    date: '2026',
+    title: 'Développeur freelance',
+    text: 'Hub de planification interne pour une ESN — agrégation de Jira, Tempo et Microsoft Graph pour la saisie de temps, la planification de tickets et l\'affichage des disponibilités collaborateurs.',
+    tech: 'React 19 · Bun · Hono · Docker · OAuth2',
+  },
+  {
+    date: '2022 — 2026',
+    title: 'Développeur fullstack — CDI',
+    text: 'Développement de plusieurs applications en autonomie : outil de backup avec suivi temps réel et notifications Slack, application mobile pour installateurs chauffagistes (scan, formulaires dynamiques, communication ERP), outil RH et planification. Mise en place d\'une méthodologie Agile et migration Jira.',
+    tech: 'React · React Native · Next.js · NestJS · Symfony · PostgreSQL · Docker · AWS',
+  },
+  {
+    date: '2017 — 2021',
+    title: 'Technicien d\'essais & intégration véhicule — Automobile',
+    text: 'Quatre ans dans l\'industrie automobile après une licence en systèmes embarqués. Une formation à la rigueur et aux environnements contraints qui oriente encore ma façon d\'appréhender les projets techniques.',
+  },
+]
 ---
 
 <BaseLayout
   title="À propos — Maxime Derycke"
   description="Développeur fullstack JS/TS freelance, spécialisé dans les applications métier sur mesure pour les PME."
 >
-  <section class="max-w-3xl mx-auto px-6 py-16 space-y-14">
+  <PageColumn>
 
     <div>
-      <h1 class="text-3xl font-semibold text-zinc-900 mb-4">À propos</h1>
-      <div class="space-y-4 text-zinc-500 leading-relaxed">
+      <h1 class={h1}>À propos</h1>
+      <div class:list={[body, 'mt-5 space-y-4 text-lg']}>
         <p>
           Titulaire d'une licence en systèmes embarqués, j'ai travaillé quatre ans en R&D
           automobile avant de me reconvertir dans le développement web en 2022. Cette double
@@ -27,72 +57,35 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-6">Ce que je construis</h2>
-      <ul class="flex flex-col gap-3 text-sm text-zinc-600">
-        <li class="flex items-start gap-2.5">
-          <span class="mt-0.5 text-zinc-300">—</span>
-          Applications web — SPA, dashboards, outils internes
-        </li>
-        <li class="flex items-start gap-2.5">
-          <span class="mt-0.5 text-zinc-300">—</span>
-          Applications mobile — React Native / Expo
-        </li>
-        <li class="flex items-start gap-2.5">
-          <span class="mt-0.5 text-zinc-300">—</span>
-          Intégrations API REST &amp; OAuth2 — Jira, Microsoft Graph, ERP...
-        </li>
-        <li class="flex items-start gap-2.5">
-          <span class="mt-0.5 text-zinc-300">—</span>
-          Mise en place d'environnements Docker et déploiement
-        </li>
+      <h2 class={h2}>Ce que je construis</h2>
+      <ul class="flex flex-col gap-3 text-zinc-600">
+        {builds.map(item => (
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class={bullet}></span>
+            {item}
+          </li>
+        ))}
       </ul>
     </div>
 
     <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-8">Parcours</h2>
-      <div class="flex flex-col gap-8">
-
-        <div class="flex gap-6">
-          <span class="text-xs font-mono text-zinc-500 w-24 shrink-0 pt-0.5">2026</span>
-          <div>
-            <p class="text-sm font-medium text-zinc-900">Développeur freelance</p>
-            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
-              Hub de planification interne pour une ESN — agrégation de Jira, Tempo et Microsoft
-              Graph pour la saisie de temps, la planification de tickets et l'affichage des
-              disponibilités collaborateurs.
-            </p>
-            <p class="text-xs font-mono text-zinc-500 mt-2.5">React 19 · Bun · Hono · Docker · OAuth2</p>
-          </div>
-        </div>
-
-        <div class="flex gap-6">
-          <span class="text-xs font-mono text-zinc-500 w-24 shrink-0 pt-0.5">2022 — 2026</span>
-          <div>
-            <p class="text-sm font-medium text-zinc-900">Développeur fullstack — CDI</p>
-            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
-              Développement de plusieurs applications en autonomie : outil de backup avec suivi
-              temps réel et notifications Slack, application mobile pour installateurs
-              chauffagistes (scan, formulaires dynamiques, communication ERP), outil RH et
-              planification. Mise en place d'une méthodologie Agile et migration Jira.
-            </p>
-            <p class="text-xs font-mono text-zinc-500 mt-2.5">React · React Native · Next.js · NestJS · Symfony · PostgreSQL · Docker · AWS</p>
-          </div>
-        </div>
-
-        <div class="flex gap-6">
-          <span class="text-xs font-mono text-zinc-500 w-24 shrink-0 pt-0.5">2017 — 2021</span>
-          <div>
-            <p class="text-sm font-medium text-zinc-900">Technicien d'essais & intégration véhicule — Automobile</p>
-            <p class="text-sm text-zinc-500 mt-1.5 leading-relaxed">
-              Quatre ans dans l'industrie automobile après une licence en systèmes embarqués.
-              Une formation à la rigueur et aux environnements contraints qui oriente encore
-              ma façon d'appréhender les projets techniques.
-            </p>
-          </div>
-        </div>
-
-      </div>
+      <h2 class={h2}>Parcours</h2>
+      <!-- Sous sm, la date passe au-dessus du texte pour lui laisser toute la largeur -->
+      <ol class="rules">
+        {timeline.map(({ date, title, text, tech }) => (
+          <li class="flex flex-col gap-2 py-6 sm:flex-row sm:gap-8">
+            <span class="shrink-0 font-mono text-xs text-zinc-500 sm:w-28 sm:pt-1">{date}</span>
+            <div>
+              <p class="font-medium text-zinc-900">{title}</p>
+              <p class="mt-2 text-sm leading-relaxed text-zinc-600">{text}</p>
+              {tech && <p class="mt-3 font-mono text-xs text-zinc-500">{tech}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
 
-  </section>
+    <ContactCard />
+
+  </PageColumn>
 </BaseLayout>
