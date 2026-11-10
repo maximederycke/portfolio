@@ -16,7 +16,7 @@ The job for the primary audience: recognise their problem, understand how a proj
 
 ## Product Purpose
 
-Professional site of Maxime Derycke, freelance developer based in Beauvais (Oise). It presents a stepped offer for SME field teams, shows the proof on hand, and turns visitors into requests for a Rendez-vous de découverte through a multi-step contact form that emails him a notification (Scaleway Transactional Email, no third-party storage). Success is a qualified request from an SME owner whose problem fits the offer.
+Professional site of Maxime Derycke, freelance developer based in Beauvais (Oise). It presents a stepped offer for SME field teams, shows the proof on hand, and turns visitors into requests for a Rendez-vous de découverte through a single-page contact form that emails him a notification (Scaleway Transactional Email, no third-party storage). Success is a qualified request from an SME owner whose problem fits the offer.
 
 ## Positioning
 
