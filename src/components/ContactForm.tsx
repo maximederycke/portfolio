@@ -252,10 +252,12 @@ export default function ContactForm() {
 
 const labelClass = 'block text-xs font-mono text-zinc-500 mb-1.5'
 
-// Le focus garde l'anneau encre global (≥ 3:1) : la bordure teal seule n'atteint que ~2,4:1
+// Focus : bordure + ring d'1 px = 2 px en teal-700 (5,5:1) ; le teal-500 seul n'atteint que ~2,4:1
 const inputClass = (invalid: boolean, extra = 'py-2.5') =>
-  `w-full min-h-11 px-4 ${extra} rounded-xl border text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 transition-colors ${
-    invalid ? 'border-red-500 focus:border-red-600' : 'border-zinc-200 focus:border-teal-500'
+  `w-full min-h-11 px-4 ${extra} rounded-xl border text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 transition-colors ${
+    invalid
+      ? 'border-red-500 focus:border-red-600 focus:ring-red-600'
+      : 'border-zinc-200 focus:border-teal-700 focus:ring-teal-700'
   }`
 
 // ─── Choix appel / visite ────────────────────────────────────────────────────
