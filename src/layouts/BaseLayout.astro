@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import { Image, getImage } from 'astro:assets'
+import { getImage } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
 import { avatar } from '../lib/avatar'
 // Fichier latin de DM Sans, préchargé pour éviter le changement de police au premier affichage
@@ -14,8 +14,9 @@ interface Props {
 const { title, description = 'Développeur Fullstack JS/TS freelance' } = Astro.props
 
 const navLinks = [
-  { href: '/about/', label: 'À propos' },
+  // L'offre d'abord : c'est ce que vient chercher le dirigeant de PME
   { href: '/offres/', label: 'Offres et tarifs' },
+  { href: '/about/', label: 'À propos' },
   { href: '/contact/', label: 'Contact' },
 ]
 
@@ -28,6 +29,11 @@ const footerLinks = [
 
 const currentPath = Astro.url.pathname
 const isHome = currentPath === '/'
+// Sur /contact/, le bouton « Prendre rendez-vous » mènerait à la page elle-même
+const isContact = currentPath.startsWith('/contact/')
+
+const primaryButton =
+  'min-h-11 items-center justify-center rounded-lg bg-zinc-900 px-4 text-sm font-medium whitespace-nowrap text-white transition hover:bg-zinc-700 active:translate-y-px'
 
 // Partage (LinkedIn, Malt, messageries) : URL canonique + image carrée tirée du portrait
 const canonical = new URL(currentPath, Astro.site).href
@@ -62,68 +68,65 @@ const ogImage = avatar
   </head>
   <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
-    <header class="site-header pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
-      <div class="mx-auto max-w-7xl lg:px-8">
-        <div class="relative flex items-center gap-4 px-6 lg:px-8">
+    <a
+      href="#contenu"
+      class="sr-only rounded-lg bg-white px-4 py-3 text-sm font-medium text-zinc-900 ring-1 ring-zinc-900/10 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-30"
+    >
+      Aller au contenu
+    </a>
 
-          <!-- Gauche : retour à l'accueil (masqué sur l'accueil, où l'avatar est dans le hero) -->
-          <div class="flex flex-1">
-            {!isHome && (
-              <a
-                href="/"
-                aria-label="Accueil"
-                class="pointer-events-auto h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm"
-              >
-                {avatar ? (
-                  <Image src={avatar} alt="" width={72} height={72} class="size-9 rounded-full bg-zinc-100 object-cover" />
-                ) : (
-                  <span class="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-sm font-semibold text-zinc-900">M</span>
-                )}
-              </a>
+    <!-- En-tête : une barre flottante sur la grille de la feuille. Retrait et padding
+         s'additionnent (12 + 12 px, puis 16 + 16 px dès lg) pour poser le nom sur la
+         même verticale que le contenu des pages (px-6, lg:px-8 dans la feuille). -->
+    <!-- Sous lg, la page est blanche jusqu'au bord : un fondu blanc masque le texte qui défile au-dessus de la barre -->
+    <header class="site-header fixed inset-x-0 top-0 z-20 max-lg:bg-linear-to-b max-lg:from-white max-lg:from-40% max-lg:to-white/0">
+      <div class="mx-auto max-w-7xl px-3 pt-3 lg:px-12 lg:pt-4">
+        <div class="flex h-14 items-center gap-6 rounded-2xl bg-white/90 px-3 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm lg:px-4">
+
+          <a href="/" aria-current={isHome ? 'page' : undefined} class="inline-flex min-h-11 items-center text-[0.9375rem] font-semibold tracking-tight whitespace-nowrap text-zinc-900">
+            Maxime Derycke
+          </a>
+
+          <nav aria-label="Navigation principale" class="hidden sm:block">
+            <ul class="flex text-sm font-medium">
+              {navLinks.map(({ href, label }) => {
+                const isActive = currentPath.startsWith(href)
+                return (
+                  <li>
+                    <a
+                      href={href}
+                      aria-current={isActive ? 'page' : undefined}
+                      class:list={['relative inline-flex min-h-11 items-center px-3 whitespace-nowrap transition-colors', isActive ? 'text-teal-700' : 'text-zinc-600 hover:text-zinc-900']}
+                    >
+                      {label}
+                      {isActive && (
+                        <span class="nav-marker absolute inset-x-1 bottom-1 h-px bg-linear-to-r from-teal-500/0 via-teal-500/60 to-teal-500/0" />
+                      )}
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+
+          <div class="ml-auto flex items-center">
+            {!isContact && (
+              <a href="/contact/" class:list={[primaryButton, 'hidden sm:inline-flex']}>Prendre rendez-vous</a>
             )}
-          </div>
-
-          <!-- Centre (desktop) : pilule de navigation. Droite (mobile) : bouton Menu -->
-          <div class="flex flex-1 justify-end sm:flex-none sm:justify-center">
             <button
               id="menu-toggle"
               type="button"
               aria-haspopup="dialog"
               aria-controls="mobile-nav"
               aria-expanded="false"
-              class="group pointer-events-auto flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm sm:hidden"
+              class="group -mr-1 inline-flex min-h-11 items-center gap-2.5 rounded-lg px-3 text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-50 sm:hidden"
             >
               Menu
-              <svg viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700">
+              <svg viewBox="0 0 8 6" aria-hidden="true" class="h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700">
                 <path d="M1.75 1.75 4 4.25l2.25-2.5" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
-
-            <nav aria-label="Navigation principale" class="pointer-events-auto hidden sm:block">
-              <ul class="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-700 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm">
-                {navLinks.map(({ href, label }) => {
-                  const isActive = currentPath.startsWith(href)
-                  return (
-                    <li>
-                      <a
-                        href={href}
-                        aria-current={isActive ? 'page' : undefined}
-                        class:list={['relative block whitespace-nowrap px-3 py-2 transition hover:text-teal-700', isActive && 'text-teal-700']}
-                      >
-                        {label}
-                        {isActive && (
-                          <span class="nav-marker absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
-                        )}
-                      </a>
-                    </li>
-                  )
-                })}
-              </ul>
-            </nav>
           </div>
-
-          <!-- Droite (desktop) : espace qui garde la pilule centrée -->
-          <div class="hidden sm:flex sm:flex-1"></div>
 
         </div>
       </div>
@@ -133,27 +136,28 @@ const ogImage = avatar
     <dialog
       id="mobile-nav"
       aria-labelledby="mobile-nav-title"
-      class="fixed inset-x-4 top-8 bottom-auto m-0 w-auto max-w-none rounded-3xl bg-white p-8 text-zinc-800 ring-1 ring-zinc-900/5 backdrop:bg-zinc-800/40 backdrop:backdrop-blur-xs sm:hidden"
+      class="fixed inset-x-3 top-3 bottom-auto m-0 w-auto max-w-none rounded-3xl bg-white p-6 text-zinc-800 ring-1 ring-zinc-900/5 backdrop:bg-zinc-800/40 backdrop:backdrop-blur-xs sm:hidden"
     >
-      <div class="flex flex-row-reverse items-center justify-between">
-        <button type="button" data-close aria-label="Fermer le menu" class="-m-1 p-1">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-zinc-500">
+      <div class="flex items-center justify-between">
+        <h2 id="mobile-nav-title" class="text-sm font-medium text-zinc-600">Navigation</h2>
+        <button type="button" data-close aria-label="Fermer le menu" class="-m-2.5 rounded-lg p-2.5 text-zinc-500 transition-colors hover:text-zinc-700">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="size-6">
             <path d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
-        <h2 id="mobile-nav-title" class="text-sm font-medium text-zinc-600">Navigation</h2>
       </div>
-      <nav aria-label="Menu mobile" class="mt-6">
-        <ul class="-my-2 divide-y divide-zinc-100 text-base text-zinc-800">
-          {navLinks.map(({ href, label }) => {
-            const isActive = currentPath.startsWith(href)
+      <nav aria-label="Menu mobile" class="mt-4">
+        <ul class="divide-y divide-zinc-100 text-base text-zinc-800">
+          {[{ href: '/', label: 'Accueil' }, ...navLinks].map(({ href, label }) => {
+            const isActive = href === '/' ? isHome : currentPath.startsWith(href)
             return (
               <li>
                 <a
                   href={href}
                   aria-current={isActive ? 'page' : undefined}
-                  class:list={['block py-2', isActive && 'font-semibold text-zinc-900']}
+                  class:list={['flex min-h-11 items-center gap-2.5 py-3', isActive && 'font-semibold text-zinc-900']}
                 >
+                  {isActive && <span aria-hidden="true" class="size-1.5 rounded-full bg-teal-500" />}
                   {label}
                 </a>
               </li>
@@ -161,12 +165,15 @@ const ogImage = avatar
           })}
         </ul>
       </nav>
+      {!isContact && (
+        <a href="/contact/" class:list={[primaryButton, 'mt-6 flex w-full']}>Prendre rendez-vous</a>
+      )}
     </dialog>
 
     <!-- La feuille : page blanche à filets fins posée sur le fond zinc-50 (dès lg) -->
     <div class="mx-auto flex w-full max-w-7xl flex-1 lg:px-8">
       <div class="flex w-full flex-col overflow-hidden bg-white lg:ring-1 lg:ring-zinc-100">
-        <main class="flex-1 pt-16">
+        <main id="contenu" tabindex="-1" class="flex-1 pt-16 focus:outline-none">
           <slot />
         </main>
 
@@ -176,10 +183,11 @@ const ogImage = avatar
           <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-between sm:justify-start text-xs font-mono text-zinc-500">
             <p>© {new Date().getFullYear()} Maxime Derycke</p>
             <nav aria-label="Pied de page" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto sm:flex sm:items-center sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400">
-              <!-- Sous sm, les liens passent à la ligne : un espace les sépare, les points reviennent dès sm -->
+              <!-- Sous sm, les liens passent à la ligne (un espace les sépare, les points reviennent dès sm) ;
+                   Renfort technique prend sa ligne pour que les deux liens légaux tiennent ensemble sur la suivante -->
               <ul class="flex flex-wrap gap-x-4 sm:gap-x-0">
                 {footerLinks.map(({ href, label }, i) => (
-                  <li class:list={['flex items-center', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>
+                  <li class:list={['flex items-center', i === 0 && 'w-full sm:w-auto', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>
                     <a
                       href={href}
                       aria-current={currentPath.startsWith(href) ? 'page' : undefined}
