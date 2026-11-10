@@ -18,7 +18,6 @@ const {
 const hasActions = Astro.slots.has('actions')
 ---
 
-<!-- Toute la largeur de la page : texte à gauche, action à droite dès lg -->
 <div class="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-7 sm:p-10 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:p-12">
   <div class="lg:col-span-7">
     <h2 class:list={[h2, 'mb-3']}>{title}</h2>
@@ -39,7 +38,7 @@ const hasActions = Astro.slots.has('actions')
             <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </a>
-        <!-- Point calé sur la première ligne : le texte passe à la ligne sur mobile -->
+        {/* Point calé sur la première ligne quand le texte passe à la ligne */}
         <p class="mt-4 flex items-start gap-2.5 font-mono text-xs leading-5 text-zinc-500">
           <span aria-hidden="true" class="mt-[0.4375rem] size-1.5 shrink-0 rounded-full bg-teal-500"></span>
           30 min · au téléphone ou sur place
