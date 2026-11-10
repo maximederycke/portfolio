@@ -36,6 +36,10 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: 'load' },
   // Astro 7 passe par défaut à 'jsx', qui supprime les espaces entre éléments inline (« et <a>…</a> » → « et… »)
   compressHTML: true,
+  // Ancienne page Services : les liens déjà partagés mènent à la nouvelle page
+  redirects: {
+    '/services/': '/offres/',
+  },
   integrations: [react(), sitemap(), checkPlaceholders()],
 
   vite: {
