@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css'
-import { Image, getImage } from 'astro:assets'
+import { getImage } from 'astro:assets'
 import SocialLinks from '../components/SocialLinks.astro'
 import { avatar } from '../lib/avatar'
 // Fichier latin de DM Sans, préchargé pour éviter le changement de police au premier affichage
@@ -13,10 +13,11 @@ interface Props {
 
 const { title, description = 'Développeur Fullstack JS/TS freelance' } = Astro.props
 
+// L'offre d'abord : c'est ce que vient chercher le dirigeant de PME. Pas de lien
+// « Contact » : le bouton « Prendre rendez-vous » de l'en-tête y mène sur toutes les pages
 const navLinks = [
+  { href: '/offres/', label: 'Offres & tarifs' },
   { href: '/about/', label: 'À propos' },
-  { href: '/offres/', label: 'Offres et tarifs' },
-  { href: '/contact/', label: 'Contact' },
 ]
 
 // Renfort technique : hors du menu principal, seulement ici (public secondaire)
@@ -28,6 +29,7 @@ const footerLinks = [
 
 const currentPath = Astro.url.pathname
 const isHome = currentPath === '/'
+const isContact = currentPath.startsWith('/contact/')
 
 // Partage (LinkedIn, Malt, messageries) : URL canonique + image carrée tirée du portrait
 const canonical = new URL(currentPath, Astro.site).href
@@ -62,45 +64,30 @@ const ogImage = avatar
   </head>
   <body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col">
 
-    <header class="site-header pointer-events-none fixed inset-x-0 top-0 z-10 pt-5 pb-2">
-      <div class="mx-auto max-w-7xl lg:px-8">
-        <div class="relative flex items-center gap-4 px-6 lg:px-8">
+    <a
+      href="#contenu"
+      class="sr-only rounded-lg bg-white px-4 py-3 text-sm font-medium text-zinc-900 ring-1 ring-zinc-900/10 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-30"
+    >
+      Aller au contenu
+    </a>
 
-          <!-- Gauche : retour à l'accueil (masqué sur l'accueil, où l'avatar est dans le hero) -->
-          <div class="flex flex-1">
-            {!isHome && (
-              <a
-                href="/"
-                aria-label="Accueil"
-                class="pointer-events-auto h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm"
-              >
-                {avatar ? (
-                  <Image src={avatar} alt="" width={72} height={72} class="size-9 rounded-full bg-zinc-100 object-cover" />
-                ) : (
-                  <span class="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-sm font-semibold text-zinc-900">M</span>
-                )}
-              </a>
-            )}
-          </div>
+    <!-- En-tête : une barre flottante sur la grille de la feuille. Retrait et padding
+         s'additionnent (12 + 12 px, puis 16 + 16 px dès lg) pour poser le nom sur la
+         même verticale que le contenu des pages (px-6, lg:px-8 dans la feuille).
+         Sous lg, la page est blanche jusqu'au bord : un fondu blanc masque le texte qui
+         défile au-dessus de la barre. -->
+    <header id="site-header" class="site-header group/header fixed inset-x-0 top-0 z-20 max-lg:bg-linear-to-b max-lg:from-white max-lg:from-40% max-lg:to-white/0">
+      <div class="mx-auto max-w-7xl px-3 pt-3 lg:px-12 lg:pt-4">
+        <div class="rounded-2xl bg-white/90 px-3 transition-colors duration-300 group-data-open/header:bg-white shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm lg:px-4">
+          <div class="flex h-14 items-center gap-6">
 
-          <!-- Centre (desktop) : pilule de navigation. Droite (mobile) : bouton Menu -->
-          <div class="flex flex-1 justify-end sm:flex-none sm:justify-center">
-            <button
-              id="menu-toggle"
-              type="button"
-              aria-haspopup="dialog"
-              aria-controls="mobile-nav"
-              aria-expanded="false"
-              class="group pointer-events-auto flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm sm:hidden"
-            >
-              Menu
-              <svg viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700">
-                <path d="M1.75 1.75 4 4.25l2.25-2.5" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
+            <a href="/" aria-current={isHome ? 'page' : undefined} class="inline-flex min-h-11 items-center text-[0.9375rem] font-semibold tracking-tight whitespace-nowrap text-zinc-900">
+              Maxime Derycke
+            </a>
 
-            <nav aria-label="Navigation principale" class="pointer-events-auto hidden sm:block">
-              <ul class="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-700 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm">
+            <!-- Seul le lien actif porte un filet (teal) : le survol ne change que la couleur -->
+            <nav aria-label="Navigation principale" class="hidden sm:block">
+              <ul class="flex text-sm font-medium">
                 {navLinks.map(({ href, label }) => {
                   const isActive = currentPath.startsWith(href)
                   return (
@@ -108,11 +95,11 @@ const ogImage = avatar
                       <a
                         href={href}
                         aria-current={isActive ? 'page' : undefined}
-                        class:list={['relative block whitespace-nowrap px-3 py-2 transition hover:text-teal-700', isActive && 'text-teal-700']}
+                        class:list={['relative inline-flex min-h-11 items-center px-3 whitespace-nowrap transition-colors duration-200', isActive ? 'text-teal-700' : 'text-zinc-600 hover:text-zinc-900']}
                       >
                         {label}
                         {isActive && (
-                          <span class="nav-marker absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0" />
+                          <span class="nav-marker absolute inset-x-1 bottom-1.5 h-px bg-linear-to-r from-teal-500/0 via-teal-500/60 to-teal-500/0" />
                         )}
                       </a>
                     </li>
@@ -120,53 +107,92 @@ const ogImage = avatar
                 })}
               </ul>
             </nav>
+
+            <div class="ml-auto flex items-center">
+              <!-- Zone cliquable portée à 44 px par un pseudo-élément, bouton visible de 36 px -->
+              <a
+                href="/contact/"
+                aria-current={isContact ? 'page' : undefined}
+                class="group/cta relative hidden h-9 items-center gap-1.5 rounded-lg bg-zinc-900 pr-3 pl-3.5 text-sm font-medium whitespace-nowrap text-white transition-colors duration-200 before:absolute before:-inset-y-1 before:inset-x-0 hover:bg-zinc-700 active:translate-y-px sm:inline-flex"
+              >
+                Prendre rendez-vous
+                <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 transition-transform duration-300 ease-out group-hover/cta:translate-x-0.5 motion-reduce:transition-none">
+                  <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+
+              <!-- Mobile : icône burger qui se change en croix à l'ouverture -->
+              <button
+                id="menu-toggle"
+                type="button"
+                aria-controls="mobile-nav"
+                aria-expanded="false"
+                aria-label="Ouvrir le menu"
+                class="-mr-1.5 inline-flex size-11 items-center justify-center rounded-lg text-zinc-800 transition-colors hover:bg-zinc-50 sm:hidden"
+              >
+                <span aria-hidden="true" class="relative block h-3 w-[1.125rem]">
+                  <span class="absolute inset-x-0 top-0 h-[1.5px] rounded-full bg-current transition-transform duration-300 ease-out group-data-open/header:translate-y-[5.25px] group-data-open/header:rotate-45 motion-reduce:transition-none" />
+                  <span class="absolute inset-x-0 bottom-0 h-[1.5px] rounded-full bg-current transition-transform duration-300 ease-out group-data-open/header:-translate-y-[5.25px] group-data-open/header:-rotate-45 motion-reduce:transition-none" />
+                </span>
+              </button>
+            </div>
+
           </div>
 
-          <!-- Droite (desktop) : espace qui garde la pilule centrée -->
-          <div class="hidden sm:flex sm:flex-1"></div>
-
+          <!-- Menu mobile : la barre s'agrandit vers le bas, elle reste visible au-dessus.
+               Fermé, le panneau est inerte (hors du parcours clavier et des lecteurs d'écran). -->
+          <div
+            id="mobile-nav"
+            inert
+            class="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-300 ease-out group-data-open/header:grid-rows-[1fr] group-data-open/header:opacity-100 motion-reduce:transition-none sm:hidden"
+          >
+            <div class="overflow-hidden">
+              <nav aria-label="Menu mobile" class="border-t border-zinc-100 pt-2 pb-3">
+                <ul class="text-base text-zinc-800">
+                  {[{ href: '/', label: 'Accueil' }, ...navLinks].map(({ href, label }) => {
+                    const isActive = href === '/' ? isHome : currentPath.startsWith(href)
+                    return (
+                      <li>
+                        <a
+                          href={href}
+                          aria-current={isActive ? 'page' : undefined}
+                          class:list={['flex min-h-12 items-center gap-2.5', isActive && 'font-semibold text-zinc-900']}
+                        >
+                          {isActive && <span aria-hidden="true" class="size-1.5 rounded-full bg-teal-500" />}
+                          {label}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+                <a
+                  href="/contact/"
+                  aria-current={isContact ? 'page' : undefined}
+                  class="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-zinc-900 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                >
+                  Prendre rendez-vous
+                  <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4">
+                    <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </a>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- Menu mobile : panneau modal (focus piégé et Échap gérés par <dialog>) -->
-    <dialog
-      id="mobile-nav"
-      aria-labelledby="mobile-nav-title"
-      class="fixed inset-x-4 top-8 bottom-auto m-0 w-auto max-w-none rounded-3xl bg-white p-8 text-zinc-800 ring-1 ring-zinc-900/5 backdrop:bg-zinc-800/40 backdrop:backdrop-blur-xs sm:hidden"
-    >
-      <div class="flex flex-row-reverse items-center justify-between">
-        <button type="button" data-close aria-label="Fermer le menu" class="-m-1 p-1">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 text-zinc-500">
-            <path d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-        <h2 id="mobile-nav-title" class="text-sm font-medium text-zinc-600">Navigation</h2>
-      </div>
-      <nav aria-label="Menu mobile" class="mt-6">
-        <ul class="-my-2 divide-y divide-zinc-100 text-base text-zinc-800">
-          {navLinks.map(({ href, label }) => {
-            const isActive = currentPath.startsWith(href)
-            return (
-              <li>
-                <a
-                  href={href}
-                  aria-current={isActive ? 'page' : undefined}
-                  class:list={['block py-2', isActive && 'font-semibold text-zinc-900']}
-                >
-                  {label}
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
-    </dialog>
+    <!-- Voile derrière le menu mobile ouvert : un clic dessus ferme le menu -->
+    <div
+      id="menu-scrim"
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 z-10 bg-zinc-800/20 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 ease-out motion-reduce:transition-none sm:hidden"
+    ></div>
 
     <!-- La feuille : page blanche à filets fins posée sur le fond zinc-50 (dès lg) -->
     <div class="mx-auto flex w-full max-w-7xl flex-1 lg:px-8">
       <div class="flex w-full flex-col overflow-hidden bg-white lg:ring-1 lg:ring-zinc-100">
-        <main class="flex-1 pt-16">
+        <main id="contenu" tabindex="-1" class="flex-1 pt-16 focus:outline-none">
           <slot />
         </main>
 
@@ -176,10 +202,11 @@ const ogImage = avatar
           <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-between sm:justify-start text-xs font-mono text-zinc-500">
             <p>© {new Date().getFullYear()} Maxime Derycke</p>
             <nav aria-label="Pied de page" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto sm:flex sm:items-center sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400">
-              <!-- Sous sm, les liens passent à la ligne : un espace les sépare, les points reviennent dès sm -->
+              <!-- Sous sm, les liens passent à la ligne (un espace les sépare, les points reviennent dès sm) ;
+                   Renfort technique prend sa ligne pour que les deux liens légaux tiennent ensemble sur la suivante -->
               <ul class="flex flex-wrap gap-x-4 sm:gap-x-0">
                 {footerLinks.map(({ href, label }, i) => (
-                  <li class:list={['flex items-center', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>
+                  <li class:list={['flex items-center', i === 0 && 'w-full sm:w-auto', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>
                     <a
                       href={href}
                       aria-current={currentPath.startsWith(href) ? 'page' : undefined}
@@ -201,24 +228,39 @@ const ogImage = avatar
 </html>
 
 <script>
+  // Menu mobile : panneau de type « disclosure » attaché à la barre (pas de modale),
+  // pour que la barre reste visible et que le panneau se déplie en douceur.
+  const header = document.getElementById('site-header')
   const toggle = document.getElementById('menu-toggle')
-  const dialog = document.getElementById('mobile-nav') as HTMLDialogElement | null
+  const panel = document.getElementById('mobile-nav')
+  const scrim = document.getElementById('menu-scrim')
 
-  toggle?.addEventListener('click', () => {
-    dialog?.showModal()
-    toggle.setAttribute('aria-expanded', 'true')
+  const setOpen = (open: boolean) => {
+    if (!header || !toggle || !panel || !scrim) return
+    header.toggleAttribute('data-open', open)
+    panel.inert = !open
+    toggle.setAttribute('aria-expanded', String(open))
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu')
+    scrim.classList.toggle('opacity-100', open)
+    scrim.classList.toggle('pointer-events-auto', open)
+    document.body.classList.toggle('overflow-hidden', open)
+  }
+  const isOpen = () => header?.hasAttribute('data-open') ?? false
+
+  toggle?.addEventListener('click', () => setOpen(!isOpen()))
+  scrim?.addEventListener('click', () => setOpen(false))
+  panel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)))
+
+  // Échap ferme et rend le focus au bouton
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && isOpen()) {
+      setOpen(false)
+      toggle?.focus()
+    }
   })
 
-  const close = () => dialog?.close()
-  dialog?.querySelectorAll('[data-close], a').forEach(el => el.addEventListener('click', close))
-
-  // Clic sur le fond (hors du panneau) : ferme
-  dialog?.addEventListener('click', event => {
-    const r = dialog.getBoundingClientRect()
-    const outside =
-      event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom
-    if (outside) close()
+  // Passage en largeur sm : le panneau n'existe plus, on le referme
+  matchMedia('(min-width: 40rem)').addEventListener('change', event => {
+    if (event.matches) setOpen(false)
   })
-
-  dialog?.addEventListener('close', () => toggle?.setAttribute('aria-expanded', 'false'))
 </script>
