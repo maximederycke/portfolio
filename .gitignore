@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Notes de travail de la skill impeccable (rapports de critique, live-server) : seul le compagnon de DESIGN.md est public
+.impeccable/*
+!.impeccable/design.json
