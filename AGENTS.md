@@ -18,7 +18,7 @@ Un secret passe toujours par une variable d'environnement : `.env` (site) ou `ap
 
 - **Astro 7**, sortie statique, TypeScript strict (`astro/tsconfigs/strict`). Config dans `astro.config.mjs` : `trailingSlash: 'always'`, préchargement de toutes les pages, sitemap.
 - **Tailwind v4** via `@tailwindcss/vite`. Composants custom uniquement, sans bibliothèque de composants (ni shadcn, ni ReUI).
-- **React 19** uniquement pour le formulaire de contact (island `client:load`, étapes gérées par `@stepperize/react`).
+- **React 19** uniquement pour le formulaire de demande de rendez-vous (island `client:load`, une seule page).
 - **Polices** : DM Sans Variable (texte) et DM Mono (labels, tags, métadonnées) via Fontsource.
 - **API** (`api/`) : TypeScript sur Node 22, bundlé par esbuild, sans dépendance d'exécution. Elle tourne en fonction serverless Scaleway et envoie l'email via Scaleway Transactional Email.
 - **Outils** : pnpm 11 (`packageManager`), Node ≥ 22.12 (Node 24 en CI pour le site).

@@ -20,9 +20,6 @@ importers:
       '@fontsource/dm-mono':
         specifier: ^5.3.0
         version: 5.3.0
-      '@stepperize/react':
-        specifier: ^6.1.0
-        version: 6.1.0(react@19.3.0)(typescript@6.0.3)
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.2(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
@@ -941,16 +938,6 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
-
-  '@stepperize/core@2.1.0':
-    resolution: {integrity: sha512-edzIlkAUDrqan3G7XhY32PvciyQoJtyX3Fz8G1LBgSHIg2rMTBsZk8oz39NxT7XFxqibRXf2rvsH81iwg+Dd6w==}
-    peerDependencies:
-      typescript: '>=5.0.2'
-
-  '@stepperize/react@6.1.0':
-    resolution: {integrity: sha512-ywTt0OQDoBKcdzeBK9V1hTsMAQ+zAoIF/au9fcATspdGWfYr/z+mDGZm2cA2rzMJF79J+fUbjZPb+7Js4PtKBA==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@tailwindcss/node@4.3.3':
     resolution: {integrity: sha512-/T8IKEsf9VTU6tLjgC7+sv2mOPtQxzE2jMw7u4Tt40Tx+QSZxpzh95/H6cMKoja9XuW7iMdLJYBB0o9G1CaAgg==}
@@ -2923,17 +2910,6 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@10.0.2': {}
-
-  '@stepperize/core@2.1.0(typescript@6.0.3)':
-    dependencies:
-      typescript: 6.0.3
-
-  '@stepperize/react@6.1.0(react@19.3.0)(typescript@6.0.3)':
-    dependencies:
-      '@stepperize/core': 2.1.0(typescript@6.0.3)
-      react: 19.3.0
-    transitivePeerDependencies:
-      - typescript
 
   '@tailwindcss/node@4.3.3':
     dependencies:
