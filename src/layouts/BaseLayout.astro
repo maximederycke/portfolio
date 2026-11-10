@@ -85,7 +85,7 @@ const ogImage = avatar
               Maxime Derycke
             </a>
 
-            <!-- Survol d'un lien : un filet d'encre se trace de gauche à droite dessous -->
+            <!-- Seul le lien actif porte un filet (teal) : le survol ne change que la couleur -->
             <nav aria-label="Navigation principale" class="hidden sm:block">
               <ul class="flex text-sm font-medium">
                 {navLinks.map(({ href, label }) => {
@@ -95,13 +95,11 @@ const ogImage = avatar
                       <a
                         href={href}
                         aria-current={isActive ? 'page' : undefined}
-                        class:list={['group/link relative inline-flex min-h-11 items-center px-3 whitespace-nowrap transition-colors duration-200', isActive ? 'text-teal-700' : 'text-zinc-600 hover:text-zinc-900']}
+                        class:list={['relative inline-flex min-h-11 items-center px-3 whitespace-nowrap transition-colors duration-200', isActive ? 'text-teal-700' : 'text-zinc-600 hover:text-zinc-900']}
                       >
                         {label}
-                        {isActive ? (
+                        {isActive && (
                           <span class="nav-marker absolute inset-x-1 bottom-1.5 h-px bg-linear-to-r from-teal-500/0 via-teal-500/60 to-teal-500/0" />
-                        ) : (
-                          <span aria-hidden="true" class="absolute inset-x-3 bottom-2.5 h-px origin-left scale-x-0 bg-zinc-900/25 transition-transform duration-300 ease-out group-hover/link:scale-x-100 motion-reduce:transition-none" />
                         )}
                       </a>
                     </li>
