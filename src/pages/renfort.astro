@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Malt from '../components/icons/Malt.astro'
-import PageColumn from '../components/PageColumn.astro'
+import Page from '../components/Page.astro'
+import PageIntro from '../components/PageIntro.astro'
+import Section from '../components/Section.astro'
 import ArrowLink from '../components/ArrowLink.astro'
 import ContactCard from '../components/ContactCard.astro'
-import { h1, lede, h2, body, bullet } from '../lib/typography'
+import { body, bullet } from '../lib/typography'
 
 // Page du public secondaire (équipes techniques) : hors du menu, liée depuis le pied de page.
 // Jamais de tarif ici, et les preuves restent anonymes (dépôt public).
@@ -51,22 +53,18 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
   title="Renfort technique — Maxime Derycke"
   description="Développeur fullstack TypeScript en renfort d'une équipe technique : applications web et mobile en production, conception, reprise de l'existant."
 >
-  <PageColumn>
+  <Page>
 
-    <div>
-      <h1 class={h1}>Renfort technique</h1>
-      <p class={lede}>
-        Je rejoins votre équipe pour faire évoluer une application web ou mobile déjà en production.
-      </p>
+    <PageIntro title="Renfort technique">
+      <p>Je rejoins votre équipe pour faire évoluer une application web ou mobile déjà en production.</p>
       <!-- Renvoi pour le dirigeant arrivé ici par erreur : sous le chapeau, pour ne pas décaler le titre -->
-      <p class="mt-6 flex flex-wrap items-center gap-x-2 text-sm text-zinc-500">
+      <p slot="after" class="mt-6 flex flex-wrap items-center gap-x-2 text-sm text-zinc-500">
         Vous dirigez une PME et cherchez un outil pour vos équipes ?
         <ArrowLink href="/offres/">Offres et tarifs</ArrowLink>
       </p>
-    </div>
+    </PageIntro>
 
-    <div>
-      <h2 class={h2}>Missions</h2>
+    <Section title="Missions">
       <ul class="flex flex-col gap-3 text-zinc-600">
         {missions.map(item => (
           <li class="flex items-start gap-3">
@@ -75,10 +73,9 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Stack</h2>
+    <Section title="Stack">
       <ul class="flex flex-wrap gap-2">
         {stack.map(tech => (
           <li class="text-xs font-mono px-3 py-1 rounded-full border border-zinc-200 text-zinc-500">
@@ -86,13 +83,12 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Réalisations</h2>
-      <ol class="rules">
+    <Section title="Réalisations">
+      <ol class="divide-y divide-zinc-100">
         {proofs.map(({ date, title, text, tech }) => (
-          <li class="flex flex-col gap-2 py-6 sm:flex-row sm:gap-8">
+          <li class="flex flex-col gap-2 py-6 first:pt-0 last:pb-0 sm:flex-row sm:gap-8">
             <span class="shrink-0 font-mono text-xs text-zinc-500 sm:w-28 sm:pt-1">{date}</span>
             <div>
               <p class="font-medium text-zinc-900">{title}</p>
@@ -102,10 +98,9 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
           </li>
         ))}
       </ol>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Façon de travailler</h2>
+    <Section title="Façon de travailler">
       <ul class="flex flex-col gap-3 text-zinc-600">
         {ways.map(item => (
           <li class="flex items-start gap-3">
@@ -114,15 +109,14 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Disponibilité</h2>
+    <Section title="Disponibilité">
       <p class={body}>
         2 à 3 jours par semaine, ou à temps plein sur une mission de 3 à 6 mois.
         À distance, ou sur site à Beauvais et dans les environs.
       </p>
-    </div>
+    </Section>
 
     <ContactCard
       title="Parlons de votre mission"
@@ -147,5 +141,5 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent('Renfort technique'
       </div>
     </ContactCard>
 
-  </PageColumn>
+  </Page>
 </BaseLayout>

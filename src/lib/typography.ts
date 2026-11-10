@@ -6,7 +6,7 @@ export const h1 = 'text-4xl font-semibold tracking-tight text-balance text-zinc-
 
 export const lede = 'mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-zinc-600'
 
-export const h2 = 'mb-6 text-2xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl'
+export const h2 = 'text-2xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl'
 
 export const h3 = 'text-xl font-semibold text-zinc-900'
 

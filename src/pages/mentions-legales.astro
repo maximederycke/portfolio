@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import PageColumn from '../components/PageColumn.astro'
-import { h1, h2, body, inlineLink } from '../lib/typography'
+import Page from '../components/Page.astro'
+import PageIntro from '../components/PageIntro.astro'
+import Section from '../components/Section.astro'
+import { body, inlineLink } from '../lib/typography'
 
 // Variables GitHub injectées au build. Sans valeur, le marqueur reste et la build échoue (astro.config.mjs)
 const address = import.meta.env.LEGAL_ADDRESS || '[ADRESSE]'
@@ -12,15 +14,13 @@ const phone = import.meta.env.LEGAL_PHONE || '[TÉLÉPHONE]'
   title="Mentions légales — Maxime Derycke"
   description="Mentions légales de maximederycke.dev : éditeur, hébergement et propriété intellectuelle."
 >
-  <PageColumn>
+  <Page>
 
-    <div>
-      <h1 class={h1}>Mentions légales</h1>
-      <p class="mt-4 font-mono text-xs text-zinc-500">Dernière mise à jour : novembre 2026</p>
-    </div>
+    <PageIntro title="Mentions légales">
+      <p slot="after" class="mt-4 font-mono text-xs text-zinc-500">Dernière mise à jour : novembre 2026</p>
+    </PageIntro>
 
-    <div>
-      <h2 class={h2}>Éditeur du site</h2>
+    <Section title="Éditeur du site">
       <div class:list={[body, 'space-y-4']}>
         <p>
           Le site maximederycke.dev est édité par Maxime Derycke, entrepreneur individuel (EI),
@@ -33,39 +33,35 @@ const phone = import.meta.env.LEGAL_PHONE || '[TÉLÉPHONE]'
           <li>SIRET : 103 286 845 00013</li>
         </ul>
       </div>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Directeur de la publication</h2>
+    <Section title="Directeur de la publication">
       <p class={body}>Maxime Derycke</p>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Hébergement</h2>
+    <Section title="Hébergement">
       <ul class:list={[body, 'flex flex-col gap-2']}>
         <li>Scaleway SAS</li>
         <li>8, rue de la Ville-l'Évêque, 75008 Paris, France</li>
         <li>Téléphone : 01 84 13 00 00</li>
         <li><a href="https://www.scaleway.com" target="_blank" rel="noopener noreferrer" class={inlineLink}>www.scaleway.com</a></li>
       </ul>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Propriété intellectuelle</h2>
+    <Section title="Propriété intellectuelle">
       <p class={body}>
         Les textes, visuels, logos et le code de ce site appartiennent à Maxime Derycke,
         sauf mention contraire. Toute reproduction sans autorisation écrite est interdite.
       </p>
       {/* Le jour où /projects présente des clients, ajouter : « Les marques et logos des clients présentés le sont avec leur accord. » */}
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Données personnelles</h2>
+    <Section title="Données personnelles">
       <p class={body}>
         Pour savoir comment vos données sont traitées, consultez la
         <a href="/confidentialite/" class={inlineLink}>politique de confidentialité</a>.
       </p>
-    </div>
+    </Section>
 
-  </PageColumn>
+  </Page>
 </BaseLayout>

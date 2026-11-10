@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import PageColumn from '../components/PageColumn.astro'
+import Page from '../components/Page.astro'
+import PageIntro from '../components/PageIntro.astro'
+import Section from '../components/Section.astro'
 import ArrowLink from '../components/ArrowLink.astro'
 import ContactCard from '../components/ContactCard.astro'
 import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
-import { h1, lede, h2, h3 } from '../lib/typography'
+import { h3 } from '../lib/typography'
 
 // Déroulé d'un projet, dans l'ordre chronologique : chaque étape a son prix (ou « Offert »).
 // Jamais de tarif journalier sur cette page.
@@ -71,19 +73,17 @@ const guarantees = [
   title="Offres et tarifs — Maxime Derycke"
   description="Planning, interventions, ressaisie entre le terrain et le bureau : un outil sur mesure pour votre PME, livré par étapes à prix ferme. Rendez-vous de découverte offert."
 >
-  <PageColumn>
+  <Page>
 
-    <div>
-      <h1 class={h1}>Offres et tarifs</h1>
-      <p class={lede}>
+    <PageIntro title="Offres et tarifs">
+      <p>
         Le planning dans un tableur, les comptes rendus d'intervention sur papier ou par messages,
         et le bureau qui ressaisit tout ? Je construis l'outil qui relie le terrain au bureau.
         Le projet avance par étapes, et vous connaissez le prix de chacune avant qu'elle commence.
       </p>
-    </div>
+    </PageIntro>
 
-    <div>
-      <h2 class:list={[h2, 'mb-10']}>Comment se passe un projet</h2>
+    <Section title="Comment se passe un projet">
 
       <!-- Frise : un rail vertical relie les étapes, numérotées parce que l'ordre compte -->
       <ol class="flex flex-col">
@@ -131,21 +131,20 @@ const guarantees = [
       <p class="mt-10 pl-[3.25rem] sm:pl-14 text-xs text-zinc-500">
         Prix en euros. {VAT_NOTICE}.
       </p>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Trois garanties</h2>
-      <ul class="rules">
+    <Section title="Trois garanties">
+      <ul class="divide-y divide-zinc-100">
         {guarantees.map(({ title, text }) => (
-          <li class="py-5 sm:grid sm:grid-cols-[14rem_1fr] sm:gap-8">
+          <li class="py-5 first:pt-0 last:pb-0 sm:grid sm:grid-cols-[14rem_1fr] sm:gap-8">
             <p class="font-medium text-zinc-900">{title}</p>
             <p class="mt-1.5 leading-relaxed text-pretty text-zinc-600 sm:mt-0">{text}</p>
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
     <ContactCard />
 
-  </PageColumn>
+  </Page>
 </BaseLayout>

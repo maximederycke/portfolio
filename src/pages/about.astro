@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import PageColumn from '../components/PageColumn.astro'
+import Page from '../components/Page.astro'
+import PageIntro from '../components/PageIntro.astro'
+import Section from '../components/Section.astro'
 import ContactCard from '../components/ContactCard.astro'
-import { h1, h2, body, bullet } from '../lib/typography'
+import { bullet } from '../lib/typography'
 
 const builds = [
   'Applications web — SPA, dashboards, outils internes',
@@ -36,11 +38,10 @@ const timeline = [
   title="À propos — Maxime Derycke"
   description="Développeur fullstack JS/TS freelance, spécialisé dans les applications métier sur mesure pour les PME."
 >
-  <PageColumn>
+  <Page>
 
-    <div>
-      <h1 class={h1}>À propos</h1>
-      <div class:list={[body, 'mt-5 space-y-4 text-lg']}>
+    <PageIntro title="À propos">
+      <div class="space-y-4">
         <p>
           Titulaire d'une licence en systèmes embarqués, j'ai travaillé quatre ans en R&D
           automobile avant de me reconvertir dans le développement web en 2022. Cette double
@@ -54,10 +55,9 @@ const timeline = [
           à l'expérience utilisateur qu'à la qualité technique.
         </p>
       </div>
-    </div>
+    </PageIntro>
 
-    <div>
-      <h2 class={h2}>Ce que je construis</h2>
+    <Section title="Ce que je construis">
       <ul class="flex flex-col gap-3 text-zinc-600">
         {builds.map(item => (
           <li class="flex items-start gap-3">
@@ -66,14 +66,13 @@ const timeline = [
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
 
-    <div>
-      <h2 class={h2}>Parcours</h2>
+    <Section title="Parcours">
       <!-- Sous sm, la date passe au-dessus du texte pour lui laisser toute la largeur -->
-      <ol class="rules">
+      <ol class="divide-y divide-zinc-100">
         {timeline.map(({ date, title, text, tech }) => (
-          <li class="flex flex-col gap-2 py-6 sm:flex-row sm:gap-8">
+          <li class="flex flex-col gap-2 py-6 first:pt-0 last:pb-0 sm:flex-row sm:gap-8">
             <span class="shrink-0 font-mono text-xs text-zinc-500 sm:w-28 sm:pt-1">{date}</span>
             <div>
               <p class="font-medium text-zinc-900">{title}</p>
@@ -83,9 +82,9 @@ const timeline = [
           </li>
         ))}
       </ol>
-    </div>
+    </Section>
 
     <ContactCard />
 
-  </PageColumn>
+  </Page>
 </BaseLayout>
