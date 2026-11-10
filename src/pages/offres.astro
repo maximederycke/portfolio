@@ -8,7 +8,8 @@ import ContactCard from '../components/ContactCard.astro'
 import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
 import { h3 } from '../lib/typography'
 
-// Déroulé d'un projet, dans l'ordre chronologique : chaque étape a son prix (ou « Offert »).
+// Déroulé d'un projet, dans l'ordre chronologique : chaque étape payante affiche son prix ;
+// le Rendez-vous de découverte n'en affiche aucun (sa gratuité va de soi).
 // Jamais de tarif journalier sur cette page.
 
 interface Price {
@@ -27,7 +28,7 @@ const steps: Step[] = [
   {
     title: 'Rendez-vous de découverte',
     text: 'Trente minutes pour me parler de votre activité et de ce qui coince. Au téléphone, ou sur place dans l\'Oise et les départements voisins.',
-    prices: [{ amount: 'Offert' }],
+    prices: [],
     link: { href: '/contact/', label: 'Prendre rendez-vous' },
   },
   {
@@ -71,7 +72,7 @@ const guarantees = [
 
 <BaseLayout
   title="Offres et tarifs — Maxime Derycke"
-  description="Planning, interventions, ressaisie entre le terrain et le bureau : un outil sur mesure pour votre PME, livré par étapes à prix ferme. Rendez-vous de découverte offert."
+  description="Planning, interventions, ressaisie entre le terrain et le bureau : un outil sur mesure pour votre PME, livré par étapes à prix ferme. Premier rendez-vous de 30 minutes, au téléphone ou sur place."
 >
   <Page>
 
@@ -107,16 +108,18 @@ const guarantees = [
               <div class:list={['pt-1', !isLast && 'pb-12']}>
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
                   <h3 class={h3}>{title}</h3>
-                  <dl class="flex flex-col gap-1 sm:items-end sm:text-right shrink-0">
-                    {prices.map(({ label, amount }) => (
-                      <div class="flex items-baseline gap-2 sm:justify-end">
-                        {label && <dt class="font-mono text-xs text-zinc-500">{label}</dt>}
-                        <dd class:list={['tabular-nums text-zinc-900', label ? 'text-sm font-medium' : 'text-base font-semibold']}>
-                          {amount}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
+                  {prices.length > 0 && (
+                    <dl class="flex flex-col gap-1 sm:items-end sm:text-right shrink-0">
+                      {prices.map(({ label, amount }) => (
+                        <div class="flex items-baseline gap-2 sm:justify-end">
+                          {label && <dt class="font-mono text-xs text-zinc-500">{label}</dt>}
+                          <dd class:list={['tabular-nums text-zinc-900', label ? 'text-sm font-medium' : 'text-base font-semibold']}>
+                            {amount}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
                 </div>
                 <p class="mt-3 max-w-xl leading-relaxed text-pretty text-zinc-600">{text}</p>
                 {link && (
