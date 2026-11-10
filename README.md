@@ -20,7 +20,7 @@ Portfolio personnel de [Maxime Derycke](https://maximederycke.dev), développeur
 |---|---|
 | `/` | Accueil — Hero, accroche, CTA |
 | `/about` | Parcours, stack, compétences |
-| `/services` | Modes Agile & Forfait |
+| `/offres` | Offres et tarifs : déroulé d'un projet par étapes et prix (`/services` y redirige) |
 | `/contact` | Formulaire multi-étapes (React island) |
 | `/mentions-legales` | Mentions légales |
 | `/confidentialite` | Politique de confidentialité |

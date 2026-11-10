@@ -27,7 +27,7 @@ Un secret passe toujours par une variable d'environnement : `.env` (site) ou `ap
 
 ```text
 src/
-├── pages/            # une page = une route (index, about, services, renfort, contact, mentions-legales, confidentialite)
+├── pages/            # une page = une route (index, about, offres, renfort, contact, mentions-legales, confidentialite)
 ├── layouts/
 │   └── BaseLayout.astro   # <head> (SEO, Open Graph), en-tête et navigation (navLinks), menu mobile, pied de page
 ├── components/       # SocialLinks, Avatar, ContactForm.tsx (island React), icons/
