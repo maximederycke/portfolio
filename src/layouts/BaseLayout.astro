@@ -71,11 +71,11 @@ const ogImage = avatar
       Aller au contenu
     </a>
 
-    <!-- En-tête : une barre flottante sur la grille de la feuille. Retrait et padding
+    {/* En-tête : une barre flottante sur la grille de la feuille. Retrait et padding
          s'additionnent (12 + 12 px, puis 16 + 16 px dès lg) pour poser le nom sur la
          même verticale que le contenu des pages (px-6, lg:px-8 dans la feuille).
          Sous lg, la page est blanche jusqu'au bord : un fondu blanc masque le texte qui
-         défile au-dessus de la barre. -->
+         défile au-dessus de la barre. */}
     <header id="site-header" class="site-header group/header fixed inset-x-0 top-0 z-20 max-lg:bg-linear-to-b max-lg:from-white max-lg:from-40% max-lg:to-white/0">
       <div class="mx-auto max-w-7xl px-3 pt-3 lg:px-12 lg:pt-4">
         <div class="rounded-2xl bg-white/90 px-3 transition-colors duration-300 group-data-open/header:bg-white shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur-sm lg:px-4">
@@ -85,7 +85,7 @@ const ogImage = avatar
               Maxime Derycke
             </a>
 
-            <!-- Seul le lien actif porte un filet (teal) : le survol ne change que la couleur -->
+            {/* Seul le lien actif porte un filet (teal) : le survol ne change que la couleur */}
             <nav aria-label="Navigation principale" class="hidden sm:block">
               <ul class="flex text-sm font-medium">
                 {navLinks.map(({ href, label }) => {
@@ -109,7 +109,7 @@ const ogImage = avatar
             </nav>
 
             <div class="ml-auto flex items-center">
-              <!-- Zone cliquable portée à 44 px par un pseudo-élément, bouton visible de 36 px -->
+              {/* Zone cliquable portée à 44 px par un pseudo-élément, bouton visible de 36 px */}
               <a
                 href="/contact/"
                 aria-current={isContact ? 'page' : undefined}
@@ -121,7 +121,6 @@ const ogImage = avatar
                 </svg>
               </a>
 
-              <!-- Mobile : icône burger qui se change en croix à l'ouverture -->
               <button
                 id="menu-toggle"
                 type="button"
@@ -139,8 +138,8 @@ const ogImage = avatar
 
           </div>
 
-          <!-- Menu mobile : la barre s'agrandit vers le bas, elle reste visible au-dessus.
-               Fermé, le panneau est inerte (hors du parcours clavier et des lecteurs d'écran). -->
+          {/* Menu mobile : la barre s'agrandit vers le bas, elle reste visible au-dessus.
+               Fermé, le panneau est inerte (hors du parcours clavier et des lecteurs d'écran). */}
           <div
             id="mobile-nav"
             inert
@@ -182,14 +181,12 @@ const ogImage = avatar
       </div>
     </header>
 
-    <!-- Voile derrière le menu mobile ouvert : un clic dessus ferme le menu -->
     <div
       id="menu-scrim"
       aria-hidden="true"
       class="pointer-events-none fixed inset-0 z-10 bg-zinc-800/20 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 ease-out motion-reduce:transition-none sm:hidden"
     ></div>
 
-    <!-- La feuille : page blanche à filets fins posée sur le fond zinc-50 (dès lg) -->
     <div class="mx-auto flex w-full max-w-7xl flex-1 lg:px-8">
       <div class="flex w-full flex-col overflow-hidden bg-white lg:ring-1 lg:ring-zinc-100">
         <main id="contenu" tabindex="-1" class="flex-1 pt-16 focus:outline-none">
@@ -197,13 +194,12 @@ const ogImage = avatar
         </main>
 
         <footer class="border-t border-zinc-100 py-8">
-          <!-- Sous sm : © et icônes sur la première ligne, liens du pied de page sur toute la largeur dessous -->
-          <!-- Points de séparation en CSS, avec un texte alternatif vide pour ne pas être lus -->
+          {/* Points de séparation en CSS, avec un texte alternatif vide pour ne pas être lus */}
           <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-between sm:justify-start text-xs font-mono text-zinc-500">
             <p>© {new Date().getFullYear()} Maxime Derycke</p>
             <nav aria-label="Pied de page" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto sm:flex sm:items-center sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400">
-              <!-- Sous sm, les liens passent à la ligne (un espace les sépare, les points reviennent dès sm) ;
-                   Renfort technique prend sa ligne pour que les deux liens légaux tiennent ensemble sur la suivante -->
+              {/* Sous sm, les liens passent à la ligne (un espace les sépare, les points reviennent dès sm) ;
+                   Renfort technique prend sa ligne pour que les deux liens légaux tiennent ensemble sur la suivante */}
               <ul class="flex flex-wrap gap-x-4 sm:gap-x-0">
                 {footerLinks.map(({ href, label }, i) => (
                   <li class:list={['flex items-center', i === 0 && 'w-full sm:w-auto', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>

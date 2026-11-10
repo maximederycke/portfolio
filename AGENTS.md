@@ -71,6 +71,7 @@ Branches : le travail arrive dans `develop`, jamais directement dans `main`. Une
 
 - TypeScript strict, sans point-virgule, guillemets simples, indentation de 2 espaces, virgule finale en multiligne.
 - Commentaires en français, courts, qui expliquent le pourquoi. En TS, les sections sont séparées par `// ─── Titre ───`.
+- Dans le balisage `.astro`, commentaires en `{/* … */}`, jamais en `<!-- … -->` : ces derniers partent dans le HTML publié. Pas de commentaire qui répète ce que les classes disent déjà.
 - Classes Tailwind en ligne, `class:list` pour les classes conditionnelles. Pas de CSS hors de `global.css`.
 - Liens internes avec slash final (`/about/`), à cause de `trailingSlash: 'always'`.
 - Accessibilité : `aria-label` sur les liens icônes, zone cliquable d'au moins 44 px, `aria-current="page"` sur la navigation, focus visible conservé.

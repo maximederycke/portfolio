@@ -1,0 +1,16 @@
+---
+import { h1, lede } from '../lib/typography'
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+const hasLede = Astro.slots.has('default')
+---
+
+<div class="max-w-3xl pb-12 lg:pb-16">
+  <h1 class={h1}>{title}</h1>
+  {hasLede && <div class={lede}><slot /></div>}
+  <slot name="after" />
+</div>
