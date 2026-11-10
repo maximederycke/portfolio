@@ -1,10 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-
-const stack = [
-  'TypeScript', 'React', 'React Native', 'Node.js', 'Bun', 'Deno',
-  'Next.js', 'NestJS', 'Hono', 'PostgreSQL', 'Docker', 'AWS',
-]
 ---
 
 <BaseLayout
@@ -96,17 +91,6 @@ const stack = [
           </div>
         </div>
 
-      </div>
-    </div>
-
-    <div>
-      <h2 class="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-5">Stack</h2>
-      <div class="flex flex-wrap gap-2">
-        {stack.map(tech => (
-          <span class="text-xs font-mono px-3 py-1 rounded-full border border-zinc-200 text-zinc-500">
-            {tech}
-          </span>
-        ))}
       </div>
     </div>
 
