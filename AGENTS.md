@@ -80,3 +80,17 @@ Déploiement : aucun script local. GitHub Actions déploie à chaque push sur `m
 - light mode uniquement, fond blanc, neutres zinc, filets d'1 px, pas d'ombre hors des éléments flottants de l'en-tête ;
 - accent `teal-500` (Tailwind v4, `oklch(70.4% 0.14 182.503)`) réservé aux marqueurs d'état ou de lieu, en traits et en points. `teal-700` quand il doit se lire comme du texte. Jamais en fond ni en texte courant ;
 - largeurs : `max-w-3xl` pour les pages internes, `max-w-7xl` pour l'accueil, `max-w-xl` pour le formulaire. Padding horizontal `px-6` (`lg:px-8` sur l'accueil).
+
+## Agent skills
+
+### Issue tracker
+
+Tickets dans Linear, équipe Maxime, projet Portfolio (identifiants `M-<n>`). Voir `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Les cinq labels par défaut (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). Voir `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context : un `GLOSSARY.md` à la racine. Les ADR sont des documents Linear du projet Portfolio (`ADR-NNNN — …`), jamais dans le dépôt public. Voir `docs/agents/domain.md`.
