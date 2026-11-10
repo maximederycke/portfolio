@@ -1,9 +1,9 @@
-import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode, type SubmitEvent } from 'react'
 
 const CONTACT_EMAIL = 'maxime@mdigitalstudio.fr'
 
 // Limites alignées sur la validation de api/contact.ts
-const MAX = { probleme: 2000, nom: 100, email: 200, telephone: 30, entreprise: 100 }
+const MAX = { problem: 2000, name: 100, email: 200, phone: 30, company: 100 }
 const SEND_TIMEOUT_MS = 15_000
 
 const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
@@ -19,36 +19,36 @@ type Format = 'appel' | 'visite'
 type SendError = 'rate' | 'timeout' | 'generic'
 
 type FormData = {
-  probleme: string
+  problem: string
   format: Format | ''
-  nom: string
+  name: string
   email: string
-  telephone: string
-  entreprise: string
+  phone: string
+  company: string
 }
 
 type Field = keyof FormData
 
 const initial: FormData = {
-  probleme: '', format: '', nom: '', email: '', telephone: '', entreprise: '',
+  problem: '', format: '', name: '', email: '', phone: '', company: '',
 }
 
 // Ordre d'affichage : le focus va sur la première erreur dans cet ordre
-const FIELD_ORDER: Field[] = ['probleme', 'format', 'nom', 'email', 'telephone']
+const FIELD_ORDER: Field[] = ['problem', 'format', 'name', 'email', 'phone']
 
 function validate(d: FormData): Partial<Record<Field, string>> {
   const errors: Partial<Record<Field, string>> = {}
-  if (!d.probleme.trim()) errors.probleme = 'Décrivez en quelques mots ce qui coince.'
+  if (!d.problem.trim()) errors.problem = 'Décrivez en quelques mots ce qui coince.'
   if (!d.format) errors.format = 'Choisissez un appel ou une visite.'
-  if (!d.nom.trim()) errors.nom = 'Indiquez votre nom.'
+  if (!d.name.trim()) errors.name = 'Indiquez votre nom.'
   if (!d.email.trim()) errors.email = 'Indiquez votre adresse e-mail.'
   else if (!isValidEmail(d.email)) {
     errors.email = 'Adresse e-mail invalide : il manque un « @ » ou un nom de domaine (exemple : jean@exemple.com).'
   }
-  if (d.format === 'appel' && !d.telephone.trim()) {
-    errors.telephone = 'Indiquez un numéro pour que je puisse vous appeler.'
-  } else if (d.telephone.trim() && !isValidPhone(d.telephone)) {
-    errors.telephone = 'Numéro invalide (exemple : 06 12 34 56 78).'
+  if (d.format === 'appel' && !d.phone.trim()) {
+    errors.phone = 'Indiquez un numéro pour que je puisse vous appeler.'
+  } else if (d.phone.trim() && !isValidPhone(d.phone)) {
+    errors.phone = 'Numéro invalide (exemple : 06 12 34 56 78).'
   }
   return errors
 }
@@ -72,7 +72,7 @@ export default function ContactForm() {
   const id = (f: Field) => `${uid}-${f}`
   const errId = (f: Field) => `${uid}-${f}-error`
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     setAttempted(true)
     const found = validate(data)
@@ -124,19 +124,19 @@ export default function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-8">
-        <FieldBlock id={id('probleme')} label="Qu'est-ce qui coince aujourd'hui ?" required error={errors.probleme} errorId={errId('probleme')}>
+        <FieldBlock id={id('problem')} label="Qu'est-ce qui coince aujourd'hui ?" required error={errors.problem} errorId={errId('problem')}>
           <textarea
-            id={id('probleme')}
-            name="probleme"
-            value={data.probleme}
-            onChange={e => set('probleme', e.target.value)}
+            id={id('problem')}
+            name="problem"
+            value={data.problem}
+            onChange={e => set('problem', e.target.value)}
             rows={5}
-            maxLength={MAX.probleme}
+            maxLength={MAX.problem}
             aria-required="true"
-            aria-invalid={!!errors.probleme}
-            aria-describedby={errors.probleme ? errId('probleme') : undefined}
+            aria-invalid={!!errors.problem}
+            aria-describedby={errors.problem ? errId('problem') : undefined}
             placeholder="Planning sur Excel, bons papier ressaisis le soir…"
-            className={inputClass(!!errors.probleme, 'py-3 resize-none')}
+            className={inputClass(!!errors.problem, 'py-3 resize-none')}
           />
         </FieldBlock>
 
@@ -159,20 +159,20 @@ export default function ContactForm() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <FieldBlock id={id('nom')} label="Nom" required error={errors.nom} errorId={errId('nom')}>
+          <FieldBlock id={id('name')} label="Nom" required error={errors.name} errorId={errId('name')}>
             <input
-              id={id('nom')}
+              id={id('name')}
               name="name"
               type="text"
               autoComplete="name"
-              maxLength={MAX.nom}
+              maxLength={MAX.name}
               aria-required="true"
-              aria-invalid={!!errors.nom}
-              aria-describedby={errors.nom ? errId('nom') : undefined}
-              value={data.nom}
-              onChange={e => set('nom', e.target.value)}
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? errId('name') : undefined}
+              value={data.name}
+              onChange={e => set('name', e.target.value)}
               placeholder="Jean Dupont"
-              className={inputClass(!!errors.nom)}
+              className={inputClass(!!errors.name)}
             />
           </FieldBlock>
           <FieldBlock id={id('email')} label="E-mail" required error={errors.email} errorId={errId('email')}>
@@ -195,37 +195,37 @@ export default function ContactForm() {
             />
           </FieldBlock>
           <FieldBlock
-            id={id('telephone')}
+            id={id('phone')}
             label={telRequired ? 'Téléphone' : 'Téléphone (facultatif)'}
             required={telRequired}
-            error={errors.telephone}
-            errorId={errId('telephone')}
+            error={errors.phone}
+            errorId={errId('phone')}
           >
             <input
-              id={id('telephone')}
+              id={id('phone')}
               name="tel"
               type="tel"
               inputMode="tel"
               autoComplete="tel"
-              maxLength={MAX.telephone}
+              maxLength={MAX.phone}
               aria-required={telRequired}
-              aria-invalid={!!errors.telephone}
-              aria-describedby={errors.telephone ? errId('telephone') : undefined}
-              value={data.telephone}
-              onChange={e => set('telephone', e.target.value)}
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? errId('phone') : undefined}
+              value={data.phone}
+              onChange={e => set('phone', e.target.value)}
               placeholder="06 12 34 56 78"
-              className={inputClass(!!errors.telephone)}
+              className={inputClass(!!errors.phone)}
             />
           </FieldBlock>
-          <FieldBlock id={id('entreprise')} label="Entreprise (facultatif)">
+          <FieldBlock id={id('company')} label="Entreprise (facultatif)">
             <input
-              id={id('entreprise')}
+              id={id('company')}
               name="organization"
               type="text"
               autoComplete="organization"
-              maxLength={MAX.entreprise}
-              value={data.entreprise}
-              onChange={e => set('entreprise', e.target.value)}
+              maxLength={MAX.company}
+              value={data.company}
+              onChange={e => set('company', e.target.value)}
               placeholder="Dupont Services"
               className={inputClass(false)}
             />
