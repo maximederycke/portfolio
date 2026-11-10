@@ -1,6 +1,5 @@
 ---
 import LinkedIn from './icons/LinkedIn.astro'
-import Malt from './icons/Malt.astro'
 import GitHub from './icons/GitHub.astro'
 
 interface Props {
@@ -17,9 +16,6 @@ const linkClass =
 <div class:list={['flex items-center', className]}>
   <a href="https://www.linkedin.com/in/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class={linkClass}>
     <LinkedIn size={size} />
-  </a>
-  <a href="https://www.malt.fr/profile/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="Malt" class={linkClass}>
-    <Malt size={size} />
   </a>
   <a href="https://github.com/maximederycke" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class={linkClass}>
     <GitHub size={size} />

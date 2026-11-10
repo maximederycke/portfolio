@@ -200,7 +200,7 @@ Soft, generous, and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for 
 - There is no secondary filled button and no teal button.
 
 ### Chips
-- **Style:** full pill, 1px `hairline` border, no fill, `pencil` DM Mono at label size, padding 0.25rem 0.75rem. Used for the stack list on About. Static, non-interactive.
+- **Style:** full pill, 1px `hairline` border, no fill, `pencil` DM Mono at label size, padding 0.25rem 0.75rem. Used for the stack list on Renfort technique. Static, non-interactive.
 
 ### Cards / Containers
 - **Corner Style:** 16px.

@@ -19,7 +19,9 @@ const navLinks = [
   { href: '/contact/', label: 'Contact' },
 ]
 
-const legalLinks = [
+// Renfort technique : hors du menu principal, seulement ici (public secondaire)
+const footerLinks = [
+  { href: '/renfort/', label: 'Renfort technique' },
   { href: '/mentions-legales/', label: 'Mentions légales' },
   { href: '/confidentialite/', label: 'Confidentialité' },
 ]
@@ -169,14 +171,15 @@ const ogImage = avatar
         </main>
 
         <footer class="border-t border-zinc-100 py-8">
-          <!-- Sous sm : © et icônes sur la première ligne, liens légaux sur toute la largeur dessous -->
+          <!-- Sous sm : © et icônes sur la première ligne, liens du pied de page sur toute la largeur dessous -->
           <!-- Points de séparation en CSS, avec un texte alternatif vide pour ne pas être lus -->
           <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-between sm:justify-start text-xs font-mono text-zinc-500">
             <p>© {new Date().getFullYear()} Maxime Derycke</p>
-            <nav aria-label="Informations légales" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto sm:flex sm:items-center sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400">
-              <ul class="flex">
-                {legalLinks.map(({ href, label }, i) => (
-                  <li class:list={['flex items-center', i > 0 && "before:content-['·'_/_''] before:px-2 before:text-zinc-400"]}>
+            <nav aria-label="Pied de page" class="order-last w-full sm:order-none sm:w-auto sm:mr-auto sm:flex sm:items-center sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400">
+              <!-- Sous sm, les liens passent à la ligne : un espace les sépare, les points reviennent dès sm -->
+              <ul class="flex flex-wrap gap-x-4 sm:gap-x-0">
+                {footerLinks.map(({ href, label }, i) => (
+                  <li class:list={['flex items-center', i > 0 && "sm:before:content-['·'_/_''] sm:before:px-2 sm:before:text-zinc-400"]}>
                     <a
                       href={href}
                       aria-current={currentPath.startsWith(href) ? 'page' : undefined}

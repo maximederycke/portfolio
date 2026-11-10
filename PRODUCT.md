@@ -53,8 +53,8 @@ Vocabulary is fixed in `GLOSSARY.md`; use its terms and never the synonyms it ru
 
 - Static site (Astro) deployed to Scaleway Object Storage + CDN; the only interactive piece is the React contact-form island; the form posts to a separate Scaleway Serverless Function.
 - Domain `maximederycke.dev`.
-- Pages live: `/`, `/about/`, `/services/`, `/contact/`, `/mentions-legales/`, `/confidentialite/`.
-- Pages to come: `/offres/` (the stepped offer and its prices) and `/renfort/` (the Renfort technique page for technical teams, outside the main navigation). `/projects/` does not exist; it will only return with real content.
+- Pages live: `/`, `/about/`, `/services/`, `/renfort/` (the Renfort technique page for technical teams, outside the main navigation, linked from the footer), `/contact/`, `/mentions-legales/`, `/confidentialite/`.
+- Pages to come: `/offres/` (the stepped offer and its prices). `/projects/` does not exist; it will only return with real content.
 - The repository is public: nothing internal is written in it (see `AGENTS.md`).
 
 ## Brand Commitments

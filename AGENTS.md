@@ -27,7 +27,7 @@ Un secret passe toujours par une variable d'environnement : `.env` (site) ou `ap
 
 ```text
 src/
-├── pages/            # une page = une route (index, about, services, contact, mentions-legales, confidentialite)
+├── pages/            # une page = une route (index, about, services, renfort, contact, mentions-legales, confidentialite)
 ├── layouts/
 │   └── BaseLayout.astro   # <head> (SEO, Open Graph), en-tête et navigation (navLinks), menu mobile, pied de page
 ├── components/       # SocialLinks, Avatar, ContactForm.tsx (island React), icons/
@@ -60,7 +60,7 @@ Déploiement : aucun script local. GitHub Actions déploie à chaque push sur `m
 ## Où vit le contenu
 
 - Les textes sont écrits directement dans les pages `src/pages/*.astro`. Il n'y a ni content collections ni markdown.
-- Les liens de navigation sont dans le tableau `navLinks` de `BaseLayout.astro`. Le pied de page (et ses liens légaux, `legalLinks`) est dans ce même layout.
+- Les liens de navigation sont dans le tableau `navLinks` de `BaseLayout.astro`. Le pied de page (et ses liens, `footerLinks` : Renfort technique et pages légales) est dans ce même layout.
 - Les choix et limites du formulaire sont dans `src/components/ContactForm.tsx`. Leurs libellés et leur validation côté serveur sont dans `api/contact.ts`, et les deux doivent rester alignés (constante `MAX`).
 - Pages légales (`mentions-legales.astro`, `confidentialite.astro`) : l'adresse et le téléphone viennent de `LEGAL_ADDRESS` et `LEGAL_PHONE` au build. Les marqueurs `[ADRESSE]`, `[TÉLÉPHONE]` et `[À VÉRIFIER]` font échouer `pnpm build` (intégration `check-placeholders` dans `astro.config.mjs`). Le jour où `/projects` présente des clients, ajouter aux mentions légales : « Les marques et logos des clients présentés le sont avec leur accord. »
 - Chaque page passe `title` et `description` à `BaseLayout`. Le titre suit le format `<Page> — Maxime Derycke`.
