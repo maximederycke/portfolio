@@ -73,6 +73,7 @@ Déploiement : aucun script local. GitHub Actions déploie à chaque push sur `m
 - Liens internes avec slash final (`/about/`), à cause de `trailingSlash: 'always'`.
 - Accessibilité : `aria-label` sur les liens icônes, zone cliquable d'au moins 44 px, `aria-current="page"` sur la navigation, focus visible conservé.
 - Commits : `type(portée): message` (feat, fix, docs, ci, chore, perf), en français, courts.
+- Pull requests : fusion en squash uniquement, un ticket donne une PR et un commit sur `main`. Le titre de la PR devient le message du commit, il suit donc la convention ci-dessus.
 
 ## Design
 
