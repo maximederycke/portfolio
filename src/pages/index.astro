@@ -41,9 +41,10 @@ const means = [
 
 const steps = [
   { title: 'Rendez-vous de découverte', detail: '30 minutes, au téléphone ou sur place.' },
-  { title: 'Étude de projet', detail: 'Je viens voir le terrain, puis je rédige le cahier des charges et le prix ferme de la première étape.' },
-  { title: 'Première étape utilisable', detail: 'Une première partie de l\'outil, livrée et facturée au prix fixé avant de commencer.' },
-  { title: 'Évolutions et maintenance', detail: 'Chaque nouvelle étape est chiffrée avant de démarrer. La maintenance prend le relais des 3 mois de garantie.' },
+  { title: 'Proposition à prix ferme', detail: 'Les étapes du projet et le prix ferme de la première, présentés de vive voix.' },
+  { title: 'Construction', detail: 'Un point toutes les deux semaines pour voir l\'outil avancer.' },
+  { title: 'Tests et mise en service', detail: 'Vous testez sur vos vrais cas, puis l\'outil est mis en service. 3 mois de garantie.' },
+  { title: 'Évolutions et maintenance', detail: 'Chaque nouvelle étape est chiffrée avant de démarrer. La maintenance prend le relais de la garantie.' },
 ]
 
 // Carte « Parcours » : inchangée ici, elle relève du ticket À propos.
@@ -181,16 +182,24 @@ const primaryButton =
         <h2 id="steps-title" class:list={[h2, 'sm:text-4xl']}>Comment je travaille</h2>
         <ArrowLink href="/offres/">Voir les offres et tarifs</ArrowLink>
       </div>
-      {/* Frise numérotée, l'ordre compte : verticale sur mobile, horizontale dès lg */}
-      <ol class="mt-12 grid lg:mt-14 lg:grid-cols-4 lg:gap-x-8">
+      {/* Frise numérotée, l'ordre compte : verticale sur mobile, horizontale dès lg.
+          Chaque trait laisse le même espace (0,5rem) avant et après les bulles. */}
+      <ol class="mt-12 grid lg:mt-14 lg:grid-cols-5 lg:gap-x-8">
         {steps.map(({ title, detail }, i) => {
           const isLast = i === steps.length - 1
           return (
             <li class="relative grid grid-cols-[2rem_1fr] gap-x-5 lg:block">
               {!isLast && (
                 <>
-                  <span class="absolute top-9 -bottom-1 left-4 w-px -translate-x-1/2 bg-zinc-200 lg:hidden" aria-hidden="true"></span>
-                  <span class="absolute top-4 right-0 left-12 hidden h-px bg-zinc-200 lg:-right-8 lg:block" aria-hidden="true"></span>
+                  <span class="absolute top-10 bottom-2 left-4 w-px -translate-x-1/2 bg-zinc-200 lg:hidden" aria-hidden="true"></span>
+                  <span class="absolute top-4 right-0 left-10 hidden h-px bg-zinc-200 lg:-right-6 lg:block" aria-hidden="true"></span>
+                </>
+              )}
+              {/* Après la dernière étape, le trait s'efface : les évolutions continuent */}
+              {isLast && (
+                <>
+                  <span class="absolute top-10 left-4 h-12 w-px -translate-x-1/2 bg-linear-to-b from-zinc-200 to-transparent lg:hidden" aria-hidden="true"></span>
+                  <span class="absolute top-4 right-0 left-10 hidden h-px bg-linear-to-r from-zinc-200 to-transparent lg:block" aria-hidden="true"></span>
                 </>
               )}
               <span
@@ -210,6 +219,11 @@ const primaryButton =
           )
         })}
       </ol>
+      {/* L'Étude est facultative : hors de la frise, elle n'en est pas une étape */}
+      <p class="mt-10 max-w-2xl text-sm leading-relaxed text-pretty text-zinc-600 lg:mt-12">
+        Besoin encore flou&nbsp;? Une Étude de projet peut précéder la proposition : je viens voir
+        le terrain, j'écris le cahier des charges et je vous montre une maquette.
+      </p>
     </section>
 
     <Section title="Parcours">
