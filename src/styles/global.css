@@ -30,8 +30,8 @@
 }
 
 /* ── Mouvement : « la lettre se compose » ───────────────────────────────────
-   Une séquence à l'arrivée sur l'accueil (grille tracée, puis hero posé dans
-   l'ordre de lecture) + des filets qui se tracent au scroll. Contenu visible
+   Une séquence à l'arrivée sur l'accueil (hero posé dans l'ordre de lecture,
+   schéma tracé trait par trait) + des filets qui se tracent au scroll. Contenu visible
    par défaut ; tout est en CSS. */
 
 @keyframes set-in {
@@ -52,11 +52,6 @@
   to { opacity: 1; }
 }
 
-@keyframes sweep-in {
-  from { clip-path: inset(0 100% 0 0); }
-  to { clip-path: inset(0 0 0 0); }
-}
-
 @keyframes draw-rule {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -67,24 +62,19 @@
   animation-delay: calc(120ms + var(--i, 0) * 70ms);
 }
 
-.sweep-in {
-  animation: sweep-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+/* Schéma du hero : chaque trait se trace dans l'ordre du dessin (terrain, liaison,
+   bureau). pathLength="1" sur chaque trait rend la longueur indépendante de la forme.
+   En mouvement réduit, aucun tracé : le dessin est là d'emblée. */
+@keyframes trace {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
 }
 
-/* Grille du hero : fondu radial autour du titre + fondu vertical, pour qu'elle
-   s'éteigne avant le contenu qui suit (aucun trait derrière le texte ou les cartes). */
-.grid-fade {
-  mask-image:
-    radial-gradient(20rem 20rem at 60% 40%, #000, transparent),
-    linear-gradient(to bottom, #000 55%, transparent 100%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-}
-@media (min-width: 40rem) {
-  .grid-fade {
-    mask-image:
-      radial-gradient(40rem 40rem at 60% 40%, #000, transparent),
-      linear-gradient(to bottom, #000 55%, transparent 100%);
+@media (prefers-reduced-motion: no-preference) {
+  .trace {
+    stroke-dasharray: 1;
+    animation: trace 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(350ms + var(--i, 0) * 90ms);
   }
 }
 
@@ -156,9 +146,6 @@
   .set-in {
     animation: fade-in 250ms ease-out both;
     animation-delay: 0ms;
-  }
-  .sweep-in {
-    animation: fade-in 400ms ease-out both;
   }
 }
 

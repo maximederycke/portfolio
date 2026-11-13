@@ -1,0 +1,138 @@
+---
+// Schéma du hero : le bon d'intervention saisi sur le terrain arrive dans le planning
+// du bureau. Dessiné en filets comme un plan coté : traits zinc, annotations en mono,
+// un seul trait teal (la liaison « sans ressaisie »). Aucune capture d'écran : c'est
+// un dessin de principe, pas un produit réel.
+// Deux variantes du même dessin : horizontale dès sm, verticale en dessous (le texte
+// garde ainsi une taille lisible). Les traits se tracent au chargement (classe `trace`).
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const variants = [
+  {
+    key: 'h',
+    class: 'hidden sm:block',
+    viewBox: '-4 0 600 300',
+    phone: 'translate(105 40)',
+    planning: 'translate(330 52)',
+    link: 'M213 152H318',
+    linkStart: [213, 152],
+    linkEnd: [322, 152],
+    linkLabel: { x: 265.5, y: 141, anchor: 'middle' },
+    terrain: { x: 155, y: 22, anchor: 'middle' },
+    bureau: { x: 460, y: 22, anchor: 'middle' },
+  },
+  {
+    key: 'v',
+    class: 'sm:hidden',
+    viewBox: '0 0 320 590',
+    phone: 'translate(120 32)',
+    planning: 'translate(30 348)',
+    link: 'M170 268V340',
+    linkStart: [170, 268],
+    linkEnd: [170, 344],
+    linkLabel: { x: 182, y: 308, anchor: 'start' },
+    terrain: { x: 170, y: 20, anchor: 'middle' },
+    bureau: { x: 290, y: 338, anchor: 'end' },
+  },
+]
+
+const label = 'Schéma : le bon d\'intervention rempli sur le terrain (photo, signature, même hors réseau) arrive directement dans le planning du bureau, sans ressaisie.'
+
+// Annotations du téléphone : texte à gauche, filet de cote jusqu'à l'élément
+const phoneNotes = [
+  { text: 'hors réseau', y: 34, to: 70 },
+  { text: 'photo', y: 102, to: 20 },
+  { text: 'signature', y: 196, to: 20 },
+]
+
+const days = ['lun', 'mar', 'mer', 'jeu', 'ven']
+
+// Créneaux du planning, en coordonnées locales (colonnes de 42 dès x = 50)
+const slots = [
+  [54, 36, 76, 18], [180, 60, 34, 16],
+  [96, 94, 34, 18], [138, 118, 76, 16],
+  [54, 152, 34, 18], [222, 176, 34, 16],
+]
+---
+
+<div class:list={['text-zinc-300', className]}>
+  {variants.map((v) => (
+    <svg
+      viewBox={v.viewBox}
+      role="img"
+      aria-label={label}
+      class:list={['h-auto w-full overflow-visible', v.class]}
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <g class="fill-zinc-500 font-mono text-[13px]" stroke="none">
+        <text x={v.terrain.x} y={v.terrain.y} text-anchor={v.terrain.anchor} class="set-in" style="--i:4">terrain</text>
+        <text x={v.bureau.x} y={v.bureau.y} text-anchor={v.bureau.anchor} class="set-in" style="--i:7">bureau</text>
+      </g>
+
+      {/* Le téléphone et son bon d'intervention */}
+      <g transform={v.phone}>
+        <rect class="trace" style="--i:0" pathLength="1" width="100" height="228" rx="16" />
+        <path class="trace" style="--i:1" pathLength="1" d="M38 12h24" />
+        <path class="trace text-zinc-400" style="--i:1" pathLength="1" d="M16 36h40" />
+        <path class="trace" style="--i:1" pathLength="1" d="M74 40v-3M78 40v-6M82 40v-9M71 28l13 13" />
+        <path class="trace" style="--i:2" pathLength="1" d="M16 54h66M16 64h48" />
+        <rect class="trace" style="--i:2" pathLength="1" x="16" y="78" width="68" height="48" rx="3" />
+        <path class="trace" style="--i:3" pathLength="1" d="m20 120 15-17 11 11 8-7 25 13" />
+        <circle class="trace" style="--i:3" pathLength="1" cx="70" cy="90" r="4" />
+        <rect class="trace" style="--i:3" pathLength="1" x="16" y="140" width="8" height="8" rx="1.5" />
+        <rect class="trace" style="--i:3" pathLength="1" x="16" y="156" width="8" height="8" rx="1.5" />
+        <path class="trace" style="--i:3" pathLength="1" d="M30 144h46M30 160h34M18 144l2 2 3.5-4" />
+        <path class="trace text-zinc-400" style="--i:4" pathLength="1" d="M20 200c5-12 9-12 11-2s5 9 9-3 7-9 9 1 7 7 13-3" />
+        <path class="trace" style="--i:4" pathLength="1" d="M16 208h68" />
+
+        {phoneNotes.map(({ text, y, to }) => (
+          <>
+            <path class="trace text-zinc-200" style="--i:5" pathLength="1" d={`M-15 ${y}H${to}`} />
+            <circle cx={to} cy={y} r="1.75" class="set-in fill-zinc-400" stroke="none" style="--i:6" />
+            <text x="-19" y={y + 4} text-anchor="end" class="set-in fill-zinc-500 font-mono text-[13px]" stroke="none" style="--i:6">{text}</text>
+          </>
+        ))}
+      </g>
+
+      {/* La liaison : le seul trait teal du dessin */}
+      <path class="trace text-teal-500" style="--i:7" pathLength="1" d={v.link} />
+      <circle cx={v.linkStart[0]} cy={v.linkStart[1]} r="2.5" class="set-in fill-white text-teal-500" style="--i:7" />
+      <circle cx={v.linkEnd[0]} cy={v.linkEnd[1]} r="2.5" class="set-in fill-teal-500" stroke="none" style="--i:8" />
+      <text
+        x={v.linkLabel.x}
+        y={v.linkLabel.y}
+        text-anchor={v.linkLabel.anchor}
+        class="set-in fill-zinc-500 font-mono text-[13px]"
+        stroke="none"
+        style="--i:8"
+      >sans ressaisie</text>
+
+      {/* Le planning du bureau */}
+      <g transform={v.planning}>
+        <rect class="trace" style="--i:8" pathLength="1" width="260" height="200" rx="10" />
+        <path class="trace text-zinc-200" style="--i:9" pathLength="1" d="M0 26h260M0 84h260M0 142h260" />
+        <path class="trace text-zinc-200" style="--i:9" pathLength="1" d="M50 26v174M92 26v174M134 26v174M176 26v174M218 26v174" />
+        {[55, 113, 171].map((cy) => (
+          <circle class="trace" style="--i:9" pathLength="1" cx="25" cy={cy} r="10" />
+        ))}
+        {slots.map(([x, y, w, h], i) => (
+          <rect class="set-in fill-zinc-100" style={`--i:${10 + (i % 3)}`} x={x} y={y} width={w} height={h} rx="3" />
+        ))}
+        {days.map((day, i) => (
+          <text x={71 + i * 42} y="17" text-anchor="middle" class="set-in fill-zinc-500 font-mono text-[12px]" stroke="none" style="--i:9">{day}</text>
+        ))}
+        <path class="trace text-zinc-200" style="--i:11" pathLength="1" d="M130 200v14" />
+        <text x="130" y="232" text-anchor="middle" class="set-in fill-zinc-500 font-mono text-[13px]" stroke="none" style="--i:12">une seule vue pour l'équipe</text>
+      </g>
+    </svg>
+  ))}
+</div>

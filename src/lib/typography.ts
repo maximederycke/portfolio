@@ -4,6 +4,10 @@
 
 export const h1 = 'text-4xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-5xl'
 
+// Niveau d'affichage : l'accroche de l'accueil seulement, au-dessus de tous les h1
+export const display =
+  'text-5xl leading-[1.02] font-semibold tracking-[-0.035em] text-balance text-zinc-900 sm:text-6xl lg:text-7xl'
+
 export const lede = 'mt-5 max-w-2xl text-lg leading-relaxed text-pretty text-zinc-600'
 
 export const h2 = 'text-2xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-3xl'
