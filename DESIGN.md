@@ -143,7 +143,7 @@ components:
 
 The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Restraint is the credential: the calm hierarchy tells an SME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.
 
-Space does most of the structural work; borders are hairlines; type size and weight carry hierarchy, with large, tight headings. Every page sits on one grid and one vertical line, shared by the header name, the page title and the footer. The home page has the rhythm of a landing page (each block treated differently, one ink band as its strong moment); inner pages read like a document (section title on the left, content on the right). Motion is one authored moment, not a coat of effects: on load the home sheet is ruled (the grid is swept in) and the hero is set down in reading order.
+Space does most of the structural work; borders are hairlines; type size and weight carry hierarchy, with large, tight headings. Every page sits on one grid and one vertical line, shared by the header name, the page title and the footer. The home page has the rhythm of a landing page (each block treated differently, one ink band as its strong moment); inner pages share a common base (title and lead, sections with the title on the left and content on the right, the contact card) and each may add one signature block of its own instead of reading as a uniform template. Motion is one authored moment per page, not a coat of effects: on load the home sheet is ruled (the grid is swept in) and the hero is set down in reading order; on /offres/ the project path is drawn as you scroll.
 
 **Key Characteristics:**
 - Light-only, white paper with zinc ink; no dark mode. The ink band on the home is the only dark surface.
@@ -207,6 +207,8 @@ A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `
 
 **Inner pages** (`Page`, `PageIntro`, `Section` components): the title and lead sit on the left, held to `max-w-3xl`. Each following section spans the full sheet: from `lg`, its heading takes the left 4 of 12 columns (and stays visible while the section scrolls) and its content the right 8, with a `hairline-faint` rule and 3rem to 4rem of padding between sections. The page ends with the full-width contact card. On /contact/ the form takes the left 6 columns and the other ways to get in touch the right 4.
 
+**Signature blocks**: on top of that common base, an inner page may carry one block with its own treatment, where the page's job is decided. /offres/ has the Linked Step Cards and the Rate Table. A signature block uses `Section` with `wide`: the heading sits on top and the content spans the whole sheet, so it is not squeezed into the right 8 columns. On /offres/ every section is wide (the Garanties go three across). Other inner pages get theirs only through their own ticket; never more than one per page.
+
 **Home**: a landing-page rhythm where each block has its own treatment. The hero is a 12-column grid: text on the left 7 (avatar, title, lead, button, reassurance), the proof card on the right 5. Then a centred heading with four features side by side, the ink band (heading left, the two means right), a horizontal numbered rail with its link aligned right, a `Section` (Parcours), and the contact card. Each fact appears once on the home; the detail lives on /offres/ and /about/.
 
 Below `lg` every grid stacks in reading order; below `sm` the numbered rail turns vertical. The header is fixed, so `main` reserves 4rem at the top.
@@ -253,7 +255,19 @@ Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields
 - Four items side by side from `lg` (two from `sm`): a 44px icon box (12px radius, hairline border, 20px line icon in Graphite, 1.5 stroke), a medium title, a body-small detail.
 
 ### Numbered Rail
-- Steps numbered because the order matters: a 32px circle with the number in a label, the first step ringed in teal, the others in `hairline`; a 1px `hairline` rail links them. Vertical on /offres/ (with prices aligned right) and on mobile; horizontal from `lg` on the home.
+- Steps numbered because the order matters: a 32px circle with the number in a label, the first step ringed in teal, the others in `hairline`; a 1px `hairline` rail links them. On the home: vertical on mobile, horizontal from `lg`, the same five steps as /offres/, the last one followed by a rail that fades out (the Évolutions go on); each rail stops 0.5rem short of the circles on both sides. The optional Étude de projet sits in a sentence below, never in the rail.
+
+### Linked Step Cards (/offres/)
+- The project path as white cards (1px `hairline` border, 16px radius, 1.25rem padding, 1.75rem from `sm`, no fill, no shadow). The 32px circle is centred on the card title, the 1px `hairline` rail runs from one circle to the next, and a short `hairline` tick joins each circle to its card.
+- Below `lg`: the rail on the left, cards stacked with 1.25rem gaps. From `lg`: the rail runs down the centre of the sheet and the cards alternate left and right (half the width each); each row overlaps the previous one by 3rem, so a card starts beside the end of the one before.
+- Only the main path is numbered. An optional step (the Étude de projet) has no number: it takes its own side of the zigzag, set 1.5rem further from the rail, with a dashed `zinc-300` border and a « Facultative » chip, and a dashed `zinc-300` bypass leaves the rail with a 16px curve into the card and returns the same way. The main rail stays solid underneath: the detour is visibly beside the path, not on it.
+- No prices in the cards; they live in the Rate Table.
+- Motion (scroll-driven, CSS `animation-timeline: view()`): each rail segment draws downward, each card sets in (opacity, 0.75rem rise, blur) as it enters, the bypass is drawn left to right. Without support, or under `prefers-reduced-motion`, everything is simply visible.
+
+### Rate Table (/offres/)
+- The only place prices appear. From `md`, a real `<table>` with four columns: Prestation (Ink medium, row header), Ce que ça comprend (body-small `slate`), Prix (« à partir de » in a label, the amount in 1.125rem semibold tabular figures, a unit or a sub-label below in `slate` / label), Délai (body-small `slate`, a delivery time, never working days). Mono labels head the columns over a `hairline` rule; rows are split by `hairline-faint`.
+- Below `md`, one block per row: the name and the price on one line, then what it includes, then « Délai · … ». Never a horizontal scroll.
+- Under the table, above a `hairline` rule: the hosting option sentence, then the price notice (euros, VAT mention) in a label size `pencil` line.
 
 ### Chips
 - Full pill, 1px `hairline` border, no fill, `pencil` label. Used for the stack list on Renfort technique. Static.
@@ -278,7 +292,7 @@ Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields
 - **Do** set metadata in DM Mono at 0.75rem in `pencil`.
 - **Do** use teal only as a stroke, dot, border or short label, per The Drafting Pen Rule.
 - **Do** give every interactive element a 44px target and keep the global 2px ink focus outline (fields use the teal-700 border + ring instead).
-- **Do** keep motion to the home load sequence (600ms exponential ease-out, 70ms stagger, CSS only, content visible by default), the menu disclosure and small hover nudges, all cut under `prefers-reduced-motion`.
+- **Do** keep motion to the home load sequence (600ms exponential ease-out, 70ms stagger, CSS only, content visible by default), the scroll-drawn path on /offres/, the menu disclosure and small hover nudges, all cut under `prefers-reduced-motion`.
 - **Do** write template comments as `{/* … */}` so they never ship in the HTML.
 
 ### Don't:

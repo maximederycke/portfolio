@@ -9,8 +9,16 @@ Premier échange, offert, de 30 minutes, au téléphone ou sur place.
 _À éviter_ : appel découverte, premier échange
 
 **Étude de projet** :
-Prestation payante qui suit le Rendez-vous de découverte : visite, cahier des charges, maquette ou schéma, et prix ferme de la première Étape. Son livrable appartient au client.
+Prestation payante et facultative, proposée après le Rendez-vous de découverte quand le besoin est encore flou : visite, cahier des charges, maquette ou schéma ; elle débouche sur la Proposition. Son livrable appartient au client.
 _À éviter_ : audit, diagnostic, avant-projet
+
+**Proposition** :
+Document écrit qui découpe le projet en Étapes et fixe le prix ferme de la première, présenté de vive voix au client, qui la signe.
+_À éviter_ : offre commerciale, estimation
+
+**Tests** :
+Moment où le client essaie l'outil sur ses vrais cas avant sa mise en service ; les 3 mois de garantie partent de là.
+_À éviter_ : recette (mot du métier), homologation
 
 **Étape** :
 Morceau du projet livré et facturé à prix ferme, fixé avant qu'il commence.

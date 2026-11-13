@@ -118,6 +118,40 @@
   }
 }
 
+/* Parcours de /offres/ : le rail se trace au fil du défilement, chaque carte se pose
+   quand on l'atteint, la dérivation de l'Étude se dessine avec sa carte.
+   Sans scroll-driven animations ou en mouvement réduit, tout est visible et fixe. */
+@keyframes draw-rail {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes draw-branch {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parcours-rail {
+      transform-origin: top;
+      animation: draw-rail linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 55%;
+    }
+    .parcours-card {
+      animation: set-in cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    .parcours-branch {
+      animation: draw-branch cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .set-in {
     animation: fade-in 250ms ease-out both;

@@ -8,6 +8,7 @@ export const PRICES = {
   application: 8000,
   maintenanceAutomatisation: 60,
   maintenanceApplication: 150,
+  hebergement: 40,
 } as const
 
 export const VAT_NOTICE = 'TVA non applicable, art. 293 B du CGI'
