@@ -1,0 +1,49 @@
+---
+// Carte de fin de page : le temps fort qui mène au Rendez-vous de découverte.
+// Bloc gris (Paper Tint) à filet fin ; la réassurance sous le bouton porte le point teal
+// (marqueur d'état, comme le statut de disponibilité).
+// Le slot `actions` remplace le bouton par défaut (ex. Renfort technique : e-mail et Malt).
+import { h2 } from '../lib/typography'
+
+interface Props {
+  title?: string
+  text?: string
+}
+
+const {
+  title = 'Vous avez un projet\u00a0? Parlons-en.',
+  text = 'Dites-moi ce qui vous fait perdre du temps aujourd\'hui. On voit ensemble si un outil peut régler le problème, et ce que ça coûterait.',
+} = Astro.props
+
+const hasActions = Astro.slots.has('actions')
+---
+
+<div class="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-7 sm:p-10 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:p-12">
+  <div class="lg:col-span-7">
+    <h2 class:list={[h2, 'mb-3']}>{title}</h2>
+    <p class="max-w-xl leading-relaxed text-pretty text-zinc-600">{text}</p>
+  </div>
+
+  <div class="mt-8 lg:col-span-5 lg:mt-0 lg:justify-self-end">
+    {hasActions ? (
+      <slot name="actions" />
+    ) : (
+      <>
+        <a
+          href="/contact/"
+          class="group/cta inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-zinc-900 pr-4 pl-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-700 active:translate-y-px"
+        >
+          Prendre rendez-vous
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 transition-transform duration-300 ease-out group-hover/cta:translate-x-0.5 motion-reduce:transition-none">
+            <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        {/* Point calé sur la première ligne quand le texte passe à la ligne */}
+        <p class="mt-4 flex items-start gap-2.5 font-mono text-xs leading-5 text-zinc-500">
+          <span aria-hidden="true" class="mt-[0.4375rem] size-1.5 shrink-0 rounded-full bg-teal-500"></span>
+          30 min · au téléphone ou sur place
+        </p>
+      </>
+    )}
+  </div>
+</div>

@@ -1,0 +1,310 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Page from '../components/Page.astro'
+import PageIntro from '../components/PageIntro.astro'
+import Section from '../components/Section.astro'
+import ArrowLink from '../components/ArrowLink.astro'
+import ContactCard from '../components/ContactCard.astro'
+import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
+import { h3 } from '../lib/typography'
+
+// Le déroulé n'affiche aucun prix : tous les montants vivent dans le tableau des tarifs.
+// L'Étude de projet est facultative (seulement si le besoin est flou) : elle n'a pas de
+// numéro et se branche à côté du chemin principal. Jamais de tarif journalier sur cette page.
+
+// ─── Déroulé ───
+
+interface Step {
+  title: string
+  text: string
+  optional?: boolean
+  link?: { href: string, label: string }
+}
+
+const steps: Step[] = [
+  {
+    title: 'Rendez-vous de découverte',
+    text: 'Trente minutes pour me parler de votre activité et de ce qui coince. Au téléphone, ou sur place dans l\'Oise et les départements voisins. Si votre besoin est clair, on passe directement à la proposition.',
+    link: { href: '/contact/', label: 'Prendre rendez-vous' },
+  },
+  {
+    title: 'Étude de projet',
+    text: 'Si votre besoin est encore flou, je viens voir comment vous travaillez, au bureau et sur le terrain. J\'écris le cahier des charges et je vous montre une maquette (ou un schéma pour une automatisation). L\'Étude débouche sur la proposition.',
+    optional: true,
+  },
+  {
+    title: 'Proposition à prix ferme',
+    text: 'Je découpe le projet en étapes et je fixe le prix ferme de la première. Je vous la présente de vive voix, et vous signez quand vous êtes prêt. Le paiement se fait en plusieurs fois, au fil de l\'avancement.',
+  },
+  {
+    title: 'Construction',
+    text: 'Je construis l\'outil et je vous le montre toutes les deux semaines : vous le voyez avancer, et vos questions sont traitées au fur et à mesure.',
+  },
+  {
+    title: 'Tests et mise en service',
+    text: 'Vous testez l\'outil sur vos vrais cas, je corrige ce qui ne va pas, puis il est mis en service. Trois mois de garantie sont inclus.',
+  },
+  {
+    title: 'Évolutions et maintenance',
+    text: 'Chaque nouvelle étape est chiffrée avant de commencer et suit le même chemin. Après la garantie, la maintenance prend le relais : corrections, mises à jour, petits ajustements.',
+  },
+]
+
+// Seules les étapes du chemin principal sont numérotées
+let n = 0
+const numbered = steps.map((step) => ({ ...step, number: step.optional ? undefined : ++n }))
+
+// ─── Tarifs ───
+
+interface Price {
+  amount: string
+  unit?: string
+  label?: string
+}
+
+interface Rate {
+  name: string
+  includes: string
+  from?: boolean
+  prices: Price[]
+  delay: string
+}
+
+const rates: Rate[] = [
+  {
+    name: 'Étude de projet',
+    includes: 'Visite au bureau et sur le terrain, cahier des charges, maquette ou schéma, puis la proposition à prix ferme.',
+    prices: [{ amount: eur(PRICES.etude) }],
+    delay: 'Sous une semaine après la visite',
+  },
+  {
+    name: 'Automatisation',
+    includes: 'Relier deux outils que vous utilisez déjà et supprimer une ressaisie.',
+    from: true,
+    prices: [{ amount: eur(PRICES.automatisation) }],
+    delay: '2 à 3 semaines',
+  },
+  {
+    name: 'Application',
+    includes: 'Une première version utilisable d\'une application simple, par exemple le planning et les bons d\'intervention.',
+    from: true,
+    prices: [{ amount: eur(PRICES.application) }],
+    delay: '6 à 8 semaines',
+  },
+  {
+    name: 'Maintenance',
+    includes: 'Mises à jour de sécurité, supervision, une heure de petits ajustements par mois.',
+    from: true,
+    prices: [
+      { amount: eur(PRICES.maintenanceAutomatisation), unit: '/ mois', label: 'automatisation' },
+      { amount: eur(PRICES.maintenanceApplication), unit: '/ mois', label: 'application' },
+    ],
+    delay: 'Réponse sous 2 jours ouvrés',
+  },
+]
+
+const hostingNote = `Hébergement en option, à partir de ${eur(PRICES.hebergement)} / mois, sauvegardes comprises.`
+
+const guarantees = [
+  {
+    title: 'L\'outil vous appartient',
+    text: 'Pas d\'abonnement par utilisateur : vous pouvez ajouter toute l\'équipe sans que la facture grimpe.',
+  },
+  {
+    title: 'Le livrable de l\'Étude est à vous',
+    text: 'Cahier des charges et maquette vous restent, même si vous ne signez pas la suite.',
+  },
+  {
+    title: '3 mois de garantie',
+    text: 'Inclus après chaque livraison : si quelque chose ne marche pas comme prévu, je corrige sans frais.',
+  },
+]
+---
+
+<BaseLayout
+  title="Offres et tarifs — Maxime Derycke"
+  description="Planning, interventions, ressaisie entre le terrain et le bureau : un outil sur mesure pour votre PME, livré par étapes à prix ferme. Premier rendez-vous de 30 minutes, au téléphone ou sur place."
+>
+  <Page>
+
+    <PageIntro title="Offres et tarifs">
+      <p>
+        Le planning dans un tableur, les comptes rendus d'intervention sur papier ou par messages,
+        et le bureau qui ressaisit tout&nbsp;? Je construis l'outil qui relie le terrain au bureau.
+        Le projet avance par étapes, et vous connaissez le prix de chacune avant qu'elle commence.
+      </p>
+    </PageIntro>
+
+    <Section title="Cinq étapes, à votre rythme" wide>
+
+      {/*
+        Parcours : des cartes reliées par un rail. --c est la hauteur du centre du titre
+        dans une carte (padding + demi-ligne) : pastilles, rail et dérivation s'y alignent.
+        --g est l'écart entre deux rangées. Dès lg, le rail passe au centre et les cartes
+        alternent à gauche et à droite ; l'écart devient négatif pour que chaque carte
+        démarre à côté de la fin de la précédente. L'Étude, décalée et en pointillés,
+        quitte le rail puis le rejoint.
+      */}
+      <ol class="parcours flex flex-col [--c:2.125rem] [--g:1.25rem] sm:[--c:2.625rem] lg:[--g:-3rem] [&>li+li]:mt-[var(--g)]">
+        {numbered.map(({ title, text, optional, link, number }, i) => {
+          const isLast = i === numbered.length - 1
+          const left = i % 2 === 0
+          return (
+            <li class="relative grid grid-cols-[2rem_1fr] gap-x-5 lg:grid-cols-[1fr_2rem_1fr] lg:gap-x-8">
+              {!isLast && (
+                <span
+                  class="parcours-rail absolute left-4 top-[var(--c)] -bottom-[calc(var(--c)+var(--g))] w-px -translate-x-1/2 bg-zinc-200 lg:left-1/2"
+                  aria-hidden="true"
+                ></span>
+              )}
+
+              {number ? (
+                <>
+                  <span
+                    class:list={[
+                      'relative z-10 mt-[calc(var(--c)-1rem)] flex size-8 items-center justify-center rounded-full border bg-white font-mono text-xs text-zinc-500 lg:col-start-2 lg:row-start-1',
+                      number === 1 ? 'border-teal-500' : 'border-zinc-200',
+                    ]}
+                    aria-hidden="true"
+                  >
+                    {number}
+                  </span>
+                  <span
+                    class:list={[
+                      'absolute top-[var(--c)] left-8 h-px w-5 bg-zinc-200 lg:w-8',
+                      left ? 'lg:left-auto lg:right-[calc(50%+1rem)]' : 'lg:left-[calc(50%+1rem)]',
+                    ]}
+                    aria-hidden="true"
+                  ></span>
+                </>
+              ) : (
+                <>
+                  <span
+                    class="parcours-branch absolute left-4 top-[calc(var(--c)-1rem)] h-4 w-[3.75rem] rounded-bl-2xl border-b border-l border-dashed border-zinc-300 lg:left-1/2 lg:w-[4.5rem]"
+                    aria-hidden="true"
+                  ></span>
+                  <span
+                    class="parcours-branch absolute left-4 bottom-[calc(var(--c)-1rem)] h-4 w-[3.75rem] rounded-tl-2xl border-t border-l border-dashed border-zinc-300 lg:left-1/2 lg:w-[4.5rem]"
+                    aria-hidden="true"
+                  ></span>
+                  <span></span>
+                </>
+              )}
+
+              <article
+                class:list={[
+                  'parcours-card rounded-2xl border bg-white p-5 sm:p-7 lg:row-start-1',
+                  left ? 'lg:col-start-1' : 'lg:col-start-3',
+                  optional ? 'ml-6 border-dashed border-zinc-300' : 'border-zinc-200',
+                ]}
+              >
+                <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                  <h3 class={h3}>{title}</h3>
+                  {optional && (
+                    <span class="rounded-full border border-zinc-200 px-2.5 py-0.5 font-mono text-xs text-zinc-500">
+                      Facultative
+                    </span>
+                  )}
+                </div>
+                <p class="mt-3 leading-relaxed text-pretty text-zinc-600">{text}</p>
+                {link && (
+                  <ArrowLink href={link.href} class="mt-2 -mb-2">{link.label}</ArrowLink>
+                )}
+              </article>
+            </li>
+          )
+        })}
+      </ol>
+    </Section>
+
+    <Section title="Des prix fermes, connus d'avance" wide>
+
+      {/* Dès lg : un vrai tableau (en dessous, la description n'aurait plus la place).
+          Plus étroit : un bloc par prestation, le prix à côté du nom. */}
+      <table class="hidden w-full table-fixed text-left lg:table">
+        <caption class="sr-only">Tarifs et délais de livraison</caption>
+        <colgroup>
+          <col class="w-44 xl:w-48" />
+          <col />
+          <col class="w-52 xl:w-60" />
+          <col class="w-40 xl:w-52" />
+        </colgroup>
+        <thead>
+          <tr class="border-b border-zinc-200 font-mono text-xs text-zinc-500">
+            <th scope="col" class="pb-3 pr-6 font-normal">Prestation</th>
+            <th scope="col" class="pb-3 pr-6 font-normal">Ce que ça comprend</th>
+            <th scope="col" class="pb-3 pr-6 font-normal">Prix</th>
+            <th scope="col" class="pb-3 font-normal">Délai</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-100">
+          {rates.map(({ name, includes, from, prices, delay }) => (
+            <tr class="align-top">
+              <th scope="row" class="py-5 pr-6 font-medium text-zinc-900">{name}</th>
+              <td class="py-5 pr-6 text-sm leading-relaxed text-pretty text-zinc-600">{includes}</td>
+              <td class="py-5 pr-6">
+                {from && <span class="block font-mono text-xs text-zinc-500">à partir de</span>}
+                <ul class="flex flex-col gap-1.5">
+                  {prices.map(({ amount, unit, label }) => (
+                    <li class="leading-tight">
+                      {/* Un seul montant : en grand. Plusieurs (la maintenance) : un cran en dessous */}
+                      <span class:list={['font-semibold tracking-tight whitespace-nowrap tabular-nums text-zinc-900', prices.length > 1 ? 'text-2xl' : 'text-3xl']}>{amount}</span>
+                      {unit && <span class="text-sm text-zinc-600"> {unit}</span>}
+                      {label && <span class="block font-mono text-xs text-zinc-500">{label}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </td>
+              <td class="py-5 text-sm leading-relaxed text-pretty text-zinc-600">{delay}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <ul class="divide-y divide-zinc-100 lg:hidden">
+        {rates.map(({ name, includes, from, prices, delay }) => (
+          <li class="py-5 first:pt-0">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-medium text-zinc-900">{name}</h3>
+              <div class="shrink-0 text-right">
+                {from && <span class="block font-mono text-xs text-zinc-500">à partir de</span>}
+                <ul class="flex flex-col gap-1.5">
+                  {prices.map(({ amount, unit, label }) => (
+                    <li class="leading-tight">
+                      <span class:list={['font-semibold tracking-tight whitespace-nowrap tabular-nums text-zinc-900', prices.length > 1 ? 'text-xl' : 'text-2xl']}>{amount}</span>
+                      {unit && <span class="text-sm text-zinc-600"> {unit}</span>}
+                      {label && <span class="block font-mono text-xs text-zinc-500">{label}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-pretty text-zinc-600">{includes}</p>
+            <p class="mt-2 text-sm text-zinc-900">
+              <span class="font-mono text-xs text-zinc-500">Délai · </span>{delay}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-6 flex flex-col gap-1.5 border-t border-zinc-200 pt-4 text-sm text-zinc-600">
+        <p>{hostingNote}</p>
+        <p class="max-w-2xl text-xs text-zinc-500">Prix en euros. {VAT_NOTICE}. Délais de livraison indicatifs.</p>
+      </div>
+    </Section>
+
+    <Section title="Ce qui vous reste acquis" wide>
+      <ul class="grid gap-8 sm:grid-cols-3">
+        {guarantees.map(({ title, text }) => (
+          <li class="border-t border-zinc-200 pt-5">
+            <p class="font-medium text-zinc-900">{title}</p>
+            <p class="mt-2 leading-relaxed text-pretty text-zinc-600">{text}</p>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <ContactCard />
+
+  </Page>
+</BaseLayout>

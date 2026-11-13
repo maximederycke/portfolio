@@ -34,10 +34,13 @@ Supporting facts already on the site: 4 years of automotive R&D (test and vehicl
 
 A fixed-price project, delivered in Étapes, each with a firm price agreed before it starts:
 
-1. **Rendez-vous de découverte**: free, 30 minutes by phone or on site.
-2. **Étude de projet**: paid; visit, specification, mock-up or diagram, and the firm price of the first Étape. The deliverable belongs to the client.
-3. **First usable Étape**: a first part of the tool, delivered and invoiced at a firm price.
-4. **Further Étapes and Maintenance**: each new Étape is priced before it starts; Maintenance is offered at each delivery, after 3 months of included warranty.
+1. **Rendez-vous de découverte**: free, 30 minutes by phone or on site. When the need is clear, it leads straight to the Proposition.
+2. **Proposition à prix ferme**: the project split into Étapes and the firm price of the first, presented in person; the client signs when ready. Payment is spread over the progress.
+3. **Construction**: a review with the client every two weeks to show the tool taking shape.
+4. **Tests et mise en service**: the client tests on real cases, fixes follow, then the tool goes live, with 3 months of included warranty.
+5. **Évolutions et maintenance**: each new Étape is priced before it starts and follows the same path; Maintenance takes over after the warranty.
+
+**Étude de projet** (optional, only when the need is still unclear): paid; visit, specification, mock-up or diagram, and it leads to the Proposition. The deliverable belongs to the client. It is never shown as a numbered, mandatory step.
 
 The means are an Automatisation (connecting existing tools) or an Application (a custom web or mobile tool). The tool belongs to the client.
 
@@ -53,8 +56,8 @@ Vocabulary is fixed in `GLOSSARY.md`; use its terms and never the synonyms it ru
 
 - Static site (Astro) deployed to Scaleway Object Storage + CDN; the only interactive piece is the React contact-form island; the form posts to a separate Scaleway Serverless Function.
 - Domain `maximederycke.dev`.
-- Pages live: `/`, `/about/`, `/services/`, `/renfort/` (the Renfort technique page for technical teams, outside the main navigation, linked from the footer), `/contact/`, `/mentions-legales/`, `/confidentialite/`.
-- Pages to come: `/offres/` (the stepped offer and its prices). `/projects/` does not exist; it will only return with real content.
+- Pages live: `/`, `/about/`, `/offres/` (the stepped offer and its prices; `/services/` redirects to it), `/renfort/` (the Renfort technique page for technical teams, outside the main navigation, linked from the footer), `/contact/`, `/mentions-legales/`, `/confidentialite/`.
+- `/projects/` does not exist; it will only return with real content.
 - The repository is public: nothing internal is written in it (see `AGENTS.md`).
 
 ## Brand Commitments

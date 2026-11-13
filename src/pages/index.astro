@@ -1,45 +1,63 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import SocialLinks from '../components/SocialLinks.astro'
 import Avatar from '../components/Avatar.astro'
+import ArrowLink from '../components/ArrowLink.astro'
+import ContactCard from '../components/ContactCard.astro'
+import FieldToOffice from '../components/FieldToOffice.astro'
+import NeedSketch from '../components/NeedSketch.astro'
+import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
+import { display, h2 } from '../lib/typography'
 
-const builds = [
-  { title: 'Applications web', detail: 'SPA, dashboards, outils internes' },
-  { title: 'Applications mobile', detail: 'React Native / Expo' },
-  { title: 'Intégrations', detail: 'API REST & OAuth2 — Jira, Microsoft Graph, ERP…' },
-  { title: 'Déploiement', detail: 'Environnements Docker et mise en production' },
-]
+// L'accueil parle au dirigeant de PME : son problème, son territoire, le prix, le déroulé, une preuve.
+// Aucun jargon technique ici (il vit sur /renfort/), le détail des tarifs vit sur /offres/.
 
-const modes = [
+// Les quatre besoins, en cartes de tailles inégales, chacune avec son petit dessin
+const needs = [
+  { title: 'Planning des interventions', detail: 'Qui intervient où et quand, sur une seule vue partagée par toute l\'équipe.', sketch: 'planning', span: 'lg:col-span-3' },
+  { title: 'Bons d\'intervention sur mobile', detail: 'Photos, signature du client, même sans réseau.', sketch: 'mobile', span: 'lg:col-span-2' },
+  { title: 'Remontée des informations', detail: 'Ce qui est saisi sur le terrain arrive au bureau, sans ressaisie.', sketch: 'flow', span: 'lg:col-span-2' },
+  { title: 'Connexion avec vos logiciels', detail: 'Vos outils actuels restent en place et se parlent entre eux.', sketch: 'connect', span: 'lg:col-span-3' },
+] as const
+
+// Les deux moyens, avec leur prix d'entrée (montants tirés de src/lib/prices.ts)
+const means = [
   {
-    title: 'Agile',
-    detail:
-      'Tarif journalier fixe, livraisons toutes les 2 semaines. Le budget total reste indicatif : on ajuste les priorités à chaque cycle.',
+    title: 'Une automatisation',
+    detail: 'Je relie les outils que vous utilisez déjà, pour que l\'information passe de l\'un à l\'autre.',
+    price: eur(PRICES.automatisation),
   },
   {
-    title: 'Forfait',
-    detail:
-      'Périmètre et prix fixés en amont. Idéal si vous avez besoin de visibilité budgétaire sur une mission définie.',
+    title: 'Une application sur mesure',
+    detail: 'Un outil web ou mobile construit pour votre façon de travailler. Il vous appartient.',
+    price: eur(PRICES.application),
   },
 ]
 
-const career = [
-  { title: 'Développeur freelance', detail: 'Hub de planification pour une ESN', dates: 'Depuis 2026' },
-  { title: 'Développeur fullstack — CDI', detail: 'Applications web et mobile', dates: '2022 — 2026' },
-  { title: "Technicien d'essais & intégration véhicule", detail: 'Industrie automobile', dates: '2017 — 2021' },
+const steps = [
+  { title: 'Rendez-vous de découverte', detail: '30 minutes, au téléphone ou sur place.' },
+  { title: 'Proposition à prix ferme', detail: 'Les étapes du projet et le prix ferme de la première, présentés de vive voix.' },
+  { title: 'Construction', detail: 'Un point toutes les deux semaines pour voir l\'outil avancer.' },
+  { title: 'Tests et mise en service', detail: 'Vous testez sur vos vrais cas, puis l\'outil est mis en service. 3 mois de garantie.' },
+  { title: 'Évolutions et maintenance', detail: 'Chaque nouvelle étape est chiffrée avant de démarrer. La maintenance prend le relais de la garantie.' },
 ]
+
+const primaryButton =
+  'group/cta inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-zinc-900 pr-4 pl-5 text-sm font-medium text-white transition-colors duration-200 hover:bg-zinc-700 active:translate-y-px'
 ---
 
 <BaseLayout
-  title="Maxime Derycke — Développeur Fullstack JS/TS"
-  description="Maxime Derycke, développeur fullstack TypeScript freelance : applications web et mobile sur mesure pour les PME, de l'UX à la mise en production."
+  title="Outils sur mesure pour les PME avec des équipes terrain · Beauvais (Oise) — Maxime Derycke"
+  description="Planning, bons d'intervention, remontée des informations : des outils sur mesure pour les PME avec des équipes terrain, sans ressaisie. Depuis Beauvais (Oise)."
 >
+  {/* Hero : l'accroche au niveau d'affichage, seule à cette taille sur le site, puis le
+      texte et le schéma du terrain au bureau côte à côte dès lg. */}
   <div class="relative isolate">
 
-    <!-- Grille SVG — remonte derrière le header fixe -->
+    {/* Grille du hero, remontée derrière l'en-tête fixe. Masquée sous sm : sur un écran
+        étroit, ses traits passeraient forcément derrière le titre. */}
     <svg
       aria-hidden="true"
-      class="sweep-in grid-fade absolute inset-x-0 -top-16 -z-10 h-[calc(100%+4rem)] w-full stroke-zinc-200"
+      class="sweep-in grid-fade absolute inset-x-0 -top-16 -z-10 hidden h-[calc(100%+4rem)] w-full stroke-zinc-200 sm:block"
     >
       <defs>
         <pattern id="grid" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
@@ -49,122 +67,195 @@ const career = [
       <rect width="100%" height="100%" fill="url(#grid)" stroke-width="0" />
     </svg>
 
-    <div class="mx-auto max-w-7xl px-6 pt-24 pb-24 sm:pt-32 lg:px-8 lg:pt-36 lg:pb-32">
-      <div class="max-w-2xl lg:max-w-none">
+    <div class="px-6 pt-16 pb-16 sm:pt-24 lg:px-8 lg:pt-28 lg:pb-24">
+      <Avatar class="set-in mb-8" />
+      <h1 class:list={['set-in max-w-5xl', display]} style="--i:1">
+        Du terrain au bureau, sans rien ressaisir.
+      </h1>
 
-        <div class="relative w-full lg:max-w-xl xl:max-w-2xl">
-          <Avatar class="set-in mb-8" />
-          <p class="set-in mb-5 flex items-center gap-2.5 text-sm font-mono text-zinc-600" style="--i:0">
-            <span aria-hidden="true" class="size-1.5 rounded-full bg-teal-500"></span>
-            Disponible pour de nouvelles missions
+      <div class="mt-10 grid gap-y-14 lg:mt-16 lg:grid-cols-12 lg:items-center lg:gap-x-8">
+        <div class="lg:col-span-5">
+          <p class="set-in max-w-xl text-lg leading-relaxed text-pretty text-zinc-600 sm:text-xl" style="--i:2">
+            J'aide les PME qui ont des équipes sur le terrain à simplifier leur planning, leurs interventions
+            et la remontée des informations. Je conçois et je développe moi-même vos outils,
+            depuis <span class="font-medium text-zinc-900">Beauvais (Oise)</span>.
           </p>
-          <h1 class="set-in text-4xl font-semibold tracking-tight text-balance text-zinc-900 sm:text-5xl" style="--i:1">
-            Applications web et mobile sur mesure pour les PME
-          </h1>
-          <p class="set-in mt-6 max-w-xl text-lg text-balance text-zinc-500 leading-relaxed sm:text-xl" style="--i:2">
-            <span class="font-medium text-zinc-900">Maxime Derycke</span>, développeur fullstack freelance,
-            avec autant d'attention à l'expérience utilisateur qu'à la qualité du code.
-            À distance, depuis Beauvais.
-          </p>
-          <div class="set-in mt-10 flex items-center gap-x-5" style="--i:3">
-            <a
-              href="/contact/"
-              class="px-5 py-3 sm:py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition"
-            >
-              Démarrer un projet
+          <div class="set-in mt-10 flex flex-col items-start gap-3" style="--i:3">
+            <a href="/contact/" class={primaryButton}>
+              Prendre rendez-vous
+              <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 transition-transform duration-300 ease-out group-hover/cta:translate-x-0.5 motion-reduce:transition-none">
+                <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </a>
-            <SocialLinks size={20} />
+            <span class="flex items-center gap-2.5 font-mono text-xs text-zinc-500">
+              <span aria-hidden="true" class="size-1.5 shrink-0 rounded-full bg-teal-500"></span>
+              30 min, au téléphone ou sur place
+            </span>
           </div>
         </div>
 
+        <FieldToOffice class="mx-auto w-full max-w-sm sm:max-w-none lg:col-span-7 lg:pl-6" />
       </div>
     </div>
-
   </div>
 
-  <!-- Contenu : à gauche le travail, à droite les cartes de repère -->
-  <div class="mx-auto max-w-7xl px-6 lg:px-8 pt-8 pb-24">
-    <div class="grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
+  <div class="px-6 pb-24 lg:px-8">
 
-      <div class="flex flex-col gap-16">
-
-        <section>
-          <h2 class="text-xl font-semibold text-zinc-900 mb-6">Ce que je construis</h2>
-          <ul class="rules">
-            {builds.map(({ title, detail }) => (
-              <li class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
-                <span class="text-sm font-medium text-zinc-900 sm:w-40 sm:shrink-0">{title}</span>
-                <span class="text-sm text-zinc-500">{detail}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section>
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-semibold text-zinc-900">Comment je travaille</h2>
-            <a href="/services/" class="-my-3 inline-flex min-h-11 items-center text-sm text-zinc-500 hover:text-zinc-600 transition-colors">Voir les services →</a>
-          </div>
-          <ul class="rules">
-            {modes.map(({ title, detail }) => (
-              <li class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
-                <span class="text-sm font-medium text-zinc-900 sm:w-40 sm:shrink-0">{title}</span>
-                <span class="text-sm text-zinc-500 leading-relaxed">{detail}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
+    {/* Seule preuve réalisée en indépendant, anonymisée (dépôt public : aucun nom de client).
+        Pleine largeur : l'avant et l'après se lisent côte à côte dès sm. */}
+    <section aria-labelledby="case-title" class="rounded-2xl border border-zinc-200 bg-zinc-50 p-7 sm:p-10 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-12">
+      <div class="lg:col-span-4">
+        <h2 id="case-title" class:list={[h2]}>Avant / après</h2>
+        <p class="mt-2 font-mono text-xs text-zinc-500">Mission freelance, 2026</p>
       </div>
+      <dl class="mt-8 grid gap-8 sm:grid-cols-2 lg:col-span-8 lg:mt-0">
+        <div class="border-t border-zinc-200 pt-5">
+          <dt class="font-mono text-xs text-zinc-500">Avant</dt>
+          <dd class="mt-2 text-lg leading-relaxed text-pretty text-zinc-600">
+            Les techniciens d'une entreprise de services jonglaient entre quatre outils
+            pour planifier leurs interventions et saisir leurs temps.
+          </dd>
+        </div>
+        <div class="border-t border-zinc-200 pt-5">
+          <dt class="flex items-center gap-2 font-mono text-xs text-zinc-500">
+            <span aria-hidden="true" class="size-1.5 rounded-full bg-teal-500"></span>
+            Après
+          </dt>
+          <dd class="mt-2 text-lg leading-relaxed text-pretty text-zinc-900">
+            Un planning de toute l'équipe sur une seule vue, une saisie des temps en quelques clics,
+            les rendez-vous et les congés affichés directement.
+          </dd>
+        </div>
+      </dl>
+    </section>
 
-      <div class="space-y-10 lg:pl-8 xl:pl-24">
+    {/* Chaque bloc a son propre traitement (cartes dessinées, bande sombre, frise horizontale)
+        pour donner un rythme de page d'accueil, et non une suite de sections identiques. */}
 
-        <section class="rounded-2xl border border-zinc-200 p-6">
-          <h2 class="flex items-center gap-3 text-sm font-semibold text-zinc-900">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-5 flex-none text-zinc-400">
-              <rect x="3" y="7" width="18" height="13" rx="2" />
-              <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-              <path d="M3 13h18" />
-            </svg>
-            Parcours
-          </h2>
-          <ol class="mt-6 space-y-4">
-            {career.map(({ title, detail, dates }) => (
-              <li class="flex gap-4">
-                <div class="flex-auto">
-                  <p class="text-sm font-medium text-zinc-900">{title}</p>
-                  <p class="mt-0.5 text-xs text-zinc-500">{detail}</p>
-                </div>
-                <span class="flex-none pt-0.5 font-mono text-xs text-zinc-500">{dates}</span>
-              </li>
-            ))}
-          </ol>
-          <a href="/about/" class="mt-3 -mb-3 inline-flex min-h-11 items-center text-sm text-zinc-500 hover:text-zinc-600 transition-colors">
-            Voir le parcours complet →
-          </a>
-        </section>
+    <section aria-labelledby="builds-title" class="py-16 lg:py-24">
+      <h2 id="builds-title" class:list={[h2, 'max-w-2xl sm:text-4xl']}>
+        Le terrain et le bureau sur le même outil
+      </h2>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-5">
+        {needs.map(({ title, detail, sketch, span }) => (
+          <li class:list={['overflow-hidden rounded-2xl border border-zinc-200 bg-white', span]}>
+            <div class="flex h-44 items-end justify-center border-b border-zinc-100 bg-zinc-50 px-6 pt-6">
+              <NeedSketch kind={sketch} />
+            </div>
+            <div class="p-6 sm:p-7">
+              <p class="text-lg font-semibold text-zinc-900">{title}</p>
+              <p class="mt-2 leading-relaxed text-pretty text-zinc-600">{detail}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-        <section class="rounded-2xl border border-zinc-200 p-6">
-          <h2 class="flex items-center gap-3 text-sm font-semibold text-zinc-900">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-5 flex-none text-zinc-400">
-              <rect x="3" y="5" width="18" height="14" rx="2" />
-              <path d="m3 7 9 6 9-6" />
-            </svg>
-            Un projet à discuter ?
-          </h2>
-          <p class="mt-3 text-sm text-zinc-500 leading-relaxed">
-            Quelques questions, deux minutes : réponse sous 48 h en général.
-          </p>
-          <a
-            href="/contact/"
-            class="mt-6 flex w-full justify-center px-5 py-3 sm:py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 active:translate-y-px transition"
-          >
-            Démarrer un projet
-          </a>
-        </section>
-
+    {/* Temps fort de la page : la bande sombre porte la promesse, le prix ferme.
+        Dégradé zinc (jamais une autre teinte) et la grille du hero en blanc à 6 %,
+        qui s'éteint vers le texte. */}
+    <section aria-labelledby="prices-title" class="relative isolate overflow-hidden rounded-3xl bg-linear-to-br from-zinc-950 from-35% to-zinc-700 px-7 py-14 sm:px-12 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-16 lg:py-20">
+      <svg aria-hidden="true" class="band-grid-fade absolute inset-0 -z-10 h-full w-full stroke-white/[0.06]">
+        <defs>
+          <pattern id="band-grid" width="64" height="64" x="100%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 64V.5H64" fill="none" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#band-grid)" stroke-width="0" />
+      </svg>
+      <div class="lg:col-span-5">
+        <h2 id="prices-title" class="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
+          Un prix ferme avant chaque étape
+        </h2>
+        <p class="mt-5 max-w-md leading-relaxed text-pretty text-zinc-300">
+          Le projet avance par étapes. Le prix de chacune est fixé avant qu'elle commence,
+          et le paiement suit l'avancement.
+        </p>
+        <a
+          href="/offres/"
+          class="group/arrow mt-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-white decoration-white/40 underline-offset-4 hover:underline"
+        >
+          Voir tous les tarifs
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 transition-transform duration-300 ease-out group-hover/arrow:translate-x-0.5 motion-reduce:transition-none">
+            <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
       </div>
-    </div>
+      <div class="mt-10 lg:col-span-7 lg:mt-0">
+        <ul class="divide-y divide-white/10">
+          {means.map(({ title, detail, price }) => (
+            <li class="flex flex-col gap-4 py-7 first:pt-0 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+              <div>
+                <p class="text-xl font-semibold text-white">{title}</p>
+                <p class="mt-2 max-w-sm leading-relaxed text-pretty text-zinc-300">{detail}</p>
+              </div>
+              <p class="shrink-0 sm:text-right">
+                <span class="block font-mono text-xs text-zinc-400">à partir de</span>
+                <span class="text-4xl font-semibold tracking-tight whitespace-nowrap tabular-nums text-white sm:text-5xl">{price}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+        <p class="border-t border-white/10 pt-4 font-mono text-xs text-zinc-400">
+          Prix en euros. {VAT_NOTICE}.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="steps-title" class="py-16 lg:py-24">
+      <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+        <h2 id="steps-title" class:list={[h2, 'sm:text-4xl']}>Cinq étapes, un seul interlocuteur</h2>
+        <ArrowLink href="/offres/">Voir le déroulé détaillé</ArrowLink>
+      </div>
+      {/* Frise numérotée, l'ordre compte : verticale sur mobile, horizontale dès lg.
+          Chaque trait laisse le même espace (0,5rem) avant et après les bulles. */}
+      <ol class="mt-12 grid lg:mt-14 lg:grid-cols-5 lg:gap-x-8">
+        {steps.map(({ title, detail }, i) => {
+          const isLast = i === steps.length - 1
+          return (
+            <li class="relative grid grid-cols-[2rem_1fr] gap-x-5 lg:block">
+              {!isLast && (
+                <>
+                  <span class="absolute top-10 bottom-2 left-4 w-px -translate-x-1/2 bg-zinc-200 lg:hidden" aria-hidden="true"></span>
+                  <span class="absolute top-4 right-0 left-10 hidden h-px bg-zinc-200 lg:-right-6 lg:block" aria-hidden="true"></span>
+                </>
+              )}
+              {/* Après la dernière étape, le trait s'efface : les évolutions continuent */}
+              {isLast && (
+                <>
+                  <span class="absolute top-10 left-4 h-12 w-px -translate-x-1/2 bg-linear-to-b from-zinc-200 to-transparent lg:hidden" aria-hidden="true"></span>
+                  <span class="absolute top-4 right-0 left-10 hidden h-px bg-linear-to-r from-zinc-200 to-transparent lg:block" aria-hidden="true"></span>
+                </>
+              )}
+              <span
+                class:list={[
+                  'relative flex size-8 items-center justify-center rounded-full border bg-white font-mono text-xs text-zinc-500',
+                  i === 0 ? 'border-teal-500' : 'border-zinc-200',
+                ]}
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <div class:list={['pt-1 lg:pt-0 lg:mt-5', !isLast && 'pb-8 lg:pb-0']}>
+                <p class="font-medium text-zinc-900">{title}</p>
+                <p class="mt-1.5 text-sm leading-relaxed text-pretty text-zinc-600">{detail}</p>
+              </div>
+            </li>
+          )
+        })}
+      </ol>
+      {/* L'Étude est facultative : hors de la frise, elle n'en est pas une étape */}
+      <p class="mt-10 max-w-xl text-sm leading-relaxed text-pretty text-zinc-600 lg:mt-12">
+        Besoin encore flou&nbsp;? Une Étude de projet peut précéder la proposition : je viens voir
+        le terrain, j'écris le cahier des charges et je vous montre une maquette.
+      </p>
+    </section>
+
+    <ContactCard
+      title={'Qu\'est-ce que vous ressaisissez aujourd\'hui ?'}
+      text="Décrivez votre besoin en quelques questions. Je vous rappelle sous 48 h ouvrées."
+    />
+
   </div>
 
 </BaseLayout>

@@ -27,7 +27,7 @@ Un secret passe toujours par une variable d'environnement : `.env` (site) ou `ap
 
 ```text
 src/
-├── pages/            # une page = une route (index, about, services, renfort, contact, mentions-legales, confidentialite)
+├── pages/            # une page = une route (index, about, offres, renfort, contact, mentions-legales, confidentialite)
 ├── layouts/
 │   └── BaseLayout.astro   # <head> (SEO, Open Graph), en-tête et navigation (navLinks), menu mobile, pied de page
 ├── components/       # SocialLinks, Avatar, ContactForm.tsx (island React), icons/
@@ -57,6 +57,8 @@ Pour pointer le site local vers l'API locale : `PUBLIC_API_URL=http://localhost:
 
 Déploiement : aucun script local. GitHub Actions déploie à chaque push sur `main`, après le workflow Check (types et build du site et de l'API), qui tourne aussi sur chaque PR. Ne jamais déployer à la main.
 
+Branches : le travail arrive dans `develop`, jamais directement dans `main`. Une branche de ticket part de `develop` et sa PR vise `develop` (`gh pr create --base develop`). Mettre en ligne, c'est fusionner une PR `develop` → `main`, décidée par Maxime.
+
 ## Où vit le contenu
 
 - Les textes sont écrits directement dans les pages `src/pages/*.astro`. Il n'y a ni content collections ni markdown.
@@ -69,11 +71,13 @@ Déploiement : aucun script local. GitHub Actions déploie à chaque push sur `m
 
 - TypeScript strict, sans point-virgule, guillemets simples, indentation de 2 espaces, virgule finale en multiligne.
 - Commentaires en français, courts, qui expliquent le pourquoi. En TS, les sections sont séparées par `// ─── Titre ───`.
+- Dans le balisage `.astro`, commentaires en `{/* … */}`, jamais en `<!-- … -->` : ces derniers partent dans le HTML publié. Pas de commentaire qui répète ce que les classes disent déjà.
 - Classes Tailwind en ligne, `class:list` pour les classes conditionnelles. Pas de CSS hors de `global.css`.
 - Liens internes avec slash final (`/about/`), à cause de `trailingSlash: 'always'`.
 - Accessibilité : `aria-label` sur les liens icônes, zone cliquable d'au moins 44 px, `aria-current="page"` sur la navigation, focus visible conservé.
 - Commits : `type(portée): message` (feat, fix, docs, ci, chore, perf), en français, courts.
-- Pull requests : fusion en squash uniquement, un ticket donne une PR et un commit sur `main`. Le titre de la PR devient le message du commit, il suit donc la convention ci-dessus.
+- Pull requests de ticket : vers `develop`, fusion en squash uniquement, un ticket donne une PR et un commit. Le titre de la PR devient le message du commit, il suit donc la convention ci-dessus.
+- PR de mise en ligne `develop` → `main` : fusion par commit de fusion (« Create a merge commit »), jamais en squash ni en rebase, pour garder un commit par ticket sur `main` et `develop` synchronisée sans réécriture.
 
 ## Design
 
