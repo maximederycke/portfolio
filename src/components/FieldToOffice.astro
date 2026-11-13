@@ -3,7 +3,7 @@
 // du bureau. Dessiné en filets comme un plan coté : traits zinc, annotations en mono,
 // un seul trait teal (la liaison « sans ressaisie »). Aucune capture d'écran : c'est
 // un dessin de principe, pas un produit réel.
-// Deux variantes du même dessin : horizontale dès sm, verticale en dessous (le texte
+// Deux variantes du même dessin : en diagonale dès sm, verticale en dessous (le texte
 // garde ainsi une taille lisible). Les traits se tracent au chargement (classe `trace`).
 
 interface Props {
@@ -16,15 +16,17 @@ const variants = [
   {
     key: 'h',
     class: 'hidden sm:block',
-    viewBox: '-4 0 600 300',
-    phone: 'translate(105 40)',
-    planning: 'translate(330 52)',
-    link: 'M213 152H318',
-    linkStart: [213, 152],
-    linkEnd: [322, 152],
-    linkLabel: { x: 265.5, y: 141, anchor: 'middle' },
-    terrain: { x: 155, y: 22, anchor: 'middle' },
-    bureau: { x: 460, y: 22, anchor: 'middle' },
+    // En diagonale : le terrain en bas à gauche, le bureau en haut à droite
+    viewBox: '-4 -8 600 408',
+    phone: 'translate(105 150)',
+    planning: 'translate(330 20)',
+    link: 'M213 262H392Q400 262 400 254V228',
+    linkStart: [213, 262],
+    linkEnd: [400, 224],
+    linkLabel: { x: 306, y: 251, anchor: 'middle' },
+    terrain: { x: 155, y: 138, anchor: 'middle' },
+    bureau: { x: 460, y: 8, anchor: 'middle' },
+    planNote: { leader: 'M-12 60H0', x: -16, y: 64, anchor: 'end' },
   },
   {
     key: 'v',
@@ -38,6 +40,7 @@ const variants = [
     linkLabel: { x: 182, y: 308, anchor: 'start' },
     terrain: { x: 170, y: 20, anchor: 'middle' },
     bureau: { x: 290, y: 338, anchor: 'end' },
+    planNote: { leader: 'M130 200V214', x: 130, y: 232, anchor: 'middle' },
   },
 ]
 
@@ -130,8 +133,8 @@ const slots = [
         {days.map((day, i) => (
           <text x={71 + i * 42} y="17" text-anchor="middle" class="set-in fill-zinc-500 font-mono text-[12px]" stroke="none" style="--i:9">{day}</text>
         ))}
-        <path class="trace text-zinc-200" style="--i:11" pathLength="1" d="M130 200v14" />
-        <text x="130" y="232" text-anchor="middle" class="set-in fill-zinc-500 font-mono text-[13px]" stroke="none" style="--i:12">une seule vue pour l'équipe</text>
+        <path class="trace text-zinc-200" style="--i:11" pathLength="1" d={v.planNote.leader} />
+        <text x={v.planNote.x} y={v.planNote.y} text-anchor={v.planNote.anchor} class="set-in fill-zinc-500 font-mono text-[13px]" stroke="none" style="--i:12">une seule vue pour l'équipe</text>
       </g>
     </svg>
   ))}

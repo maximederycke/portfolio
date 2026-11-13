@@ -4,18 +4,20 @@ import Avatar from '../components/Avatar.astro'
 import ArrowLink from '../components/ArrowLink.astro'
 import ContactCard from '../components/ContactCard.astro'
 import FieldToOffice from '../components/FieldToOffice.astro'
+import NeedSketch from '../components/NeedSketch.astro'
 import { PRICES, VAT_NOTICE, eur } from '../lib/prices'
 import { display, h2 } from '../lib/typography'
 
 // L'accueil parle au dirigeant de PME : son problème, son territoire, le prix, le déroulé, une preuve.
 // Aucun jargon technique ici (il vit sur /renfort/), le détail des tarifs vit sur /offres/.
 
+// Les quatre besoins, en cartes de tailles inégales, chacune avec son petit dessin
 const needs = [
-  { title: 'Planning des interventions', detail: 'Qui intervient où et quand, sur une seule vue partagée par toute l\'équipe.' },
-  { title: 'Bons d\'intervention sur mobile', detail: 'Photos, signature du client, même sans réseau.' },
-  { title: 'Remontée des informations', detail: 'Ce qui est saisi sur le terrain arrive au bureau, sans ressaisie.' },
-  { title: 'Connexion avec vos logiciels', detail: 'Vos outils actuels restent en place et se parlent entre eux.' },
-]
+  { title: 'Planning des interventions', detail: 'Qui intervient où et quand, sur une seule vue partagée par toute l\'équipe.', sketch: 'planning', span: 'lg:col-span-3' },
+  { title: 'Bons d\'intervention sur mobile', detail: 'Photos, signature du client, même sans réseau.', sketch: 'mobile', span: 'lg:col-span-2' },
+  { title: 'Remontée des informations', detail: 'Ce qui est saisi sur le terrain arrive au bureau, sans ressaisie.', sketch: 'flow', span: 'lg:col-span-2' },
+  { title: 'Connexion avec vos logiciels', detail: 'Vos outils actuels restent en place et se parlent entre eux.', sketch: 'connect', span: 'lg:col-span-3' },
+] as const
 
 // Les deux moyens, avec leur prix d'entrée (montants tirés de src/lib/prices.ts)
 const means = [
@@ -49,34 +51,51 @@ const primaryButton =
 >
   {/* Hero : l'accroche au niveau d'affichage, seule à cette taille sur le site, puis le
       texte et le schéma du terrain au bureau côte à côte dès lg. */}
-  <div class="px-6 pt-16 pb-16 sm:pt-24 lg:px-8 lg:pt-28 lg:pb-24">
-    <Avatar class="set-in mb-8" />
-    <h1 class:list={['set-in max-w-5xl', display]} style="--i:1">
-      Du terrain au bureau, sans rien ressaisir.
-    </h1>
+  <div class="relative isolate">
 
-    <div class="mt-10 grid gap-y-14 lg:mt-16 lg:grid-cols-12 lg:items-center lg:gap-x-8">
-      <div class="lg:col-span-5">
-        <p class="set-in max-w-xl text-lg leading-relaxed text-pretty text-zinc-600 sm:text-xl" style="--i:2">
-          J'aide les PME qui ont des équipes sur le terrain à simplifier leur planning, leurs interventions
-          et la remontée des informations. Je conçois et je développe moi-même vos outils,
-          depuis <span class="font-medium text-zinc-900">Beauvais (Oise)</span>.
-        </p>
-        <div class="set-in mt-10 flex flex-col items-start gap-3" style="--i:3">
-          <a href="/contact/" class={primaryButton}>
-            Prendre rendez-vous
-            <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 transition-transform duration-300 ease-out group-hover/cta:translate-x-0.5 motion-reduce:transition-none">
-              <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-          <span class="flex items-center gap-2.5 font-mono text-xs text-zinc-500">
-            <span aria-hidden="true" class="size-1.5 shrink-0 rounded-full bg-teal-500"></span>
-            30 min, au téléphone ou sur place
-          </span>
+    {/* Grille du hero, remontée derrière l'en-tête fixe. Masquée sous sm : sur un écran
+        étroit, ses traits passeraient forcément derrière le titre. */}
+    <svg
+      aria-hidden="true"
+      class="sweep-in grid-fade absolute inset-x-0 -top-16 -z-10 hidden h-[calc(100%+4rem)] w-full stroke-zinc-200 sm:block"
+    >
+      <defs>
+        <pattern id="grid" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+          <path d="M.5 200V.5H200" fill="none" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" stroke-width="0" />
+    </svg>
+
+    <div class="px-6 pt-16 pb-16 sm:pt-24 lg:px-8 lg:pt-28 lg:pb-24">
+      <Avatar class="set-in mb-8" />
+      <h1 class:list={['set-in max-w-5xl', display]} style="--i:1">
+        Du terrain au bureau, sans rien ressaisir.
+      </h1>
+
+      <div class="mt-10 grid gap-y-14 lg:mt-16 lg:grid-cols-12 lg:items-center lg:gap-x-8">
+        <div class="lg:col-span-5">
+          <p class="set-in max-w-xl text-lg leading-relaxed text-pretty text-zinc-600 sm:text-xl" style="--i:2">
+            J'aide les PME qui ont des équipes sur le terrain à simplifier leur planning, leurs interventions
+            et la remontée des informations. Je conçois et je développe moi-même vos outils,
+            depuis <span class="font-medium text-zinc-900">Beauvais (Oise)</span>.
+          </p>
+          <div class="set-in mt-10 flex flex-col items-start gap-3" style="--i:3">
+            <a href="/contact/" class={primaryButton}>
+              Prendre rendez-vous
+              <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 transition-transform duration-300 ease-out group-hover/cta:translate-x-0.5 motion-reduce:transition-none">
+                <path d="M3.5 8h9M8.75 4.25 12.5 8l-3.75 3.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <span class="flex items-center gap-2.5 font-mono text-xs text-zinc-500">
+              <span aria-hidden="true" class="size-1.5 shrink-0 rounded-full bg-teal-500"></span>
+              30 min, au téléphone ou sur place
+            </span>
+          </div>
         </div>
-      </div>
 
-      <FieldToOffice class="mx-auto w-full max-w-sm sm:max-w-none lg:col-span-7 lg:pl-6" />
+        <FieldToOffice class="mx-auto w-full max-w-sm sm:max-w-none lg:col-span-7 lg:pl-6" />
+      </div>
     </div>
   </div>
 
@@ -110,25 +129,40 @@ const primaryButton =
       </dl>
     </section>
 
-    {/* Chaque bloc a son propre traitement (titre à gauche, bande encre, frise horizontale)
+    {/* Chaque bloc a son propre traitement (cartes dessinées, bande sombre, frise horizontale)
         pour donner un rythme de page d'accueil, et non une suite de sections identiques. */}
 
-    <section aria-labelledby="builds-title" class="py-16 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:py-24">
-      <h2 id="builds-title" class:list={[h2, 'sm:text-4xl lg:col-span-4']}>
+    <section aria-labelledby="builds-title" class="py-16 lg:py-24">
+      <h2 id="builds-title" class:list={[h2, 'max-w-2xl sm:text-4xl']}>
         Le terrain et le bureau sur le même outil
       </h2>
-      <ul class="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:col-span-8 lg:mt-0">
-        {needs.map(({ title, detail }) => (
-          <li class="border-t border-zinc-200 pt-5">
-            <p class="text-lg font-semibold text-zinc-900">{title}</p>
-            <p class="mt-2 leading-relaxed text-pretty text-zinc-600">{detail}</p>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-5">
+        {needs.map(({ title, detail, sketch, span }) => (
+          <li class:list={['overflow-hidden rounded-2xl border border-zinc-200 bg-white', span]}>
+            <div class="flex h-44 items-end justify-center border-b border-zinc-100 bg-zinc-50 px-6 pt-6">
+              <NeedSketch kind={sketch} />
+            </div>
+            <div class="p-6 sm:p-7">
+              <p class="text-lg font-semibold text-zinc-900">{title}</p>
+              <p class="mt-2 leading-relaxed text-pretty text-zinc-600">{detail}</p>
+            </div>
           </li>
         ))}
       </ul>
     </section>
 
-    {/* Temps fort de la page : la bande à l'encre porte la promesse, le prix ferme */}
-    <section aria-labelledby="prices-title" class="rounded-3xl bg-zinc-900 px-7 py-14 sm:px-12 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-16 lg:py-20">
+    {/* Temps fort de la page : la bande sombre porte la promesse, le prix ferme.
+        Dégradé zinc (jamais une autre teinte) et la grille du hero en blanc à 6 %,
+        qui s'éteint vers le texte. */}
+    <section aria-labelledby="prices-title" class="relative isolate overflow-hidden rounded-3xl bg-linear-to-br from-zinc-950 from-35% to-zinc-700 px-7 py-14 sm:px-12 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-16 lg:py-20">
+      <svg aria-hidden="true" class="band-grid-fade absolute inset-0 -z-10 h-full w-full stroke-white/[0.06]">
+        <defs>
+          <pattern id="band-grid" width="64" height="64" x="100%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 64V.5H64" fill="none" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#band-grid)" stroke-width="0" />
+      </svg>
       <div class="lg:col-span-5">
         <h2 id="prices-title" class="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">
           Un prix ferme avant chaque étape
