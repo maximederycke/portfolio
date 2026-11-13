@@ -135,7 +135,7 @@ const guarantees = [
       </p>
     </PageIntro>
 
-    <Section title="Comment se passe un projet" wide>
+    <Section title="Cinq étapes, à votre rythme" wide>
 
       {/*
         Parcours : des cartes reliées par un rail. --c est la hauteur du centre du titre
@@ -217,16 +217,17 @@ const guarantees = [
       </ol>
     </Section>
 
-    <Section title="Tarifs" wide>
+    <Section title="Des prix fermes, connus d'avance" wide>
 
-      {/* Dès md : un vrai tableau. En dessous : un bloc par prestation, le prix à côté du nom. */}
-      <table class="hidden w-full table-fixed text-left md:table">
+      {/* Dès lg : un vrai tableau (en dessous, la description n'aurait plus la place).
+          Plus étroit : un bloc par prestation, le prix à côté du nom. */}
+      <table class="hidden w-full table-fixed text-left lg:table">
         <caption class="sr-only">Tarifs et délais de livraison</caption>
         <colgroup>
-          <col class="w-52" />
+          <col class="w-44 xl:w-48" />
           <col />
-          <col class="w-56" />
-          <col class="w-60" />
+          <col class="w-52 xl:w-60" />
+          <col class="w-40 xl:w-52" />
         </colgroup>
         <thead>
           <tr class="border-b border-zinc-200 font-mono text-xs text-zinc-500">
@@ -246,7 +247,8 @@ const guarantees = [
                 <ul class="flex flex-col gap-1.5">
                   {prices.map(({ amount, unit, label }) => (
                     <li class="leading-tight">
-                      <span class="text-lg font-semibold whitespace-nowrap tabular-nums text-zinc-900">{amount}</span>
+                      {/* Un seul montant : en grand. Plusieurs (la maintenance) : un cran en dessous */}
+                      <span class:list={['font-semibold tracking-tight whitespace-nowrap tabular-nums text-zinc-900', prices.length > 1 ? 'text-2xl' : 'text-3xl']}>{amount}</span>
                       {unit && <span class="text-sm text-zinc-600"> {unit}</span>}
                       {label && <span class="block font-mono text-xs text-zinc-500">{label}</span>}
                     </li>
@@ -259,7 +261,7 @@ const guarantees = [
         </tbody>
       </table>
 
-      <ul class="divide-y divide-zinc-100 md:hidden">
+      <ul class="divide-y divide-zinc-100 lg:hidden">
         {rates.map(({ name, includes, from, prices, delay }) => (
           <li class="py-5 first:pt-0">
             <div class="flex items-start justify-between gap-4">
@@ -269,7 +271,7 @@ const guarantees = [
                 <ul class="flex flex-col gap-1.5">
                   {prices.map(({ amount, unit, label }) => (
                     <li class="leading-tight">
-                      <span class="font-semibold whitespace-nowrap tabular-nums text-zinc-900">{amount}</span>
+                      <span class:list={['font-semibold tracking-tight whitespace-nowrap tabular-nums text-zinc-900', prices.length > 1 ? 'text-xl' : 'text-2xl']}>{amount}</span>
                       {unit && <span class="text-sm text-zinc-600"> {unit}</span>}
                       {label && <span class="block font-mono text-xs text-zinc-500">{label}</span>}
                     </li>
@@ -287,11 +289,11 @@ const guarantees = [
 
       <div class="mt-6 flex flex-col gap-1.5 border-t border-zinc-200 pt-4 text-sm text-zinc-600">
         <p>{hostingNote}</p>
-        <p class="text-xs text-zinc-500">Prix en euros. {VAT_NOTICE}. Délais de livraison indicatifs.</p>
+        <p class="max-w-2xl text-xs text-zinc-500">Prix en euros. {VAT_NOTICE}. Délais de livraison indicatifs.</p>
       </div>
     </Section>
 
-    <Section title="Trois garanties" wide>
+    <Section title="Ce qui vous reste acquis" wide>
       <ul class="grid gap-8 sm:grid-cols-3">
         {guarantees.map(({ title, text }) => (
           <li class="border-t border-zinc-200 pt-5">

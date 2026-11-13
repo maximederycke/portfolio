@@ -16,6 +16,12 @@ colors:
   paper: "#ffffff"
   error: "oklch(63.7% 0.237 25.331)"
 typography:
+  hero:
+    fontFamily: "DM Sans Variable, system-ui, sans-serif"
+    fontSize: "3.75rem"
+    fontWeight: 600
+    lineHeight: 1.05
+    letterSpacing: "-0.03em"
   display:
     fontFamily: "DM Sans Variable, system-ui, sans-serif"
     fontSize: "3rem"
@@ -143,10 +149,10 @@ components:
 
 The site reads like a well-typeset professional letter from an engineer: white paper, one sans voice, thin rules instead of boxes-with-shadows, small mono annotations in the margins, and a single drafting-pen teal that marks where you are or what you chose. Restraint is the credential: the calm hierarchy tells an SME owner the work will be orderly, and the mono detailing tells a tech lead the author is technical.
 
-Space does most of the structural work; borders are hairlines; type size and weight carry hierarchy, with large, tight headings. Every page sits on one grid and one vertical line, shared by the header name, the page title and the footer. The home page has the rhythm of a landing page (each block treated differently, one ink band as its strong moment); inner pages share a common base (title and lead, sections with the title on the left and content on the right, the contact card) and each may add one signature block of its own instead of reading as a uniform template. Motion is one authored moment per page, not a coat of effects: on load the home sheet is ruled (the grid is swept in) and the hero is set down in reading order; on /offres/ the project path is drawn as you scroll.
+Space does most of the structural work; borders are hairlines; type size and weight carry hierarchy, with large, tight headings. Every page sits on one grid and one vertical line, shared by the header name, the page title and the footer. The home page has the rhythm of a landing page (each block treated differently, one ink band as its strong moment); inner pages share a common base (title and lead, sections with the title on the left and content on the right, the contact card) and each may add one signature block of its own instead of reading as a uniform template. Motion is one authored moment per page, not a coat of effects: on load the home sheet is ruled (the grid is swept in), the hero is set down in reading order and its field-to-office drawing is traced stroke by stroke; on /offres/ the project path is drawn as you scroll.
 
 **Key Characteristics:**
-- Light-only, white paper with zinc ink; no dark mode. The ink band on the home is the only dark surface.
+- Light-only, white paper with zinc ink; no dark mode. The price band on the home (a zinc gradient) is the only dark surface.
 - Flat surfaces with hairline zinc borders; shadow exists only on the floating header bar.
 - One sans (DM Sans) for reading, one mono (DM Mono) for metadata.
 - Everything aligned to the sheet grid: the header name, every `h1` and the footer share one vertical.
@@ -157,17 +163,17 @@ Space does most of the structural work; borders are hairlines; type size and wei
 A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chroma) plus one teal. The canonical values are Tailwind v4's `oklch` tokens, not the v3 hex values.
 
 ### Primary
-- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`): the drafting-pen mark, used as strokes and dots only: the underline of the current nav link, the dot before the current item of the mobile menu, the dot before the reassurance « 30 min, au téléphone ou sur place », the dot before « Après » in the proof card, the ring of the first step in a numbered rail, and the border of a selected choice card. Never a fill, never text.
+- **Drafting Teal** (oklch(70.4% 0.14 182.503), Tailwind `teal-500`): the drafting-pen mark, used as strokes and dots only: the underline of the current nav link, the dot before the current item of the mobile menu, the dot before the reassurance « 30 min, au téléphone ou sur place », the dot before « Après » in the proof card, the « sans ressaisie » link of the hero drawing, the ring of the first step in a numbered rail, and the border of a selected choice card. Never a fill, never text.
 - **Drafting Teal Ink** (`teal-700`, about 5.4:1 on white): the same teal when it has to be read or must reach 3:1 as an indicator: the current nav link, the « Demande envoyée » label, and the 2px border + ring of a focused form field.
 - **Drafting Teal Wash** (`teal-50`, at 50% opacity): the fill behind a selected choice card.
 
 ### Neutral
-- **Ink** (`zinc-900`): headings, primary button fill, and the one dark surface (the ink band on the home).
+- **Ink** (`zinc-900`): headings, primary button fill. The one dark surface (the ink band on the home) is a zinc gradient from `zinc-950` to `zinc-700`.
 - **Graphite** (`zinc-700`): primary-button hover, unselected choice-card labels, the feature icons.
 - **Slate** (`zinc-600`): lead paragraphs, body text, list items, inactive nav links.
 - **Pencil** (`zinc-500`): metadata (dates, reassurance, update date), footer, social icons at rest.
 - **Placeholder** (`zinc-400`): input placeholder text only.
-- **Hairline** (`zinc-200`): borders of cards, fields, chips and icon boxes; numbered-rail lines; the hero grid strokes.
+- **Hairline** (`zinc-200`): borders of cards, fields, chips and icon boxes; numbered-rail lines; the hero grid strokes; the inner lines of the drawings (their outlines use `zinc-300`).
 - **Hairline Faint** (`zinc-100`): rules between sections and between list rows; the footer rule.
 - **Paper Tint** (`zinc-50`): the contact card, the proof card, and the ground around the page sheet from `lg`.
 - **Paper** (#ffffff): the page sheet and the header bar (90%).
@@ -190,7 +196,8 @@ A near-monochrome zinc palette (Tailwind v4 defaults, hue ~286° at very low chr
 **Character:** A friendly geometric sans for reading paired with a matching mono for the "typewriter margin". Hierarchy comes from size and weight (semibold 600 for headings, regular for text), not from colour or decoration. The shared scale lives in `src/lib/typography.ts` (`h1`, `lede`, `h2`, `h3`, `body`, `inlineLink`, `bullet`).
 
 ### Hierarchy
-- **Display** (600, 2.25rem → 3rem from `sm`, tracking -0.025em, balanced): every page title (`h1`), including the home hero sentence.
+- **Hero** (600, 3rem → 3.75rem from `sm`, line-height 1.05, tracking -0.03em, balanced): the home hero sentence only (`display` in `typography.ts`). Nothing else on the site reaches this size.
+- **Display** (600, 2.25rem → 3rem from `sm`, tracking -0.025em, balanced): every inner page title (`h1`).
 - **Headline** (600, 1.5rem → 1.875rem from `sm`, tracking -0.025em, balanced): section headings (`h2`). On the home, the centred and the frise headings go up to 2.25rem from `sm`.
 - **Title** (600, 1.25rem): step titles, the two means, the proof card title.
 - **Lead** (400, 1.125rem, relaxed, `slate`, `max-w-2xl`): the paragraph under a page title (1.25rem from `sm` on the home hero).
@@ -209,7 +216,7 @@ A single white sheet, like a letter on a desk: from `lg` it is framed by a 1px `
 
 **Signature blocks**: on top of that common base, an inner page may carry one block with its own treatment, where the page's job is decided. /offres/ has the Linked Step Cards and the Rate Table. A signature block uses `Section` with `wide`: the heading sits on top and the content spans the whole sheet, so it is not squeezed into the right 8 columns. On /offres/ every section is wide (the Garanties go three across). Other inner pages get theirs only through their own ticket; never more than one per page.
 
-**Home**: a landing-page rhythm where each block has its own treatment. The hero is a 12-column grid: text on the left 7 (avatar, title, lead, button, reassurance), the proof card on the right 5. Then a centred heading with four features side by side, the ink band (heading left, the two means right), a horizontal numbered rail with its link aligned right, a `Section` (Parcours), and the contact card. Each fact appears once on the home; the detail lives on /offres/ and /about/.
+**Home**: a landing-page rhythm where each block has its own treatment. The hero sits on the faint 200px grid: the avatar and the hero sentence across the sheet, then a 12-column row: lead, button and reassurance on the left 5, the Field-to-Office Drawing on the right 7. Then the full-width proof card, the four Need Cards, the ink band (the firm prices), a horizontal numbered rail with its link aligned right, and the contact card. Section headings on the home are claims, not labels. Each fact appears once on the home; the detail lives on /offres/ and /about/; the career history lives on /about/ only.
 
 Below `lg` every grid stacks in reading order; below `sm` the numbered rail turns vertical. The header is fixed, so `main` reserves 4rem at the top.
 
@@ -222,7 +229,7 @@ Flat by default. Depth is conveyed by hairline borders, the Paper Tint cards, th
 
 ## Shapes
 
-Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields, choice cards and icon boxes, 16px (`2xl`) for the header bar and the content cards (contact, proof), 24px (`3xl`) for the ink band, a full circle for numbered steps and the avatar, a full pill for tag chips. Borders are always 1px hairlines. The other geometry: a 1px teal gradient underline under the active nav link, a faint 200px square grid behind the home hero (hidden below `sm`), and 1px rails between numbered steps.
+Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields, choice cards and icon boxes, 16px (`2xl`) for the header bar and the content cards (contact, proof), 24px (`3xl`) for the ink band, a full circle for numbered steps and the avatar, a full pill for tag chips. Borders are always 1px hairlines. The other geometry: a 1px teal gradient underline under the active nav link, a faint 200px square grid behind the home hero (hidden below `sm`), the hairline drawings (hero and Need Cards), and 1px rails between numbered steps.
 
 ## Components
 
@@ -245,14 +252,23 @@ Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields
 - **Style:** full width, Paper Tint fill, 1px `hairline` border, 16px radius, 1.75rem to 3rem padding. From `lg`, the heading and one sentence on the left 7 columns, the action on the right.
 - **Content:** default heading « Vous avez un projet ? Parlons-en. », the primary button, and below it the reassurance in a label with a teal dot: « 30 min · au téléphone ou sur place ». /renfort/ replaces the action with an e-mail button and the Malt link. The free first meeting is never labelled « offert ».
 
+### Field-to-Office Drawing (home hero)
+- The main illustration of the site, drawn like a dimensioned plan rather than shown as a screenshot: a phone with a bon d'intervention (photo, checklist, signature, no-signal mark) low on the left, a weekly planning high on the right, so the drawing reads as a diagonal from the field up to the office. Outlines are 1px `zinc-300`, inner grid and leader lines `zinc-200`, the planning slots `zinc-100`.
+- Annotations are DM Mono labels in `pencil` at 13px (« terrain », « bureau », « hors réseau », « photo », « signature », « une seule vue pour l'équipe »), each tied to its element by a leader line ending in a small dot.
+- The link between the two (« sans ressaisie ») is the drawing's only teal: a 1px `teal-500` stroke that leaves the phone, turns with an 8px curve and rises into the planning, between two 5px dots. Nothing else in it is teal.
+- Two variants of the same drawing: diagonal from `sm`, vertical below, so the labels stay legible at 375px. It is a `role="img"` with a sentence that says what it shows.
+- Motion: on load, every stroke is traced in drawing order (field, link, office) with `pathLength="1"` and a dash offset, 900ms exponential ease-out with a 90ms stagger; labels and slots set in. Under `prefers-reduced-motion` the drawing is simply there.
+
 ### Proof Card (home)
-- Paper Tint, 16px radius, title « Avant / après » with the mission date in a label; two rows « Avant » (body in `slate`) and « Après » (a teal dot, body in Ink). It is opaque so the hero grid never runs behind its text.
+- Full width under the hero, Paper Tint, 16px radius. From `lg`, title « Avant / après » and the mission date (label) on the left 4 columns; « Avant » (lead-size body in `slate`) and « Après » (a teal dot, lead-size body in Ink) side by side from `sm` on the right 8, each under a `hairline` rule.
 
 ### Ink Band (home)
-- The one strong moment of the home: Ink fill, 24px radius, generous padding; heading in white on the left, the two means on the right as Title + body in `zinc-300`, separated by `white/10` rules. Only one per page.
+- The one strong moment of the home, and it carries the promise: the firm price. A zinc gradient (`zinc-950` up to 35%, then towards `zinc-700` in the bottom-right corner, never another hue), 24px radius, generous padding, and the hero grid at a 64px pitch in white at 6%, masked so it only shows in the lighter corner. On the left, the heading « Un prix ferme avant chaque étape » in white, one sentence in `zinc-300` and a white arrow link to /offres/. On the right, the two means (Title in white + body in `zinc-300`), each with its entry price: « à partir de » in a `zinc-400` label above the amount at 2.25rem → 3rem from `sm`, semibold, tabular, white. Rows are split by `white/10` rules and the price notice closes the list in a `zinc-400` label. The amounts come from `src/lib/prices.ts`. Only one band per page.
 
-### Feature List (home)
-- Four items side by side from `lg` (two from `sm`): a 44px icon box (12px radius, hairline border, 20px line icon in Graphite, 1.5 stroke), a medium title, a body-small detail.
+### Need Cards (home)
+- The four needs as a bento of white cards (1px `hairline` border, 16px radius, no shadow) of unequal widths: 3 + 2 columns, then 2 + 3, on a 5-column grid from `lg`; two across from `sm`, stacked below. The heading sits above, left-aligned.
+- Each card opens on a 11rem Paper Tint panel (a `hairline-faint` rule below) holding a small hairline drawing in the hero's vocabulary: the week planning, the phone cut by the panel edge, the field-to-office flow, the existing software around « votre outil ». No teal in them, no motion; they are `aria-hidden`, the card text carries the meaning.
+- Below the panel: a Title-weight name (1.125rem semibold) and a body detail.
 
 ### Numbered Rail
 - Steps numbered because the order matters: a 32px circle with the number in a label, the first step ringed in teal, the others in `hairline`; a 1px `hairline` rail links them. On the home: vertical on mobile, horizontal from `lg`, the same five steps as /offres/, the last one followed by a rail that fades out (the Évolutions go on); each rail stops 0.5rem short of the circles on both sides. The optional Étude de projet sits in a sentence below, never in the rail.
@@ -265,8 +281,8 @@ Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields
 - Motion (scroll-driven, CSS `animation-timeline: view()`): each rail segment draws downward, each card sets in (opacity, 0.75rem rise, blur) as it enters, the bypass is drawn left to right. Without support, or under `prefers-reduced-motion`, everything is simply visible.
 
 ### Rate Table (/offres/)
-- The only place prices appear. From `md`, a real `<table>` with four columns: Prestation (Ink medium, row header), Ce que ça comprend (body-small `slate`), Prix (« à partir de » in a label, the amount in 1.125rem semibold tabular figures, a unit or a sub-label below in `slate` / label), Délai (body-small `slate`, a delivery time, never working days). Mono labels head the columns over a `hairline` rule; rows are split by `hairline-faint`.
-- Below `md`, one block per row: the name and the price on one line, then what it includes, then « Délai · … ». Never a horizontal scroll.
+- The full price list (the home band shows only the two entry prices). From `lg`, a real `<table>` with four columns: Prestation (Ink medium, row header), Ce que ça comprend (body-small `slate`), Prix (« à partir de » in a label, the amount in 1.875rem semibold tabular figures (1.5rem when a row has two amounts), a unit or a sub-label below in `slate` / label), Délai (body-small `slate`, a delivery time, never working days). Mono labels head the columns over a `hairline` rule; rows are split by `hairline-faint`.
+- Below `lg`, one block per row: the name and the price (1.5rem, 1.25rem when two) on one line, then what it includes, then « Délai · … ». Never a horizontal scroll.
 - Under the table, above a `hairline` rule: the hosting option sentence, then the price notice (euros, VAT mention) in a label size `pencil` line.
 
 ### Chips
@@ -292,7 +308,7 @@ Soft and consistent by role: 8px (`lg`) for buttons, 12px (`xl`) for form fields
 - **Do** set metadata in DM Mono at 0.75rem in `pencil`.
 - **Do** use teal only as a stroke, dot, border or short label, per The Drafting Pen Rule.
 - **Do** give every interactive element a 44px target and keep the global 2px ink focus outline (fields use the teal-700 border + ring instead).
-- **Do** keep motion to the home load sequence (600ms exponential ease-out, 70ms stagger, CSS only, content visible by default), the scroll-drawn path on /offres/, the menu disclosure and small hover nudges, all cut under `prefers-reduced-motion`.
+- **Do** keep motion to the home load sequence (600ms exponential ease-out, 70ms stagger, the hero drawing traced stroke by stroke, CSS only), the scroll-drawn path on /offres/, the menu disclosure and small hover nudges, all cut under `prefers-reduced-motion`.
 - **Do** write template comments as `{/* … */}` so they never ship in the HTML.
 
 ### Don't:

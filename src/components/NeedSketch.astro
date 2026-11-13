@@ -1,0 +1,98 @@
+---
+// Petits dessins des besoins de l'accueil, dans le vocabulaire du schéma du hero :
+// traits zinc d'1 px, annotations en mono, créneaux en zinc-100. Aucun teal ici
+// (le schéma du hero porte déjà le seul trait teal du dessin) et aucun mouvement.
+// Purement décoratifs : le titre et le texte de la carte disent la même chose.
+
+interface Props {
+  kind: 'planning' | 'mobile' | 'flow' | 'connect'
+  class?: string
+}
+
+const { kind, class: className } = Astro.props
+
+const days = ['lun', 'mar', 'mer', 'jeu', 'ven']
+---
+
+<svg
+  aria-hidden="true"
+  viewBox={kind === 'planning' || kind === 'connect' ? '0 0 480 176' : '0 0 280 176'}
+  class:list={['h-full w-full text-zinc-300', className]}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {kind === 'planning' && (
+    <>
+      {/* Une semaine, trois techniciens, les créneaux posés */}
+      <rect x="24" y="20" width="432" height="136" rx="10" class="fill-white" />
+      <path class="text-zinc-200" d="M24 46h432M24 82.67h432M24 119.33h432M88 46v110M161.6 46v110M235.2 46v110M308.8 46v110M382.4 46v110" />
+      {days.map((day, i) => (
+        <text x={124.8 + i * 73.6} y="38" text-anchor="middle" class="fill-zinc-500 font-mono text-[12px]" stroke="none">{day}</text>
+      ))}
+      {[64.3, 101, 137.7].map((cy) => <circle cx="56" cy={cy} r="9" />)}
+      <rect x="93" y="54" width="137" height="20" rx="4" class="fill-zinc-100" />
+      <rect x="314" y="58" width="63" height="16" rx="4" class="fill-zinc-100" />
+      <rect x="167" y="90" width="63" height="20" rx="4" class="fill-zinc-100" />
+      <rect x="240" y="94" width="137" height="16" rx="4" class="fill-zinc-100" />
+      <rect x="93" y="127" width="63" height="20" rx="4" class="fill-zinc-100" />
+      <rect x="388" y="131" width="63" height="16" rx="4" class="fill-zinc-100" />
+    </>
+  )}
+
+  {kind === 'mobile' && (
+    <>
+      {/* Le téléphone sort du cadre par le bas : on voit le haut du bon */}
+      <rect x="96" y="22" width="88" height="180" rx="14" class="fill-white" />
+      <path d="M128 33h24" />
+      <path class="text-zinc-400" d="M110 54h36" />
+      <path d="M110 68h60M110 77h42" />
+      <rect x="110" y="90" width="60" height="42" rx="3" />
+      <path d="m114 127 13-14 9 9 7-6 23 11" />
+      <circle cx="158" cy="100" r="3.5" />
+      <path class="text-zinc-400" d="M114 160c4-10 8-10 10-2s4 8 8-2 6-8 8 1 6 6 11-2" />
+      <path d="M110 167h60" />
+      <path class="text-zinc-200" d="M64 111h46M64 160h50" />
+      <text x="60" y="115" text-anchor="end" class="fill-zinc-500 font-mono text-[12px]" stroke="none">photo</text>
+      <text x="60" y="164" text-anchor="end" class="fill-zinc-500 font-mono text-[12px]" stroke="none">signature</text>
+    </>
+  )}
+
+  {kind === 'flow' && (
+    <>
+      {/* Une saisie, deux endroits : le terrain la remplit, le bureau la reçoit */}
+      <rect x="28" y="44" width="72" height="96" rx="10" class="fill-white" />
+      <path d="M42 66h36M42 76h44M42 86h28" />
+      <rect x="42" y="98" width="44" height="26" rx="3" class="fill-zinc-100" />
+      <rect x="164" y="40" width="96" height="70" rx="6" class="fill-white" />
+      <path d="M196 110v14M184 124h24" />
+      <path d="M176 58h36M176 68h52M176 78h44" />
+      <rect x="176" y="86" width="44" height="14" rx="3" class="fill-zinc-100" />
+      <path class="text-zinc-400" d="M108 92h44m-6-6 6 6-6 6" />
+      <text x="64" y="160" text-anchor="middle" class="fill-zinc-500 font-mono text-[12px]" stroke="none">terrain</text>
+      <text x="212" y="146" text-anchor="middle" class="fill-zinc-500 font-mono text-[12px]" stroke="none">bureau</text>
+    </>
+  )}
+
+  {kind === 'connect' && (
+    <>
+      {/* Les logiciels déjà en place, reliés entre eux plutôt que remplacés */}
+      <path class="text-zinc-200" d="M196 88H144M284 88h52M240 70V48M240 106v22" />
+      <rect x="196" y="70" width="88" height="36" rx="8" class="fill-white text-zinc-400" />
+      <text x="240" y="92" text-anchor="middle" class="fill-zinc-900 font-mono text-[12px]" stroke="none">votre outil</text>
+      {[
+        { x: 24, y: 70, w: 120, label: 'comptabilité' },
+        { x: 336, y: 70, w: 120, label: 'devis, factures' },
+        { x: 186, y: 12, w: 108, label: 'agenda' },
+        { x: 186, y: 128, w: 108, label: 'tableur' },
+      ].map(({ x, y, w, label }) => (
+        <>
+          <rect x={x} y={y} width={w} height="36" rx="8" class="fill-white" />
+          <text x={x + w / 2} y={y + 22} text-anchor="middle" class="fill-zinc-500 font-mono text-[12px]" stroke="none">{label}</text>
+        </>
+      ))}
+    </>
+  )}
+</svg>

@@ -30,8 +30,8 @@
 }
 
 /* ── Mouvement : « la lettre se compose » ───────────────────────────────────
-   Une séquence à l'arrivée sur l'accueil (grille tracée, puis hero posé dans
-   l'ordre de lecture) + des filets qui se tracent au scroll. Contenu visible
+   Une séquence à l'arrivée sur l'accueil (grille tracée, hero posé dans l'ordre
+   de lecture, schéma tracé trait par trait) + des filets qui se tracent au scroll. Contenu visible
    par défaut ; tout est en CSS. */
 
 @keyframes set-in {
@@ -75,7 +75,7 @@
    s'éteigne avant le contenu qui suit (aucun trait derrière le texte ou les cartes). */
 .grid-fade {
   mask-image:
-    radial-gradient(20rem 20rem at 60% 40%, #000, transparent),
+    radial-gradient(20rem 20rem at 40% 30%, #000, transparent),
     linear-gradient(to bottom, #000 55%, transparent 100%);
   mask-composite: intersect;
   -webkit-mask-composite: source-in;
@@ -83,8 +83,30 @@
 @media (min-width: 40rem) {
   .grid-fade {
     mask-image:
-      radial-gradient(40rem 40rem at 60% 40%, #000, transparent),
+      radial-gradient(40rem 40rem at 40% 30%, #000, transparent),
       linear-gradient(to bottom, #000 55%, transparent 100%);
+  }
+}
+
+/* Grille de la bande des prix : visible vers le coin bas droit (le plus clair du dégradé),
+   éteinte derrière le titre et les montants. */
+.band-grid-fade {
+  mask-image: radial-gradient(60% 90% at 100% 100%, #000, transparent);
+}
+
+/* Schéma du hero : chaque trait se trace dans l'ordre du dessin (terrain, liaison,
+   bureau). pathLength="1" sur chaque trait rend la longueur indépendante de la forme.
+   En mouvement réduit, aucun tracé : le dessin est là d'emblée. */
+@keyframes trace {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trace {
+    stroke-dasharray: 1;
+    animation: trace 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(350ms + var(--i, 0) * 90ms);
   }
 }
 
