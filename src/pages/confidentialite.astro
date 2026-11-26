@@ -8,7 +8,7 @@ import { h3, body, bullet, inlineLink } from '../lib/typography'
 
 <BaseLayout
   title="Politique de confidentialité — Maxime Derycke"
-  description="Comment maximederycke.dev traite vos données : mesure d'audience sans cookie, échanges par e-mail et vos droits."
+  description="Comment maximederycke.dev traite vos données : aucune mesure d'audience, échanges par e-mail et vos droits."
 >
   <Page>
 
@@ -29,24 +29,9 @@ import { h3, body, bullet, inlineLink } from '../lib/typography'
 
         <div>
           <h3 class:list={[h3, 'mb-3']}>Mesure d'audience</h3>
-          <div class:list={[body, 'space-y-3']}>
-            <p>
-              J'utilise Umami, un outil de mesure d'audience que j'héberge moi-même sur un serveur
-              situé en France. Umami ne dépose aucun cookie et ne conserve pas votre adresse IP.
-              Il enregistre les pages consultées, le site d'où vous venez, le type d'appareil,
-              le navigateur et le pays. Ces statistiques servent uniquement à améliorer le site.
-            </p>
-            <ul class="flex flex-col gap-2">
-              <li class="flex items-start gap-3">
-                <span aria-hidden="true" class={bullet}></span>
-                <span>Base légale : mon intérêt légitime à savoir comment le site est utilisé.</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span aria-hidden="true" class={bullet}></span>
-                <span>Durée de conservation : 25 mois.</span>
-              </li>
-            </ul>
-          </div>
+          <p class={body}>
+            Ce site n'utilise aucun outil de mesure d'audience ni de statistiques de visite.
+          </p>
         </div>
 
         <div>
